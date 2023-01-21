@@ -1,0 +1,2660 @@
+/*----------------------------------------------------------------------------*
+ | This file is part of WinDEU, the port of DEU to Windows.                   |
+ | WinDEU was created by the DEU team:                                        |
+ |  Renaud Paquay, Raphael Quinet, Brendon Wyber and others...                |
+ |                                                                            |
+ | DEU is an open project: if you think that you can contribute, please join  |
+ | the DEU team.  You will be credited for any code (or ideas) included in    |
+ | the next version of the program.                                           |
+ |                                                                            |
+ | If you want to make any modifications and re-distribute them on your own,  |
+ | you must follow the conditions of the WinDEU license. Read the file        |
+ | LICENSE or README.TXT in the top directory.  If do not  have a copy of     |
+ | these files, you can request them from any member of the DEU team, or by   |
+ | mail: Raphael Quinet, Rue des Martyrs 9, B-4550 Nandrin (Belgium).         |
+ |                                                                            |
+ | This program comes with absolutely no warranty.  Use it at your own risks! |
+ *----------------------------------------------------------------------------*
+
+	Project WinDEU
+	DEU team
+	Jul-Dec 1994, Jan-Mar 1995
+
+	FILE:         windeapp.rc
+
+	OVERVIEW
+	========
+	All resources defined here.
+*/
+
+#if !defined(WORKSHOP_INVOKED)
+#include <windows.h>
+#endif
+
+#include "windeapp.rh"
+
+
+MENU_MAIN MENU 
+{
+ POPUP "&File"
+ {
+  MENUITEM "&Open .WAD file...\tR", CM_FILE_READPATCH
+  MENUITEM "&Save object...\tS", CM_FILE_SAVEOBJECT
+  MENUITEM SEPARATOR
+  MENUITEM "&Build new main\tB", CM_FILE_BUILDMAIN
+  MENUITEM "&Group .WAD files\tG", CM_FILE_GROUPPATCH
+  MENUITEM SEPARATOR
+  MENUITEM "&Insert raw file...\tI", CM_FILE_INSERTRAW
+  MENUITEM "&Extract object...\tX", CM_FILE_EXTRACTOBJ
+  MENUITEM SEPARATOR
+  MENUITEM "List &master directory...\tM", CM_FILE_LISTMASTER
+  MENUITEM "List &opened .WAD files...\tW", CM_FILE_DISPLAYFILES
+  MENUITEM SEPARATOR
+  MENUITEM "E&xit\tQ", CM_FILE_EXIT
+ }
+
+ POPUP "&Editor"
+ {
+  MENUITEM "&Edit level...\tE", CM_EDITOR_EDITLEVEL
+  MENUITEM "&Create level...\tC", CM_EDITOR_CREATELEVEL
+  MENUITEM SEPARATOR
+  MENUITEM "&Dump entry...\tD", CM_EDITOR_DUMPENTRY
+  MENUITEM "View &Sprites...\tV", CM_EDITOR_VIEWSPRITE
+  MENUITEM "View &Wall textures...", CM_EDITOR_VIEWWTEXTURE
+  MENUITEM "View &Floor/Ceiling textures...", CM_EDITOR_VIEWFTEXTURE
+ }
+
+ POPUP "&Help"
+ {
+  MENUITEM "&Contents\tF1", CM_HELP_CONTENTS
+  MENUITEM "&Search help on...", CM_HELP_SEARCH
+  MENUITEM "&Using help", CM_HELP_USING_HELP
+  MENUITEM SEPARATOR
+  MENUITEM "&Main menu", CM_HELP_MAIN_MENU
+  MENUITEM "&Tutorial", CM_HELP_TUTORIAL
+  MENUITEM SEPARATOR
+  MENUITEM "&About WinDEU", CM_HELP_ABOUT
+ }
+
+}
+
+
+// Accelerator table for short-cut to menu commands. (include\owl\editfile.rc)
+MENU_MAIN ACCELERATORS
+{
+ "q", CM_FILE_EXIT, ASCII, NOINVERT
+ "x", CM_FILE_EXIT, ASCII, NOINVERT, ALT
+ "e", CM_EDITOR_EDITLEVEL, ASCII, NOINVERT
+ "c", CM_EDITOR_CREATELEVEL, ASCII, NOINVERT
+ "r", CM_FILE_READPATCH, ASCII, NOINVERT
+ "i", CM_FILE_INSERTRAW, ASCII, NOINVERT
+ "x", CM_FILE_EXTRACTOBJ, ASCII, NOINVERT
+ "w", CM_FILE_DISPLAYFILES, ASCII, NOINVERT
+ "g", CM_FILE_GROUPPATCH, ASCII, NOINVERT
+ "v", CM_EDITOR_VIEWSPRITE, ASCII, NOINVERT
+ "d", CM_EDITOR_DUMPENTRY, VIRTKEY, NOINVERT
+ "b", CM_FILE_BUILDMAIN, ASCII, NOINVERT
+ "m", CM_FILE_LISTMASTER, VIRTKEY, NOINVERT
+ "s", CM_FILE_SAVEOBJECT, ASCII, NOINVERT
+}
+
+MENU_EDITOR MENU
+{
+ POPUP "&File"
+ {
+  MENUITEM "Save...\tF2", CM_FILE_SAVE
+  MENUITEM "Save as...\tF3", CM_FILE_SAVEAS
+  MENUITEM SEPARATOR
+  MENUITEM "Quit editor\tAlt-X", CM_FILE_QUITEDIT
+ }
+
+ POPUP "&Edit"
+ {
+  MENUITEM "Undo\tAlt-BkSp", CM_EDIT_UNDO
+  MENUITEM "Redo\tShift-Alt-BkSp", CM_EDIT_REDO
+  MENUITEM SEPARATOR
+  MENUITEM "Edit object(s)...\tEnter", CM_EDIT_OBJECT
+  MENUITEM "Copy object(s)\tCtrl-C", CM_EDIT_COPYOBJ
+  MENUITEM "Add object\tInsert", CM_EDIT_ADDOBJ
+  POPUP "&Insert standard object"
+  {
+   MENUITEM "&Rectangle...", CM_OBJECTS_RECTANGLE
+   MENUITEM "&Polygon (N sides)...", CM_OBJECTS_POLYGON
+  }
+
+  MENUITEM "Delete object(s)\tDelete", CM_EDIT_DELETEOBJ
+  MENUITEM SEPARATOR
+  MENUITEM "Preferences...\tF5", CM_EDIT_PREFERENCES
+ }
+
+ POPUP "&Search"
+ {
+  MENUITEM "Find/Change...", CM_SEARCH_FIND
+  MENUITEM "Repeat last find", CM_SEARCH_REPEAT
+  MENUITEM SEPARATOR
+  MENUITEM "Next object\tN", CM_SEARCH_NEXTOBJ
+  MENUITEM "Previous object\tP", CM_SEARCH_PREVOBJ
+  MENUITEM SEPARATOR
+  MENUITEM "Jump to object...\tJ", CM_SEARCH_JUMPOBJ
+ }
+
+ POPUP "M&isc"
+ {
+  MENUITEM "Item", CM_MISCITEM
+ }
+
+ POPUP "&Modes"
+ {
+  MENUITEM "&Things\tT", CM_MODE_THINGS
+  MENUITEM "&Vertices\tV", CM_MODE_VERTEXES
+  MENUITEM "&LineDefs / SideDefs\tL", CM_MODE_LINEDEFS
+  MENUITEM "&Sectors\tS", CM_MODE_SECTORS
+  MENUITEM SEPARATOR
+  MENUITEM "&Next mode\tTab", CM_MODE_NEXT
+  MENUITEM "&Previous mode\tShift-Tab", CM_MODE_PREV
+  MENUITEM "&3D Preview", CM_MODE_3DPREVIEW
+ }
+
+ POPUP "&Check"
+ {
+  MENUITEM "&Display statistics...\tCtrl-F5", CM_CHECK_NUMBER
+  MENUITEM "Check all &sectors are closed\tCtrl-F6", CM_CHECK_SECTORS
+  MENUITEM "Check &cross-references\tCtrl-F7", CM_CHECK_CROSSREF
+  MENUITEM "Check &missing textures\tCtrl-F8", CM_CHECK_TEXTURES
+  MENUITEM "Check &textures names\tCtrl-F9", CM_CHECK_TEXTURES_NAMES
+ }
+
+ POPUP "&Window"
+ {
+  MENUITEM "&Center map\tF6", CM_WINDOW_CENTER_MAP
+  MENUITEM "Zoom &in\t+", CM_WINDOW_ZOOMIN
+  MENUITEM "Zoom &out\t-", CM_WINDOW_ZOOMOUT
+  MENUITEM "&Slow scroll\tSPACE", CM_WINDOW_SLOW_SCROLL
+  MENUITEM SEPARATOR
+  MENUITEM "Snap t&o grid\tShift-H", CM_WINDOW_SNAPTOGRID
+  MENUITEM "Show &grid\tH", CM_WINDOW_SHOWGRID
+  MENUITEM "I&ncrease grid scale\tG", CM_WINDOW_GRIDNEXT
+  MENUITEM "&Decrease grid scale\tShift-G", CM_WINDOW_GRIDPREV
+  MENUITEM SEPARATOR
+  MENUITEM "Show info &windows\tAlt-F7", CM_WINDOW_INFOWIN
+  MENUITEM "Show &tool bar\tAlt-F8", CM_WINDOW_TOOLBAR
+  MENUITEM "Show info &bar\tAlt-F9", CM_WINDOW_INFOBAR
+  POPUP "Info windows &layout"
+  {
+   MENUITEM "Horizontal, down left", CM_INFOWIN_HORIZ_DOWNLEFT
+   MENUITEM "Horizontal, down right", CM_INFOWIN_HORIZ_DOWNRIGHT
+   MENUITEM "Horizontal, up left", CM_INFOWIN_HORIZ_UPLEFT
+   MENUITEM "Horizontal, up right", CM_INFOWIN_HORIZ_UPRIGHT
+   MENUITEM "Vertical, down left", CM_INFOWIN_VERT_DOWNLEFT
+   MENUITEM "Vertical, down right", CM_INFOWIN_VERT_DOWNRIGHT
+   MENUITEM "Vertical, up left", CM_INFOWIN_VERT_UPLEFT
+   MENUITEM "Vertical, up right", CM_INFOWIN_VERT_UPRIGHT
+   MENUITEM SEPARATOR
+   MENUITEM "&Layout now!", CM_WINDOW_LAYOUT
+   MENUITEM "&Automatic layout", CM_WINDOW_AUTOLAYOUT
+  }
+
+ }
+
+ POPUP "&Help"
+ {
+  MENUITEM "&Contents\tF1", CM_HELP_CONTENTS
+  MENUITEM "&Search for help on...", CM_HELP_SEARCH
+  MENUITEM "&Using help", CM_HELP_USING_HELP
+  MENUITEM "&Keyboard", CM_HELP_KEYBOARD
+  MENUITEM "&Mouse", CM_HELP_MOUSE
+  MENUITEM SEPARATOR
+  MENUITEM "&Level editor", CM_HELP_LEVEL_EDITOR
+  MENUITEM "&Tutorial", CM_HELP_TUTORIAL
+  MENUITEM SEPARATOR
+  MENUITEM "&About WinDEU...", CM_HELP_ABOUT
+ }
+
+}
+
+
+MENU_MISC_THINGS MENU
+{
+ MENUITEM "Free tag number...", CM_MISCT_FINDFREETAG
+ MENUITEM "Rotate and scale...", CM_MISCT_ROTATESCALE
+}
+
+
+MENU_MISC_LINEDEFS MENU
+{
+ MENUITEM "Free tag number...", CM_MISCL_FINDFREETAG
+ MENUITEM "Rotate and scale...", CM_MISCL_ROTATESCALE
+ MENUITEM "Split LineDef (add new Vertex)", CM_MISCL_SPLITADD
+ MENUITEM "Split LineDefs and Sectors", CM_MISCL_SPLITSECT
+ MENUITEM "Delete LineDefs and join Sectors", CM_MISCL_DELETE
+ MENUITEM "Flip LineDef", CM_MISCL_FLIP
+ MENUITEM "Swap SideDefs", CM_MISCL_SWAP
+ MENUITEM "Align textures (Y offset)", CM_MISCL_ALIGNY
+ POPUP "Align textures (X offset)"
+ {
+  MENUITEM "SD1, Check", CM_MISCL_AX_SD1_CHECK
+  MENUITEM "SD1, Check && Offset", CM_MISCL_AX_SD1_CHECK_OFFSET
+  MENUITEM "SD1, No Check", CM_MISCL_AX_SD1_NOCHECK
+  MENUITEM "SD1, No Check && Offset", CM_MISCL_AX_SD1_NOCHECK_OFFSET
+  MENUITEM "SD2, Check", CM_MISCL_AX_SD2_CHECK
+  MENUITEM "SD2, Check && Offset", CM_MISCL_AX_SD2_CHECK_OFFSET
+  MENUITEM "SD2, No Check", CM_MISCL_AX_SD2_NOCHECK
+  MENUITEM "SD2, No Check && Offset", CM_MISCL_AX_SD2_NOCHECK_OFFSET
+ }
+
+}
+
+MENU_MISC_VERTEXES MENU
+{
+ MENUITEM "Free tag number...", CM_MISCV_FINDFREETAG
+ MENUITEM "Rotate and scale...", CM_MISCV_ROTATESCALE
+ MENUITEM "Delete Vertex and join LineDefs", CM_MISCV_DELETE
+ MENUITEM "Merge several Vertices into one", CM_MISCV_MERGE
+ MENUITEM "Add a LineDef and split Sector", CM_MISCV_ADD
+}
+
+
+MENU_MISC_SECTORS MENU
+{
+ MENUITEM "Free tag number...", CM_MISCS_FINDFREETAG
+ MENUITEM "Rotate and scale...", CM_MISCS_ROTATESCALE
+ MENUITEM "Make door from Sector", CM_MISCS_MAKEDOOR
+ MENUITEM "Make lift from Sector", CM_MISCS_MAKELIFT
+ MENUITEM "Distributes Sector floor heights...", CM_MISCS_DISTRIBFLOOR
+ MENUITEM "Distributes Sector ceiling heights...", CM_MISCS_DISTRIBCEILING
+}
+
+
+MENU_THINGS MENU
+{
+ POPUP "gag"
+ {
+  MENUITEM "Edit Thing(s)...", CM_EDIT_OBJECT
+  MENUITEM "Copy Thing(s)", CM_EDIT_COPYOBJ
+  MENUITEM "Add Thing", CM_EDIT_ADDOBJ
+  MENUITEM SEPARATOR
+  MENUITEM "Find free tag...", CM_MISCT_FINDFREETAG
+  MENUITEM "Rotate and scale...", CM_MISCT_ROTATESCALE
+  MENUITEM SEPARATOR
+  POPUP "Standard object"
+  {
+   MENUITEM "Rectangle...", CM_OBJECTS_RECTANGLE
+   MENUITEM "Polygon (N sides)...", CM_OBJECTS_POLYGON
+  }
+
+  POPUP "Modes"
+  {
+   MENUITEM "Things", CM_MODE_THINGS
+   MENUITEM "Vertices", CM_MODE_VERTEXES
+   MENUITEM "LineDefs / SideDefs", CM_MODE_LINEDEFS
+   MENUITEM "Sectors", CM_MODE_SECTORS
+   MENUITEM SEPARATOR
+   MENUITEM "Next mode", CM_MODE_NEXT
+   MENUITEM "Previous mode", CM_MODE_PREV
+   MENUITEM "3D Preview", CM_MODE_3DPREVIEW
+  }
+ }
+}
+
+
+MENU_LINEDEFS MENU 
+{
+ POPUP "gag"
+ {
+  MENUITEM "Edit LineDef(s)...", CM_EDIT_OBJECT
+  MENUITEM "Copy LineDef(s)", CM_EDIT_COPYOBJ
+  MENUITEM "Add LineDef", CM_EDIT_ADDOBJ
+  MENUITEM SEPARATOR
+  MENUITEM "Find free tag...", CM_MISCL_FINDFREETAG
+  MENUITEM "Rotate and scale...", CM_MISCL_ROTATESCALE
+  MENUITEM "Split (add Vertex)", CM_MISCL_SPLITADD
+  MENUITEM "Split (Sectors)", CM_MISCL_SPLITSECT
+  MENUITEM "Delete (join Sectors)", CM_MISCL_DELETE
+  MENUITEM "Flip LineDef", CM_MISCL_FLIP
+  MENUITEM "Swap SideDefs", CM_MISCL_SWAP
+  MENUITEM "Align text. (Y)", CM_MISCL_ALIGNY
+  POPUP "Align text. (X)"
+  {
+   MENUITEM "SD1, Check", CM_MISCL_AX_SD1_CHECK
+   MENUITEM "SD1, Check && Offset", CM_MISCL_AX_SD1_CHECK_OFFSET
+   MENUITEM "SD1, No Check", CM_MISCL_AX_SD1_NOCHECK
+   MENUITEM "SD1, No Check && Offset", CM_MISCL_AX_SD1_NOCHECK_OFFSET
+   MENUITEM "SD2, Check", CM_MISCL_AX_SD2_CHECK
+   MENUITEM "SD2, Check && Offset", CM_MISCL_AX_SD2_CHECK_OFFSET
+   MENUITEM "SD2, No Check", CM_MISCL_AX_SD2_NOCHECK
+   MENUITEM "SD2, No Check && Offset", CM_MISCL_AX_SD2_NOCHECK_OFFSET
+  }
+
+  MENUITEM SEPARATOR
+  POPUP "Standard object"
+  {
+   MENUITEM "Rectangle...", CM_OBJECTS_RECTANGLE
+   MENUITEM "Polygon (N sides)...", CM_OBJECTS_POLYGON
+  }
+
+  POPUP "Modes"
+  {
+   MENUITEM "Things", CM_MODE_THINGS
+   MENUITEM "Vertices", CM_MODE_VERTEXES
+   MENUITEM "LineDefs / SideDefs", CM_MODE_LINEDEFS
+   MENUITEM "Sectors", CM_MODE_SECTORS
+   MENUITEM SEPARATOR
+   MENUITEM "Next mode", CM_MODE_NEXT
+   MENUITEM "Previous mode", CM_MODE_PREV
+   MENUITEM "3D Preview", CM_MODE_3DPREVIEW
+  }
+ }
+}
+
+
+MENU_VERTEXES MENU
+{
+ POPUP "gag"
+ {
+  MENUITEM "Edit Vertex(ices)...", CM_EDIT_OBJECT
+  MENUITEM "Copy Vertex(ices)", CM_EDIT_COPYOBJ
+  MENUITEM "Add Vertex", CM_EDIT_ADDOBJ
+  MENUITEM SEPARATOR
+  MENUITEM "Find free tag...", CM_MISCV_FINDFREETAG
+  MENUITEM "Rotate and scale...", CM_MISCV_ROTATESCALE
+  MENUITEM "Delete (join LineDefs)", CM_MISCV_DELETE
+  MENUITEM "Merge", CM_MISCV_MERGE
+  MENUITEM "Split Sector", CM_MISCV_ADD
+  MENUITEM SEPARATOR
+  POPUP "Standard object"
+  {
+   MENUITEM "Rectangle...", CM_OBJECTS_RECTANGLE
+   MENUITEM "Polygon (N sides)...", CM_OBJECTS_POLYGON
+  }
+
+  POPUP "Modes"
+  {
+   MENUITEM "Things", CM_MODE_THINGS
+   MENUITEM "Vertices", CM_MODE_VERTEXES
+   MENUITEM "LineDefs / SideDefs", CM_MODE_LINEDEFS
+   MENUITEM "Sectors", CM_MODE_SECTORS
+   MENUITEM SEPARATOR
+   MENUITEM "Next mode", CM_MODE_NEXT
+   MENUITEM "Previous mode", CM_MODE_PREV
+   MENUITEM "3D Preview", CM_MODE_3DPREVIEW
+  }
+
+ }
+
+}
+
+
+MENU_SECTORS MENU 
+{
+ POPUP "gag"
+ {
+  MENUITEM "Edit Sector(s)...", CM_EDIT_OBJECT
+  MENUITEM "Copy Sector(s)", CM_EDIT_COPYOBJ
+  MENUITEM "Add Sector", CM_EDIT_ADDOBJ
+  MENUITEM SEPARATOR
+  MENUITEM "Find free tag...", CM_MISCS_FINDFREETAG
+  MENUITEM "Rotate and scale...", CM_MISCS_ROTATESCALE
+  MENUITEM "Make door", CM_MISCS_MAKEDOOR
+  MENUITEM "Make lift", CM_MISCS_MAKELIFT
+  MENUITEM "Distrib. floor H...", CM_MISCS_DISTRIBFLOOR
+  MENUITEM "Distrib. ceiling H...", CM_MISCS_DISTRIBCEILING
+  MENUITEM SEPARATOR
+  POPUP "Standard object"
+  {
+   MENUITEM "Rectangle...", CM_OBJECTS_RECTANGLE
+   MENUITEM "Polygon (N sides)...", CM_OBJECTS_POLYGON
+  }
+
+  POPUP "Modes"
+  {
+   MENUITEM "Things", CM_MODE_THINGS
+   MENUITEM "Vertices", CM_MODE_VERTEXES
+   MENUITEM "LineDefs / SideDefs", CM_MODE_LINEDEFS
+   MENUITEM "Sectors", CM_MODE_SECTORS
+   MENUITEM SEPARATOR
+   MENUITEM "Next mode", CM_MODE_NEXT
+   MENUITEM "Previous mode", CM_MODE_PREV
+   MENUITEM "3D Preview", CM_MODE_3DPREVIEW
+  }
+
+ }
+
+}
+
+MENU_OBJECTS MENU
+{
+ POPUP "gag"
+ {
+  MENUITEM "Edit Object(s)...", CM_EDIT_OBJECT
+  MENUITEM "Copy Object(s)", CM_EDIT_COPYOBJ
+  MENUITEM "Add Object", CM_EDIT_ADDOBJ
+  MENUITEM SEPARATOR
+  POPUP "Standard Object"
+  {
+   MENUITEM "Rectangle...", CM_OBJECTS_RECTANGLE
+   MENUITEM "Polygon (N sides)...", CM_OBJECTS_POLYGON
+  }
+
+  POPUP "Edit mode"
+  {
+   MENUITEM "Things", CM_MODE_THINGS
+   MENUITEM "Vertices", CM_MODE_VERTEXES
+   MENUITEM "LineDefs / SideDefs", CM_MODE_LINEDEFS
+   MENUITEM "Sectors", CM_MODE_SECTORS
+   MENUITEM SEPARATOR
+   MENUITEM "Next mode", CM_MODE_NEXT
+   MENUITEM "Previous mode", CM_MODE_PREV
+   MENUITEM "3D Preview", CM_MODE_3DPREVIEW
+  }
+
+ }
+
+}
+
+
+MENU_EDITOR ACCELERATORS 
+{
+ VK_X, CM_FILE_QUITEDIT, VIRTKEY, NOINVERT, ALT
+ VK_Q, CM_FILE_QUITEDIT, VIRTKEY, NOINVERT
+/*
+   Removed "+" and "-" because we handle differently a ZOOM command
+   and a ZOOM key (in the case of a key, the ZOOM is centered on the
+   the mouse pointer).
+*/
+/*
+ "+", CM_WINDOW_ZOOMIN, ASCII, NOINVERT
+ "-", CM_WINDOW_ZOOMOUT, ASCII, NOINVERT
+*/
+ VK_INSERT, CM_EDIT_ADDOBJ, VIRTKEY, NOINVERT
+ VK_INSERT, CM_EDIT_ADDOBJ, VIRTKEY, NOINVERT, SHIFT
+ VK_DELETE, CM_EDIT_DELETEOBJ, VIRTKEY, NOINVERT
+ VK_C, CM_EDIT_COPYOBJ, VIRTKEY, NOINVERT, CONTROL
+ VK_O, CM_EDIT_COPYOBJ, VIRTKEY, NOINVERT
+ VK_TAB, CM_MODE_NEXT, VIRTKEY, NOINVERT
+ VK_TAB, CM_MODE_PREV, VIRTKEY, NOINVERT, SHIFT
+ VK_T, CM_MODE_THINGS, VIRTKEY, NOINVERT
+ VK_L, CM_MODE_LINEDEFS, VIRTKEY, NOINVERT
+ VK_V, CM_MODE_VERTEXES, VIRTKEY, NOINVERT
+ VK_S, CM_MODE_SECTORS, VIRTKEY, NOINVERT
+ VK_F2, CM_FILE_SAVE, VIRTKEY, NOINVERT
+ VK_F3, CM_FILE_SAVEAS, VIRTKEY, NOINVERT
+ VK_F5, CM_EDIT_PREFERENCES, VIRTKEY, NOINVERT
+ VK_F6, CM_WINDOW_CENTER_MAP, VIRTKEY, NOINVERT
+ VK_F8, CM_MISC_MENU, VIRTKEY, NOINVERT
+ VK_F9, CM_INSERT_MENU, VIRTKEY, NOINVERT
+ VK_F10, CM_CHECK_MENU, VIRTKEY, NOINVERT
+ VK_F6, CM_WINDOW_SHOWGRID, VIRTKEY, NOINVERT, ALT
+ VK_F7, CM_WINDOW_INFOWIN, VIRTKEY, NOINVERT, ALT
+ VK_F8, CM_WINDOW_TOOLBAR, VIRTKEY, NOINVERT, ALT
+ VK_F9, CM_WINDOW_INFOBAR, VIRTKEY, NOINVERT, ALT
+ /*
+ VK_F1, CM_MODE_THINGS, VIRTKEY, NOINVERT, CONTROL
+ VK_F2, CM_MODE_VERTEXES, VIRTKEY, NOINVERT, CONTROL
+ VK_F3, CM_MODE_LINEDEFS, VIRTKEY, NOINVERT, CONTROL
+ VK_F4, CM_MODE_SECTORS, VIRTKEY, NOINVERT, CONTROL
+ */
+ VK_F5, CM_CHECK_NUMBER, VIRTKEY, NOINVERT, CONTROL
+ VK_F6, CM_CHECK_SECTORS, VIRTKEY, NOINVERT, CONTROL
+ VK_F7, CM_CHECK_CROSSREF, VIRTKEY, NOINVERT, CONTROL
+ VK_F8, CM_CHECK_TEXTURES, VIRTKEY, NOINVERT, CONTROL
+ VK_F9, CM_CHECK_TEXTURES_NAMES, VIRTKEY, NOINVERT, CONTROL
+ VK_I, CM_WINDOW_INFOBAR, VIRTKEY, NOINVERT
+ VK_G, CM_WINDOW_GRIDNEXT, VIRTKEY, NOINVERT
+ VK_G, CM_WINDOW_GRIDPREV, VIRTKEY, NOINVERT, SHIFT
+ VK_H, CM_WINDOW_SNAPTOGRID, VIRTKEY, NOINVERT, SHIFT
+ VK_H, CM_WINDOW_SHOWGRID, VIRTKEY, NOINVERT
+ ">", CM_SEARCH_NEXTOBJ, ASCII, NOINVERT
+ VK_N, CM_SEARCH_NEXTOBJ, VIRTKEY, NOINVERT
+ "<", CM_SEARCH_PREVOBJ, ASCII, NOINVERT
+ VK_P, CM_SEARCH_PREVOBJ, VIRTKEY, NOINVERT
+ "#", CM_SEARCH_JUMPOBJ, ASCII, NOINVERT
+ "=", CM_SEARCH_JUMPOBJ, ASCII, NOINVERT
+ VK_J, CM_SEARCH_JUMPOBJ, VIRTKEY, NOINVERT
+ VK_RETURN, CM_EDIT_OBJECT, VIRTKEY, NOINVERT
+ VK_SPACE, CM_WINDOW_SLOW_SCROLL, VIRTKEY, NOINVERT
+ VK_BACK, CM_EDIT_UNDO, VIRTKEY, NOINVERT, ALT
+ VK_BACK, CM_EDIT_REDO, VIRTKEY, NOINVERT, ALT, SHIFT
+}
+
+
+//
+// Table of help hints displayed in the status bar.
+//
+STRINGTABLE
+{
+ -1, "File/document operations"
+ CM_FILE_READPATCH, "Open a new patch WAD file\nOpen PWAD"
+ CM_FILE_SAVEOBJECT, "Save an object to a separate patch WAD file\nSave object"
+ CM_FILE_BUILDMAIN, "Build a new main WAD file\nBuild main WAD"
+ CM_FILE_GROUPPATCH, "Group all patch WAD files in a file\nGroup PWADs"
+ CM_FILE_INSERTRAW, "Insert a RAW file in a patch WAD file\nInsert RAW"
+ CM_FILE_EXTRACTOBJ, "Save (extract) an object to a RAW file\nExtract object"
+ CM_FILE_LISTMASTER, "List the master directory\nMaster directory"
+ CM_FILE_DISPLAYFILES, "Display all opended WAD files and their directory\nList WADs"
+ CM_FILE_EXIT, "Quits WinDEU"
+ CM_EDITOR_CREATELEVEL, "Creates and edit a new (empty) level\nCreate level"
+ CM_EDITOR_EDITLEVEL, "Edit a game level, saving results to a patch WAD file\nEdit level"
+ CM_EDITOR_DUMPENTRY, "Dump a directory entry in hexdecimal\nDump entry"
+ CM_EDITOR_VIEWSPRITE, "Display the sprites\nView sprites"
+ CM_EDITOR_VIEWWTEXTURE, "Display the wall textures\nView wall textures"
+ CM_EDITOR_VIEWFTEXTURE, "Display the Floor/Ceiling textures\nView floor/ceiling textures"
+ CM_HELP_CONTENTS, "Display help contents\nHelp index"
+ CM_HELP_ABOUT -1, "Access About"
+ CM_HELP_ABOUT, "About the WinDEU application\nAbout"
+ CM_FILE_SAVE, "Save current level to a patch WAD file\nSave PWAD"
+ CM_FILE_SAVEAS, "Save current level as another episode and mission"
+ CM_FILE_QUITEDIT, "Exit level editor and return to main menu"
+ CM_EDIT_UNDO, "Undo last operation\nUndo"
+ CM_EDIT_REDO, "Redo last operation\nRedo"
+ CM_EDIT_OBJECT, "Edit selected object(s)\nEdit object(s)"
+ CM_EDIT_COPYOBJ, "Copy selected object(s)\nCopy object(s)"
+ CM_EDIT_ADDOBJ, "Add an object\nAdd object"
+ CM_EDIT_DELETEOBJ, "Delete selected object(s)\nDelete object(s)"
+ CM_EDIT_PREFERENCES, "Set default textures, object type, ...\nPreferences"
+ CM_SEARCH_FIND, "Find or change an object (NOT YET IMPLEMENTED)"
+ CM_SEARCH_REPEAT, "Repeat the last find/change (NOT YET IMPLEMENTED)"
+ CM_SEARCH_NEXTOBJ, "Go to next object"
+ CM_SEARCH_PREVOBJ, "Go to previous object"
+ CM_SEARCH_JUMPOBJ, "Go to a object given its number"
+ CM_OBJECTS_RECTANGLE, "Insert a rectangle\nInsert rectangle"
+ CM_OBJECTS_POLYGON, "Insert a polygon given its number of sides\nInsert polygon"
+ CM_MODE_THINGS, "Switch to the 'things' editing mode\nThings mode"
+ CM_MODE_LINEDEFS, "Switch to the 'LineDefs and SideDefs' editing mode\nLineDefs mode"
+ CM_MODE_VERTEXES, "Switch to the 'Vertices' editing mode\nVertices mode"
+ CM_MODE_SECTORS, "Switch to the 'Sectors' editing mode\nSectors mode"
+ CM_MODE_NEXT, "Switch to next editing mode"
+ CM_MODE_PREV, "Switch to previous editing mode"
+ CM_MODE_3DPREVIEW, "3d preview of level (NOT YET IMPLEMENTED)"
+ CM_CHECK_NUMBER, "Display statistics about the level objects"
+ CM_CHECK_SECTORS, "Check that all sectors are closed"
+ CM_CHECK_CROSSREF, "Check all cross-references between Sectors and LideDefs"
+ CM_CHECK_TEXTURES, "Check if all SidefDefs, Sectors have legal textures"
+ CM_CHECK_TEXTURES_NAMES, "Check if textures names are legal"
+ CM_WINDOW_CENTER_MAP, "Center the map to fit the window area\nCenter map"
+ CM_WINDOW_ZOOMIN, "Zoom in level map\nZoom in"
+ CM_WINDOW_ZOOMOUT, "Zoom out level map\nZoom out"
+ CM_WINDOW_SLOW_SCROLL, "Toggle fast/slow scrolling of map\nFast/slow scroll"
+ CM_WINDOW_SHOWGRID, "Hide/show grid\nHide/show grid"
+ CM_WINDOW_GRIDNEXT, "Multiply the grid scale by 2\nIncrease scale"
+ CM_WINDOW_GRIDPREV, "Divide the grid scale by 2\nDecrease scale"
+ CM_WINDOW_SNAPTOGRID, "Toggle grid snapping\nSnap on/off"
+ CM_WINDOW_INFOWIN, "Hide/show information windows\nHide/show info windows"
+ CM_WINDOW_TOOLBAR, "Hide/show tool bar\nHide/show tool bar"
+ CM_WINDOW_INFOBAR, "Hide/show information (status) bar\nHide/show info bar"
+ CM_WINDOW_LAYOUT, "Layout information window(s) now"
+ CM_WINDOW_AUTOLAYOUT, "Toggle automatic layout of information window(s)"
+ CM_INFOWIN_HORIZ_DOWNLEFT, "Layout information windows horizontaly, lower left of editor"
+ CM_INFOWIN_HORIZ_DOWNRIGHT, "Layout information windows horizontaly, lower right of editor"
+ CM_INFOWIN_HORIZ_UPLEFT, "Layout information windows horizontaly, upper left of editor"
+ CM_INFOWIN_HORIZ_UPRIGHT, "Layout information windows horizontaly, upper right of editor"
+ CM_INFOWIN_VERT_DOWNLEFT, "Layout information windows verticaly, lower left of editor"
+ CM_INFOWIN_VERT_DOWNRIGHT, "Layout information windows verticaly, lower right of editor"
+ CM_INFOWIN_VERT_UPLEFT, "Layout information windows verticaly, upper left of editor"
+ CM_INFOWIN_VERT_UPRIGHT, "Layout information windows verticaly, uppper right of editor"
+ CM_HELP_SEARCH, "Search for a help topic by typing or selecting a keyword"
+ CM_HELP_USING_HELP, "Display information about how to use help"
+ CM_HELP_MAIN_MENU, "Help on the WinDEU main menu"
+ CM_HELP_LEVEL_EDITOR, "Help on the WinDEU level editor"
+ CM_HELP_MOUSE, "Help about using the mouse in the level editor"
+ CM_HELP_KEYBOARD, "Help about using keyboard in the level editor"
+ CM_HELP_TUTORIAL, "Open the WinDEU tutorial\nTutorial"
+}
+
+
+//
+// OWL string table
+//
+
+// EditFile (include\owl\editfile.rc and include\owl\editsear.rc)
+STRINGTABLE LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+	IDS_CANNOTFIND,             "Cannot find ""%s""."
+	IDS_UNTITLED,               "Untitled"
+	IDS_UNABLEREAD,             "Unable to read file %s from disk."
+	IDS_UNABLEWRITE,            "Unable to write file %s to disk."
+	IDS_FILECHANGED,            "The text in the %s file has changed.\n\nDo you want to save the changes?"
+	IDS_FILEFILTER,             "Text files (*.TXT)|*.TXT|AllFiles (*.*)|*.*|"
+END
+
+
+// Exception string resources (include\owl\except.rc)
+STRINGTABLE LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+	IDS_OWLEXCEPTION,           "ObjectWindows Exception"
+	IDS_UNHANDLEDXMSG,          "Unhandled Exception"
+	IDS_OKTORESUME,             "OK to resume?"
+	IDS_UNKNOWNEXCEPTION,       "Unknown exception"
+
+	IDS_UNKNOWNERROR,           "Unknown error"
+	IDS_NOAPP,                  "No application object"
+	IDS_OUTOFMEMORY,            "Out of memory"
+	IDS_INVALIDMODULE,          "Invalid module specified for window"
+	IDS_INVALIDMAINWINDOW,      "Invalid MainWindow"
+
+	IDS_INVALIDWINDOW,          "Invalid window %s"
+	IDS_INVALIDCHILDWINDOW,     "Invalid child window %s"
+	IDS_INVALIDCLIENTWINDOW,    "Invalid client window %s"
+
+	IDS_CLASSREGISTERFAIL,      "Class registration fail for window %s"
+	IDS_CHILDREGISTERFAIL,      "Child class registration fail for window %s"
+	IDS_WINDOWCREATEFAIL,       "Create fail for window %s"
+	IDS_WINDOWEXECUTEFAIL,      "Execute fail for window %s"
+	IDS_CHILDCREATEFAIL,        "Child create fail for window %s"
+
+	IDS_MENUFAILURE,            "Menu creation failure"
+	IDS_VALIDATORSYNTAX,        "Validator syntax error"
+	IDS_PRINTERERROR,           "Printer error"
+
+	IDS_LAYOUTINCOMPLETE,       "Incomplete layout constraints specified in window %s"
+	IDS_LAYOUTBADRELWIN,        "Invalid relative window specified in layout constraint in window %s"
+
+	IDS_GDIFAILURE,             "GDI failure"
+	IDS_GDIALLOCFAIL,           "GDI allocate failure"
+	IDS_GDICREATEFAIL,          "GDI creation failure"
+	IDS_GDIRESLOADFAIL,         "GDI resource load failure"
+	IDS_GDIFILEREADFAIL,        "GDI file read failure"
+	IDS_GDIDELETEFAIL,          "GDI object %X delete failure"
+	IDS_GDIDESTROYFAIL,         "GDI object %X destroy failure"
+	IDS_INVALIDDIBHANDLE,       "Invalid DIB handle %X"
+END
+
+
+// General Window's status bar messages. (include\owl\statusba.rc)
+STRINGTABLE
+BEGIN
+	IDS_MODES                   "EXT|CAPS|NUM|SCRL|OVR|REC"
+	SC_SIZE,                    "Changes the size of the window"
+	SC_MOVE,                    "Moves the window to another position"
+	SC_MINIMIZE,                "Reduces the window to an icon"
+	SC_MAXIMIZE,                "Enlarges the window to it maximum size"
+	SC_RESTORE,                 "Restores the window to its previous size"
+	SC_CLOSE,                   "Closes the window"
+	SC_TASKLIST,                "Opens task list"
+	SC_NEXTWINDOW,              "Switches to next window"
+END
+
+
+// Validator messages (include\owl\validate.rc)
+STRINGTABLE LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+	IDS_VALPXPCONFORM          "Input does not conform to picture:\n""%s"""
+	IDS_VALINVALIDCHAR         "Invalid character in input"
+	IDS_VALNOTINRANGE          "Value is not in the range %ld to %ld."
+	IDS_VALNOTINLIST           "Input is not in valid-list"
+END
+
+
+//
+// Misc application definitions
+//
+
+// Application ICON
+IDI_SDIAPPLICATION ICON "applsdi.ico"
+IDI_BOSS ICON "boss.ico"
+IDI_CACO ICON "caco.ico"
+IDI_DEMON ICON "demon.ico"
+IDI_DOOMFAC1 ICON "doomfac1.ico"
+IDI_GORY5 ICON "gory5.ico"
+IDI_HELMET1 ICON "helmet1.ico"
+IDI_IMP ICON "imp.ico"
+IDI_INVISBL ICON "invisbl.ico"
+IDI_INVUL ICON "invul.ico"
+IDI_PLAYER5 ICON "player5.ico"
+IDI_PLAYR1 ICON "playr1.ico"
+IDI_SARG ICON "sarg.ico"
+IDI_SKULL6 ICON "skull6.ico"
+IDI_SOUL ICON "soul.ico"
+IDI_NOEL_1 ICON "noel1.ico"
+IDI_NOEL_2 ICON "noel2.ico"
+
+
+// About box.
+IDD_ABOUT DIALOG 19, 28, 274, 148
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "About WinDEU"
+FONT 8, "MS Sans Serif"
+{
+ DEFPUSHBUTTON "&Close", IDOK, 112, 125, 41, 16
+ PUSHBUTTON "&Info", IDC_VERSION_INFO, 240, 14, 26, 14
+}
+
+
+// TInputDialog class dialog box.
+IDD_INPUTDIALOG DIALOG 20, 24, 180, 64
+STYLE 0x04 | WS_POPUP | WS_CAPTION | DS_SETFONT
+FONT 8, "Helv"
+{
+ LTEXT "", ID_PROMPT, 10, 8, 160, 10, SS_NOPREFIX
+ EDITTEXT ID_INPUT, 10, 20, 160, 12, WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP | ES_AUTOHSCROLL
+ DEFPUSHBUTTON "&OK", IDOK, 47, 42, 40, 16
+ PUSHBUTTON "&Cancel", IDCANCEL, 93, 42, 40, 16
+}
+
+
+// Horizontal slider thumb bitmap for TSlider and VSlider (include\owl\slider.rc)
+IDB_HSLIDERTHUMB BITMAP PRELOAD MOVEABLE DISCARDABLE
+BEGIN
+	'42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+	'00 00 12 00 00 00 14 00 00 00 01 00 04 00 00 00'
+	'00 00 F0 00 00 00 00 00 00 00 00 00 00 00 00 00'
+	'00 00 10 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+	'00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+	'00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+	'00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+	'00 00 FF FF FF 00 BB BB 0B BB BB BB B0 BB BB 00'
+	'00 00 BB B0 80 BB BB BB 08 0B BB 00 00 00 BB 08'
+	'F8 0B BB B0 87 70 BB 00 00 00 B0 8F F8 80 BB 08'
+	'77 77 0B 00 00 00 08 F8 88 88 00 88 88 87 70 00'
+	'00 00 0F F7 77 88 00 88 77 77 70 00 00 00 0F F8'
+	'88 88 00 88 88 87 70 00 00 00 0F F7 77 88 00 88'
+	'77 77 70 00 00 00 0F F8 88 88 00 88 88 87 70 00'
+	'00 00 0F F7 77 88 00 88 77 77 70 00 00 00 0F F8'
+	'88 88 00 88 88 87 70 00 00 00 0F F7 77 88 00 88'
+	'77 77 70 00 00 00 0F F8 88 88 00 88 88 87 70 00'
+	'00 00 0F F7 77 88 00 88 77 77 70 00 00 00 0F F8'
+	'88 88 00 88 88 87 70 00 00 00 0F F7 77 88 00 88'
+	'77 77 70 00 00 00 0F F8 88 88 00 88 88 87 70 00'
+	'00 00 0F F7 77 78 00 88 77 77 70 00 00 00 0F FF'
+	'FF FF 00 88 88 88 80 00 00 00 B0 00 00 00 BB 00'
+	'00 00 0B 00 00 00'
+END
+
+
+// Vertical slider thumb bitmap for TSlider and HSlider (include\owl\slider.rc)
+IDB_VSLIDERTHUMB BITMAP PRELOAD MOVEABLE DISCARDABLE
+BEGIN
+	'42 4D 2A 01 00 00 00 00 00 00 76 00 00 00 28 00'
+	'00 00 28 00 00 00 09 00 00 00 01 00 04 00 00 00'
+	'00 00 B4 00 00 00 00 00 00 00 00 00 00 00 00 00'
+	'00 00 10 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+	'00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+	'00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+	'00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+	'00 00 FF FF FF 00 B0 00 00 00 00 00 00 00 00 0B'
+	'B0 00 00 00 00 00 00 00 00 0B 0F 88 88 88 88 88'
+	'88 88 88 80 08 88 88 88 88 88 88 88 88 80 0F 77'
+	'77 77 77 77 77 77 77 80 08 77 77 77 77 77 77 77'
+	'77 80 0F 77 FF FF FF FF FF FF F7 80 08 77 FF FF'
+	'FF FF FF FF F7 80 0F 70 00 00 00 00 00 00 77 80'
+	'08 70 00 00 00 00 00 00 77 80 0F 77 77 77 77 77'
+	'77 77 77 80 08 77 77 77 77 77 77 77 77 80 0F 77'
+	'77 77 77 77 77 77 77 80 08 77 77 77 77 77 77 77'
+	'77 80 0F FF FF FF FF FF FF FF FF F0 08 88 88 88'
+	'88 88 88 88 88 80 B0 00 00 00 00 00 00 00 00 0B'
+	'B0 00 00 00 00 00 00 00 00 0B'
+END
+
+
+IDD_FUNNY DIALOG 23, 32, 254, 170
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Funny message"
+FONT 8, "MS Sans Serif"
+{
+ DEFPUSHBUTTON "&Close", IDOK, 102, 147, 50, 16
+ LTEXT "Welcome to WinDEU!  This is a poweful utility and, like all good tools, it", -1, 8, 8, 238, 8, WS_GROUP | WS_TABSTOP
+ LTEXT "comes with its user's manual.  Please use the contextual help system (F1)", -1, 8, 20, 238, 8, WS_GROUP | WS_TABSTOP
+ LTEXT "to discover all the features of this program.  If you are new to WinDEU, the", -1, 8, 32, 238, 8, WS_GROUP | WS_TABSTOP
+ LTEXT "tutorial will show you how to build your first level.", -1, 8, 44, 238, 8, WS_GROUP | WS_TABSTOP
+ LTEXT "", -1, 8, 56, 238, 8, WS_GROUP | WS_TABSTOP
+ LTEXT "If you are an experienced WinDEU user and want to know what has changed since", -1, 8, 68, 238, 8, WS_GROUP | WS_TABSTOP
+ LTEXT "the last version, you should read the revision history in WhatsNew.TXT.", -1, 8, 80, 238, 8, WS_GROUP | WS_TABSTOP
+ LTEXT "", -1, 8, 92, 238, 8, WS_GROUP | WS_TABSTOP
+ LTEXT "And if you have lots of suggestions for improvements, bug reports, or even", -1, 8, 104, 238, 8, WS_GROUP | WS_TABSTOP
+ LTEXT "complaints about this program, be sure to read README.TXT first.", -1, 8, 116, 238, 8, WS_GROUP | WS_TABSTOP
+ LTEXT "Hint: you can easily disable this message.  Read the docs carefully...", -1, 8, 128, 238, 8, WS_GROUP | WS_TABSTOP
+}
+
+
+IDD_USAGE DIALOG 12, 27, 293, 230
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Command line options of WinDEU"
+FONT 8, "MS Sans Serif"
+{
+ DEFPUSHBUTTON "&Close", IDOK, 121, 211, 50, 16
+ LTEXT "Usage:", -1, 7, 7, 242, 8
+ LTEXT "WinDEU [-w <main_wad_file>] [-d] [-sb] [-c] [-q] [-qq] [-e] [-a] [-i] [-z <zoom>] [-3d] [-dl] [-bp][-config <ini_file>] [-pw <pwad_file>] [-file <pwad_files>...]", -1, 7, 18, 265, 20
+ LTEXT "Gives the name of the main wad file (also -main).  Default is DOOM.WAD", -1, 39, 41, 242, 8
+ LTEXT "Enter debug mode (also -debug).", -1, 39, 51, 242, 8
+ LTEXT "Use the alternate Things color set (also -color2).", -1, 39, 61, 242, 8
+ LTEXT "Suppresses some sounds (also -quiet).", -1, 39, 71, 242, 8
+ LTEXT "Suppresses all sounds (also -quieter).", -1, 39, 81, 242, 8
+ LTEXT "Stops prompts for confirmation (also -expert).", -1, 39, 91, 242, 8
+ LTEXT "To have an additive selection box (also -addselbox).", -1, 39, 101, 242, 8
+ LTEXT "Show the info bar in the editors (also -infobar).", -1, 39, 111, 242, 8
+ LTEXT "Set the initial zoom factor for the editors (also -zoom).", -1, 39, 121, 242, 8
+ LTEXT "Use 3D controls in dialog boxes (needs ctl3dv2.dll or ctl3d32.dll)", -1, 39, 131, 242, 8
+ LTEXT "To add one patch wad file to be loaded; may be repeated (also -pwad).", -1, 39, 141, 242, 8
+ LTEXT "To draw the moving LineDefs length (also -drawlength)", -1, 39, 151, 242, 8
+ LTEXT "Time-slice of nodes builder priority (also -buildpriority)", -1, 39, 161, 242, 8
+ LTEXT "NOTE: Put a '+' instead of a '-' before boolean options to reverse their effect.", -1, 9, 197, 258, 8
+ LTEXT "-w", -1, 12, 41, 24, 8
+ LTEXT "-d", -1, 12, 51, 24, 8
+ LTEXT "-c", -1, 12, 61, 24, 8
+ LTEXT "-q", -1, 12, 71, 24, 8
+ LTEXT "-qq", -1, 12, 81, 24, 8
+ LTEXT "-e", -1, 12, 91, 24, 8
+ LTEXT "-a", -1, 12, 101, 24, 8
+ LTEXT "-i", -1, 12, 111, 24, 8
+ LTEXT "-z", -1, 12, 121, 24, 8
+ LTEXT "-3d", -1, 12, 131, 24, 8
+ LTEXT "-pw", -1, 12, 141, 24, 8
+ LTEXT "-dl", -1, 12, 151, 24, 8
+ LTEXT "-bp", -1, 12, 161, 24, 8
+ LTEXT "To add a list of patch wad files to be loaded.", -1, 39, 172, 242, 8
+ LTEXT "Gives the name of the config file.", -1, 39, 182, 242, 8
+ LTEXT "-file", -1, 12, 172, 24, 8
+ LTEXT "-config", -1, 12, 182, 24, 8
+}
+
+IDD_WADLIST DIALOG 25, 43, 295, 174
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "List of opened wad files"
+FONT 8, "MS Sans Serif"
+{
+ DEFPUSHBUTTON "&Close", IDOK, 122, 147, 50, 16, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ LISTBOX IDC_WADLISTBOX, 7, 18, 177, 100, LBS_NOTIFY | WS_BORDER | LBS_WANTKEYBOARDINPUT | WS_BORDER | WS_VSCROLL | WS_HSCROLL | WS_GROUP
+ LISTBOX IDC_DIRLISTBOX, 197, 18, 80, 100, LBS_NOTIFY | WS_BORDER | WS_BORDER | WS_VSCROLL | WS_GROUP
+ LTEXT "List of wad files", -1, 7, 4, 60, 8
+ LTEXT "Entries of selected file", -1, 198, 4, 77, 8
+ CHECKBOX "Show levels only", IDC_CHECK_ONLYEM, 197, 121, 74, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+}
+
+IDD_EPISODE_MISSION DIALOG 21, 35, 229, 183
+STYLE DS_MODALFRAME | 0x4L | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Select level"
+FONT 8, "MS Sans Serif"
+{
+ CHECKBOX "&Doom 2", IDC_EM_DOOM2_CHECK, 10, 7, 98, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP | WS_GROUP
+ GROUPBOX "Doom 1 / Heretic level number", IDC_EM_DOOM1_GROUP, 12, 22, 203, 133, BS_GROUPBOX
+ CONTROL "", IDC_EM_SEPARATOR_1, "STATIC", SS_GRAYFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 78, 32, 1, 118
+ CONTROL "", IDC_EM_SEPARATOR_2, "STATIC", SS_GRAYFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 146, 32, 1, 118
+ LTEXT "Episode 1", IDC_EM_EPISODE1, 27, 33, 36, 8, NOT WS_GROUP
+ LTEXT "Episode 2", IDC_EM_EPISODE2, 95, 33, 36, 8, NOT WS_GROUP
+ LTEXT "Episode 3", IDC_EM_EPISODE3, 164, 33, 36, 8, NOT WS_GROUP
+ CONTROL "Mission 1", IDC_EM_E1M1, "BUTTON", BS_AUTORADIOBUTTON | WS_GROUP, 22, 43, 45, 12
+ CONTROL "Mission 2", IDC_EM_E1M2, "BUTTON", BS_AUTORADIOBUTTON, 22, 55, 45, 12
+ CONTROL "Mission 3", IDC_EM_E1M3, "BUTTON", BS_AUTORADIOBUTTON, 22, 67, 45, 12
+ CONTROL "Mission 4", IDC_EM_E1M4, "BUTTON", BS_AUTORADIOBUTTON, 22, 79, 45, 12
+ CONTROL "Mission 5", IDC_EM_E1M5, "BUTTON", BS_AUTORADIOBUTTON, 22, 91, 45, 12
+ CONTROL "Mission 6", IDC_EM_E1M6, "BUTTON", BS_AUTORADIOBUTTON, 22, 103, 45, 12
+ CONTROL "Mission 7", IDC_EM_E1M7, "BUTTON", BS_AUTORADIOBUTTON, 22, 115, 45, 12
+ CONTROL "Mission 8", IDC_EM_E1M8, "BUTTON", BS_AUTORADIOBUTTON, 22, 127, 45, 12
+ CONTROL "Mission 9", IDC_EM_E1M9, "BUTTON", BS_AUTORADIOBUTTON, 22, 139, 45, 12
+ CONTROL "Mission 1", IDC_EM_E2M1, "BUTTON", BS_AUTORADIOBUTTON, 90, 43, 44, 12
+ CONTROL "Mission 2", IDC_EM_E2M2, "BUTTON", BS_AUTORADIOBUTTON, 90, 55, 44, 12
+ CONTROL "Mission 3", IDC_EM_E2M3, "BUTTON", BS_AUTORADIOBUTTON, 90, 67, 44, 12
+ CONTROL "Mission 4", IDC_EM_E2M4, "BUTTON", BS_AUTORADIOBUTTON, 90, 79, 44, 12
+ CONTROL "Mission 5", IDC_EM_E2M5, "BUTTON", BS_AUTORADIOBUTTON, 90, 91, 44, 12
+ CONTROL "Mission 6", IDC_EM_E2M6, "BUTTON", BS_AUTORADIOBUTTON, 90, 103, 44, 12
+ CONTROL "Mission 7", IDC_EM_E2M7, "BUTTON", BS_AUTORADIOBUTTON, 90, 115, 44, 12
+ CONTROL "Mission 8", IDC_EM_E2M8, "BUTTON", BS_AUTORADIOBUTTON, 90, 127, 44, 12
+ CONTROL "Mission 9", IDC_EM_E2M9, "BUTTON", BS_AUTORADIOBUTTON, 90, 139, 44, 12
+ CONTROL "Mission 1", IDC_EM_E3M1, "BUTTON", BS_AUTORADIOBUTTON, 159, 43, 45, 12
+ CONTROL "Mission 2", IDC_EM_E3M2, "BUTTON", BS_AUTORADIOBUTTON, 159, 55, 45, 12
+ CONTROL "Mission 3", IDC_EM_E3M3, "BUTTON", BS_AUTORADIOBUTTON, 159, 67, 45, 12
+ CONTROL "Mission 4", IDC_EM_E3M4, "BUTTON", BS_AUTORADIOBUTTON, 159, 79, 45, 12
+ CONTROL "Mission 5", IDC_EM_E3M5, "BUTTON", BS_AUTORADIOBUTTON, 159, 91, 45, 12
+ CONTROL "Mission 6", IDC_EM_E3M6, "BUTTON", BS_AUTORADIOBUTTON, 159, 103, 45, 12
+ CONTROL "Mission 7", IDC_EM_E3M7, "BUTTON", BS_AUTORADIOBUTTON, 159, 115, 45, 12
+ CONTROL "Mission 8", IDC_EM_E3M8, "BUTTON", BS_AUTORADIOBUTTON, 159, 127, 45, 12
+ CONTROL "Mission 9", IDC_EM_E3M9, "BUTTON", BS_AUTORADIOBUTTON, 159, 139, 45, 12
+ GROUPBOX "Doom 2 map number", IDC_EM_DOOM2_GROUP, 12, 22, 203, 133, BS_GROUPBOX
+ CONTROL "Map 01", IDC_EM_MAP_01, "BUTTON", BS_AUTORADIOBUTTON | WS_GROUP, 20, 33, 39, 12
+ CONTROL "Map 02", IDC_EM_MAP_02, "BUTTON", BS_AUTORADIOBUTTON, 20, 48, 39, 12
+ CONTROL "Map 03", IDC_EM_MAP_03, "BUTTON", BS_AUTORADIOBUTTON, 20, 63, 39, 12
+ CONTROL "Map 04", IDC_EM_MAP_04, "BUTTON", BS_AUTORADIOBUTTON, 20, 78, 39, 12
+ CONTROL "Map 05", IDC_EM_MAP_05, "BUTTON", BS_AUTORADIOBUTTON, 20, 93, 39, 12
+ CONTROL "Map 06", IDC_EM_MAP_06, "BUTTON", BS_AUTORADIOBUTTON, 20, 108, 39, 12
+ CONTROL "Map 07", IDC_EM_MAP_07, "BUTTON", BS_AUTORADIOBUTTON, 20, 123, 39, 12
+ CONTROL "Map 08", IDC_EM_MAP_08, "BUTTON", BS_AUTORADIOBUTTON, 20, 138, 39, 12
+ CONTROL "Map 09", IDC_EM_MAP_09, "BUTTON", BS_AUTORADIOBUTTON, 70, 33, 39, 12
+ CONTROL "Map 10", IDC_EM_MAP_10, "BUTTON", BS_AUTORADIOBUTTON, 70, 48, 39, 12
+ CONTROL "Map 11", IDC_EM_MAP_11, "BUTTON", BS_AUTORADIOBUTTON, 70, 63, 39, 12
+ CONTROL "Map 12", IDC_EM_MAP_12, "BUTTON", BS_AUTORADIOBUTTON, 70, 78, 39, 12
+ CONTROL "Map 13", IDC_EM_MAP_13, "BUTTON", BS_AUTORADIOBUTTON, 70, 93, 39, 12
+ CONTROL "Map 14", IDC_EM_MAP_14, "BUTTON", BS_AUTORADIOBUTTON, 70, 108, 39, 12
+ CONTROL "Map 15", IDC_EM_MAP_15, "BUTTON", BS_AUTORADIOBUTTON, 70, 123, 39, 12
+ CONTROL "Map 16", IDC_EM_MAP_16, "BUTTON", BS_AUTORADIOBUTTON, 70, 138, 39, 12
+ CONTROL "Map 17", IDC_EM_MAP_17, "BUTTON", BS_AUTORADIOBUTTON, 120, 33, 39, 12
+ CONTROL "Map 18", IDC_EM_MAP_18, "BUTTON", BS_AUTORADIOBUTTON, 120, 48, 39, 12
+ CONTROL "Map 19", IDC_EM_MAP_19, "BUTTON", BS_AUTORADIOBUTTON, 120, 63, 39, 12
+ CONTROL "Map 20", IDC_EM_MAP_20, "BUTTON", BS_AUTORADIOBUTTON, 120, 78, 39, 12
+ CONTROL "Map 21", IDC_EM_MAP_21, "BUTTON", BS_AUTORADIOBUTTON, 120, 93, 39, 12
+ CONTROL "Map 22", IDC_EM_MAP_22, "BUTTON", BS_AUTORADIOBUTTON, 120, 108, 39, 12
+ CONTROL "Map 23", IDC_EM_MAP_23, "BUTTON", BS_AUTORADIOBUTTON, 120, 123, 39, 12
+ CONTROL "Map 24", IDC_EM_MAP_24, "BUTTON", BS_AUTORADIOBUTTON, 120, 138, 39, 12
+ CONTROL "Map 25", IDC_EM_MAP_25, "BUTTON", BS_AUTORADIOBUTTON, 170, 33, 39, 12
+ CONTROL "Map 26", IDC_EM_MAP_26, "BUTTON", BS_AUTORADIOBUTTON, 170, 48, 39, 12
+ CONTROL "Map 27", IDC_EM_MAP_27, "BUTTON", BS_AUTORADIOBUTTON, 170, 63, 39, 12
+ CONTROL "Map 28", IDC_EM_MAP_28, "BUTTON", BS_AUTORADIOBUTTON, 170, 78, 39, 12
+ CONTROL "Map 29", IDC_EM_MAP_29, "BUTTON", BS_AUTORADIOBUTTON, 170, 93, 39, 12
+ CONTROL "Map 30", IDC_EM_MAP_30, "BUTTON", BS_AUTORADIOBUTTON, 170, 108, 39, 12
+ CONTROL "Map 31", IDC_EM_MAP_31, "BUTTON", BS_AUTORADIOBUTTON, 170, 123, 39, 12
+ CONTROL "Map 32", IDC_EM_MAP_32, "BUTTON", BS_AUTORADIOBUTTON, 170, 138, 39, 12
+ DEFPUSHBUTTON "&OK", IDOK, 51, 163, 50, 16, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ PUSHBUTTON "&Cancel", IDCANCEL, 128, 163, 50, 16, WS_GROUP | WS_TABSTOP
+}
+
+
+IDD_LEVEL_PROGRESS DIALOG 48, 40, 259, 127
+STYLE 0x04 | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_MINIMIZEBOX
+CAPTION "Level map build progress"
+FONT 8, "MS Sans Serif"
+{
+ CONTROL "", -1, "static", SS_WHITERECT | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 5, 250, 46
+ LTEXT "Rebuilding NODES ...", IDC_BUILD_NODES, 9, 10, 159, 8, NOT WS_GROUP
+ LTEXT "Vertices:", -1, 174, 9, 35, 8, NOT WS_GROUP
+ LTEXT "SideDefs:", -1, 174, 19, 35, 8, NOT WS_GROUP
+ LTEXT "Segs:", -1, 174, 29, 35, 8, NOT WS_GROUP
+ LTEXT "SSectors:", -1, 174, 39, 35, 8, NOT WS_GROUP
+ LTEXT "", IDC_VERTEXES, 218, 9, 33, 8, NOT WS_GROUP
+ LTEXT "", IDC_SIDEDEFS, 218, 19, 33, 8, NOT WS_GROUP
+ LTEXT "", IDC_SEGS, 218, 29, 33, 8, NOT WS_GROUP
+ LTEXT "", IDC_SSECTORS, 218, 39, 33, 8, NOT WS_GROUP
+ CONTROL "", IDC_FRAME_REJECT, "static", SS_WHITERECT | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 56, 250, 30
+ LTEXT "Rebuilding REJECT data ...", IDC_BUILD_REJECT, 9, 61, 240, 8, NOT WS_GROUP
+ CONTROL "", IDC_FRAME_BLOCKMAP, "static", SS_WHITERECT | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 91, 250, 30
+ LTEXT "Rebuilding BLOCKMAP ...", IDC_BUILD_BLOCKMAP, 9, 96, 240, 8, NOT WS_GROUP
+}
+
+IDD_VIEW_BITMAP DIALOG 12, 36, 329, 208
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Viewing bitmaps"
+FONT 8, "MS Sans Serif"
+{
+ LTEXT "Choose bitmap name:", IDC_CHOOSE, 12, 5, 48, 18, NOT WS_GROUP
+ LISTBOX IDC_BITMAP_LIST, 13, 26, 56, 156, LBS_STANDARD | WS_GROUP
+ CONTROL "", IDC_BITMAP_SIZE, "STATIC", SS_BLACKFRAME | WS_CHILD | NOT WS_VISIBLE, 79, 8, 205, 171
+ CTEXT "Zoom factor", -1, 294, 4, 26, 17, SS_CENTER | NOT WS_GROUP
+ CTEXT "-", IDC_ZOOM_FACTOR, 293, 23, 27, 8, SS_CENTER | NOT WS_GROUP
+ CTEXT "Gamma Correction", -1, 290, 77, 34, 17, SS_CENTER | NOT WS_GROUP
+ CTEXT "-", IDC_GAMMA_LEVEL, 293, 96, 27, 8, SS_CENTER | NOT WS_GROUP
+ DEFPUSHBUTTON "&Close", IDOK, 139, 188, 50, 16, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ CONTROL "", IDC_ZOOM_FRAME, "STATIC", SS_BLACKFRAME | WS_CHILD | NOT WS_VISIBLE, 295, 36, 24, 34
+ CONTROL "", IDC_GAMMA_FRAME, "STATIC", SS_BLACKFRAME | WS_CHILD | NOT WS_VISIBLE, 295, 110, 24, 69
+}
+
+IDD_THING_EDIT DIALOG 22, 28, 399, 276
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Editing thing"
+FONT 7, "MS Serif"
+{
+ DEFPUSHBUTTON "&OK", IDOK, 11, 245, 50, 21, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ PUSHBUTTON "&Cancel", IDCANCEL, 75, 245, 50, 21
+ GROUPBOX "Thing type", IDC_TYPE_GROUP, 7, 29, 121, 77, BS_GROUPBOX | WS_GROUP
+ CONTROL "Player position", IDC_PLAYER, "BUTTON", BS_AUTORADIOBUTTON | WS_GROUP, 14, 41, 66, 11
+ CONTROL "Enemy", IDC_ENEMY, "BUTTON", BS_AUTORADIOBUTTON, 14, 54, 41, 11
+ CONTROL "Weapon", IDC_WEAPON, "BUTTON", BS_AUTORADIOBUTTON, 14, 67, 41, 11
+ CONTROL "Bonus", IDC_BONUS, "BUTTON", BS_AUTORADIOBUTTON, 14, 80, 41, 11
+ CONTROL "Keys", IDC_KEYS, "BUTTON", BS_AUTORADIOBUTTON, 14, 93, 41, 11
+ CONTROL "Decoration", IDC_DECORATION, "BUTTON", BS_AUTORADIOBUTTON, 57, 54, 68, 11
+ CONTROL "Dead Bodies", IDC_DEAD_BODIES, "BUTTON", BS_AUTORADIOBUTTON, 57, 67, 68, 11
+ CONTROL "Hanging bodies", IDC_HANGINGBODIES, "BUTTON", BS_AUTORADIOBUTTON, 57, 80, 68, 11
+ CONTROL "Light sources", IDC_LIGHT_SOURCES, "BUTTON", BS_AUTORADIOBUTTON, 57, 93, 68, 11
+ GROUPBOX "Appears attributes", IDC_APPEARS_GROUP, 135, 8, 109, 68, BS_GROUPBOX | WS_GROUP
+ CHECKBOX "Level 1/2", IDC_LEVEL12, 141, 25, 45, 12, BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP
+ CHECKBOX "Level 3", IDC_LEVEL3, 141, 41, 39, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Level 4/5", IDC_LEVEL45, 141, 57, 45, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Deaf", IDC_DEAF, 187, 26, 31, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Multiplayer", IDC_MULTIPLAYER, 188, 42, 52, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ GROUPBOX "Angle", IDC_ANGLE_GROUP, 251, 8, 110, 68, BS_GROUPBOX | WS_GROUP
+ CONTROL "NW", IDC_ANGLE_NW, "BUTTON", BS_AUTORADIOBUTTON | WS_GROUP, 255, 23, 25, 12
+ CONTROL "North", IDC_ANGLE_N, "BUTTON", BS_AUTORADIOBUTTON, 288, 23, 33, 12
+ CONTROL "NE", IDC_ANGLE_NE, "BUTTON", BS_AUTORADIOBUTTON, 327, 23, 30, 12
+ CONTROL "East", IDC_ANGLE_E, "BUTTON", BS_AUTORADIOBUTTON, 327, 40, 30, 12
+ CONTROL "SE", IDC_ANGLE_SE, "BUTTON", BS_AUTORADIOBUTTON, 327, 57, 30, 12
+ CONTROL "South", IDC_ANGLE_S, "BUTTON", BS_AUTORADIOBUTTON, 288, 57, 31, 12
+ CONTROL "SW", IDC_ANGLE_SW, "BUTTON", BS_AUTORADIOBUTTON, 255, 57, 25, 12
+ CONTROL "West", IDC_ANGLE_W, "BUTTON", BS_AUTORADIOBUTTON, 255, 40, 30, 12
+ GROUPBOX "Sprite preview", IDC_SPRITE_GROUP, 133, 80, 258, 187, BS_GROUPBOX
+ CONTROL "", IDC_BITMAP_SIZE, "STATIC", SS_BLACKFRAME | WS_CHILD | NOT WS_VISIBLE, 139, 92, 205, 169
+ CTEXT "Zoom factor", -1, 353, 93, 27, 17, SS_CENTER | NOT WS_GROUP
+ CTEXT "-", IDC_ZOOM_FACTOR, 353, 111, 27, 8, SS_CENTER | NOT WS_GROUP
+ CONTROL "", IDC_ZOOM_FRAME, "STATIC", SS_BLACKFRAME | WS_CHILD | NOT WS_VISIBLE, 355, 122, 24, 37
+ CTEXT "Gamma Correction", -1, 349, 165, 36, 17, SS_CENTER | NOT WS_GROUP
+ CTEXT "-", IDC_GAMMA_LEVEL, 350, 183, 34, 8, SS_CENTER | NOT WS_GROUP
+ CONTROL "", IDC_GAMMA_FRAME, "STATIC", SS_BLACKFRAME | WS_CHILD | NOT WS_VISIBLE, 355, 197, 24, 64
+ LISTBOX IDC_THING_LIST, 7, 111, 121, 128, LBS_NOTIFY | WS_BORDER | WS_BORDER | WS_VSCROLL | WS_GROUP
+ LTEXT "X pos:", -1, 6, 10, 22, 8
+ EDITTEXT IDC_THING_XPOS, 31, 8, 30, 12
+ LTEXT "Y pos:", -1, 70, 10, 22, 8
+ EDITTEXT IDC_THING_YPOS, 95, 8, 30, 12
+}
+
+
+//
+// Version info.
+//
+
+#ifdef __WIN32__
+#define INTERNAL_NAME       "WINDEU32\000"
+#define FILE_OS             VOS__WINDOWS32
+#define ORIGINAL_FILENAME   "WINDEU32.EXE\000"
+#else
+#define INTERNAL_NAME       "WINDEU\000"
+#define FILE_OS             VOS__WINDOWS16
+#define ORIGINAL_FILENAME   "WINDEU.EXE\000"
+#endif
+#define COMPANY_NAME        "FUNDP"
+#define FILE_DESCRIPTION    "WinDEU: DEU for Windows"
+#define FILE_VERSION        "5.23\000"
+#define LEGAL_COPYRIGHT     "Renaud Paquay, Jul-Dec 1994, Jan-Feb 1995\000"
+#define PRODUCT_NAME        "WinDEU"
+#define PRODUCT_VERSION     "5.23\000"
+
+#if !defined(__DEBUG_)
+// Non-Debug VERSIONINFO
+1 VERSIONINFO LOADONCALL MOVEABLE
+FILEVERSION 0, 95, 0, 0
+PRODUCTVERSION 0, 95, 0, 0
+FILEFLAGSMASK 0
+FILEFLAGS VS_FFI_FILEFLAGSMASK
+FILEOS FILE_OS
+FILETYPE VFT_APP
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+		// Language type = U.S. English (0x0409) and
+		// Character Set = Windows, Multilingual(0x04e4)
+		BLOCK "040904E4" // Matches VarFileInfo Translation hex value.
+		BEGIN
+			VALUE "CompanyName", COMPANY_NAME
+			VALUE "FileDescription", FILE_DESCRIPTION
+			VALUE "FileVersion", FILE_VERSION
+			VALUE "InternalName", INTERNAL_NAME
+			VALUE "LegalCopyright", LEGAL_COPYRIGHT
+			VALUE "LegalTrademarks", "Windows /231 is a trademark of Microsoft Corporation\000"
+			VALUE "OriginalFilename", ORIGINAL_FILENAME
+			VALUE "ProductName", PRODUCT_NAME
+			VALUE "ProductVersion", PRODUCT_VERSION
+		END
+	END
+
+	BLOCK "VarFileInfo"
+	BEGIN
+		// U.S. English(0x0409) & Windows Multilingual(0x04e4) 1252
+		VALUE "Translation", 0x0409, 0x04e4
+	END
+
+END
+#else
+
+// Debug VERSIONINFO
+1 VERSIONINFO LOADONCALL MOVEABLE
+FILEVERSION 0, 95, 0, 0
+PRODUCTVERSION 0, 95, 0, 0
+FILEFLAGSMASK VS_FF_DEBUG | VS_FF_PRERELEASE | VS_FF_PATCHED | VS_FF_PRIVATEBUILD | VS_FF_SPECIALBUILD
+FILEFLAGS VS_FFI_FILEFLAGSMASK
+FILEOS FILE_OS
+FILETYPE VFT_APP
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+		// Language type = U.S. English (0x0409) and Character Set = Windows, Multilingual(0x04e4)
+		BLOCK "040904E4"                            // Matches VarFileInfo Translation hex value.
+		BEGIN
+			VALUE "CompanyName", COMPANY_NAME
+			VALUE "FileDescription", FILE_DESCRIPTION
+			VALUE "FileVersion", FILE_VERSION
+			VALUE "InternalName", INTERNAL_NAME
+			VALUE "LegalCopyright", LEGAL_COPYRIGHT
+			VALUE "LegalTrademarks", "Windows /231 is a trademark of Microsoft Corporation\000"
+			VALUE "OriginalFilename", ORIGINAL_FILENAME
+			VALUE "ProductName", PRODUCT_NAME
+			VALUE "ProductVersion", PRODUCT_VERSION
+
+			VALUE "SpecialBuild", "Debug Version\000"
+			VALUE "PrivateBuild", "Built by Renaud Paquay\000"
+		END
+	END
+
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x0409, 0x04e4        // U.S. English(0x0409) & Windows Multilingual(0x04e4) 1252
+	END
+
+END
+#endif
+
+
+
+IDD_CONFIRM_THING DIALOG 27, 23, 249, 168
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Confirm copy of Thing attributes"
+FONT 8, "MS Sans Serif"
+{
+ DEFPUSHBUTTON "&OK", IDOK, 63, 146, 50, 16, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ LTEXT "You confirmed the changes for the current highlighted Thing in the editor, but you have more than one Thing selected.", -1, 9, 6, 231, 18
+ GROUPBOX "Attributes selection", IDC_ATTR_GROUP, 8, 48, 238, 89, BS_GROUPBOX | WS_GROUP
+ CHECKBOX "Horizontal (&X) position", IDC_XPOS_CHECK, 14, 62, 111, 12, BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP
+ CHECKBOX "Vertical (&Y) position", IDC_YPOS_CHECK, 14, 80, 111, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "&Type", IDC_TYPE_CHECK, 14, 98, 111, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "&Angle", IDC_ANGLE_CHECK, 14, 116, 111, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ LTEXT "Select the attributes you want to copy from the current Thing to ALL the OTHERS SELECTED Things.", -1, 9, 26, 231, 18
+ CHECKBOX "Level &1/2", IDC_CONF_LEVEL12_CHECK, 138, 63, 60, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Level &3", IDC_CONF_LEVEL3_CHECK, 138, 76, 60, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Level &4/5", IDC_CONF_LEVEL45_CHECK, 138, 89, 60, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "&Deaf", IDC_CONF_DEAF_CHECK, 138, 102, 60, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "&Multi-player", IDC_CONF_MULTI_CHECK, 138, 115, 60, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ GROUPBOX "Appearence", IDC_APPEAR_GROUP, 132, 54, 107, 77, BS_GROUPBOX
+ PUSHBUTTON "&Copy nothing", IDCANCEL, 135, 146, 50, 16, WS_GROUP | WS_TABSTOP
+}
+
+IDD_INPUT_2 DIALOG 60, 33, 194, 92
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Input 2 title"
+FONT 8, "MS Sans Serif"
+{
+ LTEXT "Prompt:", IDC_PROMPT, 8, 7, 176, 18, NOT WS_GROUP | SS_NOPREFIX
+ EDITTEXT IDC_INPUT1_EDIT, 17, 30, 160, 12, ES_AUTOHSCROLL | WS_BORDER | WS_GROUP | WS_TABSTOP
+ EDITTEXT IDC_INPUT2_EDIT, 17, 48, 160, 12, ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP
+ DEFPUSHBUTTON "&OK", IDOK, 37, 70, 50, 16, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ PUSHBUTTON "&Cancel", IDCANCEL, 106, 70, 50, 16
+}
+
+IDC_HAND CURSOR LOADONCALL MOVEABLE DISCARDABLE
+{
+ '00 00 02 00 01 00 20 20 00 00 10 00 10 00 30 01'
+ '00 00 16 00 00 00 28 00 00 00 20 00 00 00 40 00'
+ '00 00 01 00 01 00 00 00 00 00 80 00 00 00 00 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 FF FF FF 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 00 03 FE 00 00 07 FF 00 00 0F FF 00 00 1F'
+ 'FF 80 00 1F FF 80 00 3F FF C0 00 39 FF C0 00 70'
+ 'FF C0 00 60 FF C0 00 60 DB 40 00 60 DB 40 00 00'
+ 'DB 40 00 00 DB 40 00 01 DB 40 00 01 BA 80 00 03'
+ 'B6 80 00 07 76 00 00 06 EC 00 00 00 C0 00 00 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 00 00 00 00 FF FF FF FF FF FF FF FF FF FF'
+ 'FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FC'
+ '01 FF FF F8 00 FF FF F0 00 7F FF E0 00 7F FF C0'
+ '00 3F FF C0 00 3F FF 80 00 1F FF 80 00 1F FF 06'
+ '00 1F FF 0E 00 1F FF 0E 00 1F FF 0E 00 1F FF 9E'
+ '00 1F FF FE 00 1F FF FC 00 1F FF FC 00 3F FF F8'
+ '00 3F FF F0 00 7F FF F0 01 FF FF F8 13 FF FF FF'
+ '3F FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF'
+ 'FF FF FF FF FF FF'
+}
+
+IDD_LINEDEF_EDIT DIALOG 14, 21, 420, 282
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "LineDef edit"
+FONT 7, "MS Serif"
+{
+ DEFPUSHBUTTON "&OK", IDOK, 8, 231, 50, 19, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ PUSHBUTTON "&Cancel", IDCANCEL, 8, 255, 50, 19
+ GROUPBOX "Flags", IDC_FLAGS_GROUP, 4, 3, 140, 127, BS_GROUPBOX | WS_GROUP
+ CHECKBOX "Impassable", IDC_IMPASSABLE, 13, 15, 123, 12, BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP
+ CHECKBOX "Monsters cannot cross", IDC_MONCROSS, 13, 27, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Two-sided (transparent SideDefs)", IDC_TWOSIDED, 13, 39, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Wall above is unpegged", IDC_ABOVEUNP, 13, 51, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Wall below is unpegged", IDC_BELOWUNP, 13, 63, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Secret (hides behind in Automap)", IDC_SECRET, 13, 75, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Blocks sound", IDC_BLOCKSOUND, 13, 87, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Not shown on Automap", IDC_NOTSHOWN, 13, 99, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Shown on Automap at start", IDC_SHOWN, 13, 112, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CONTROL "Doors", IDC_DOORS, "BUTTON", BS_AUTORADIOBUTTON | WS_GROUP, 154, 6, 37, 12
+ CONTROL "Raise Floors", IDC_RAISE_FLOORS, "BUTTON", BS_AUTORADIOBUTTON, 201, 6, 58, 12
+ CONTROL "Moving things", IDC_MOVING_THINGS, "BUTTON", BS_AUTORADIOBUTTON, 267, 6, 62, 12
+ CONTROL "Ceilings", IDC_CEILINGS, "BUTTON", BS_AUTORADIOBUTTON, 154, 20, 41, 12
+ CONTROL "Lower Floors", IDC_LOWER_FLOORS, "BUTTON", BS_AUTORADIOBUTTON, 201, 20, 62, 12
+ CONTROL "Special", IDC_SPECIAL, "BUTTON", BS_AUTORADIOBUTTON, 267, 20, 62, 12
+ LISTBOX IDC_LINEDEF_LIST, 154, 36, 257, 104, LBS_NOTIFY | WS_BORDER | LBS_USETABSTOPS | WS_BORDER | WS_VSCROLL | WS_GROUP
+ CONTROL "Text", -1, "STATIC", SS_GRAYFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 345, 2, 69, 30
+ LTEXT "Sector tag:", -1, 350, 6, 38, 8, NOT WS_GROUP
+ EDITTEXT IDC_SECTOR_TAG, 356, 17, 21, 11, WS_BORDER | WS_TABSTOP
+ PUSHBUTTON "New", IDC_STAG_NEW, 385, 15, 19, 14
+ GROUPBOX "Vertices number", IDC_VERTEX_GROUP, 4, 135, 71, 42, BS_GROUPBOX | WS_GROUP
+ LTEXT "First:", -1, 11, 148, 25, 8, NOT WS_GROUP
+ EDITTEXT IDC_VERTEX1, 46, 147, 21, 11, WS_BORDER | WS_TABSTOP
+ LTEXT "Second:", -1, 11, 163, 35, 8, NOT WS_GROUP
+ EDITTEXT IDC_VERTEX2, 46, 162, 21, 11, WS_BORDER | WS_TABSTOP
+ GROUPBOX "SideDefs number", IDC_SIDEDEFS_GROUP, 4, 178, 90, 49, BS_GROUPBOX | WS_GROUP
+ LTEXT "First:", -1, 8, 191, 21, 8, NOT WS_GROUP
+ EDITTEXT IDC_SD1, 40, 190, 21, 11, WS_BORDER | WS_TABSTOP
+ LTEXT "Second:", -1, 8, 210, 31, 8, NOT WS_GROUP
+ EDITTEXT IDC_SD2, 40, 209, 21, 11, WS_BORDER | WS_TABSTOP
+ PUSHBUTTON "New", IDC_SD1_NEW, 67, 189, 22, 14
+ PUSHBUTTON "New", IDC_SD2_NEW, 67, 208, 22, 14
+ GROUPBOX "First SideDef:", IDC_SIDEDEF1_GROUP, 97, 145, 85, 127, BS_GROUPBOX | WS_GROUP
+ LTEXT "XOff", -1, 106, 157, 17, 8, NOT WS_GROUP
+ LTEXT "YOff", -1, 136, 157, 17, 8, NOT WS_GROUP
+ LTEXT "Sector", -1, 156, 157, 24, 8, NOT WS_GROUP
+ EDITTEXT IDC_SD1_XPOS, 101, 167, 28, 11, WS_BORDER | WS_TABSTOP
+ EDITTEXT IDC_SD1_YPOS, 133, 167, 21, 11, WS_BORDER | WS_TABSTOP
+ EDITTEXT IDC_SD1_SECTOR, 157, 167, 21, 11, WS_BORDER | WS_TABSTOP
+ LTEXT "Above wall", -1, 104, 183, 41, 8, NOT WS_GROUP
+ CONTROL "Text", IDC_SD1_ABOVE_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 102, 194, 57, 14
+ LTEXT "Text", IDC_SD1_ABOVE, 105, 197, 50, 10, NOT WS_GROUP
+ LTEXT "Normal wall", -1, 104, 212, 41, 8, NOT WS_GROUP
+ CONTROL "Text", IDC_SD1_NORMAL_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 102, 223, 57, 14
+ LTEXT "Text", IDC_SD1_NORMAL, 105, 226, 50, 10, NOT WS_GROUP
+ LTEXT "Below wall", -1, 104, 241, 41, 8, NOT WS_GROUP
+ CONTROL "Text", IDC_SD1_BELOW_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 102, 253, 57, 14
+ LTEXT "Text", IDC_SD1_BELOW, 105, 256, 50, 10, NOT WS_GROUP
+ PUSHBUTTON "c", IDC_SD1_CLEAR_ABOVE, 162, 194, 16, 14, WS_TABSTOP
+ PUSHBUTTON "c", IDC_SD1_CLEAR_NORMAL, 162, 223, 16, 14, WS_TABSTOP
+ PUSHBUTTON "c", IDC_SD1_CLEAR_BELOW, 162, 253, 16, 14, WS_TABSTOP
+ PUSHBUTTON "<<", IDC_SD1_TO_ABOVE, 188, 194, 14, 14, WS_TABSTOP
+ PUSHBUTTON "<<", IDC_SD1_TO_NORMAL, 188, 223, 14, 14, WS_TABSTOP
+ PUSHBUTTON "<<", IDC_SD1_TO_BELOW, 188, 253, 14, 14, WS_TABSTOP
+ LTEXT "Texture - Width - Height", -1, 213, 146, 81, 8, NOT WS_GROUP
+ LISTBOX IDC_TEXTURE_LIST, 210, 157, 90, 116, LBS_STANDARD | LBS_USETABSTOPS
+ PUSHBUTTON ">>", IDC_SD2_TO_ABOVE, 305, 194, 14, 14, WS_TABSTOP
+ PUSHBUTTON ">>", IDC_SD2_TO_NORMAL, 305, 223, 14, 14, WS_TABSTOP
+ PUSHBUTTON ">>", IDC_SD2_TO_BELOW, 305, 253, 14, 14, WS_TABSTOP
+ GROUPBOX "Second SideDef:", IDC_SD2_GROUP, 325, 145, 87, 126, BS_GROUPBOX | WS_GROUP
+ LTEXT "XOff", -1, 336, 157, 17, 8, NOT WS_GROUP
+ LTEXT "YOff", -1, 365, 157, 17, 8, NOT WS_GROUP
+ LTEXT "Sector", -1, 385, 157, 24, 8, NOT WS_GROUP
+ EDITTEXT IDC_SD2_XPOS, 330, 167, 28, 11, WS_BORDER | WS_TABSTOP
+ EDITTEXT IDC_SD2_YPOS, 362, 167, 22, 11, WS_BORDER | WS_TABSTOP
+ EDITTEXT IDC_SD2_SECTOR, 387, 167, 21, 11
+ LTEXT "Above wall", -1, 332, 183, 41, 8, NOT WS_GROUP
+ CONTROL "Text", IDC_SD2_ABOVE_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 330, 194, 57, 14
+ LTEXT "Text", IDC_SD2_ABOVE, 333, 197, 50, 10, NOT WS_GROUP
+ LTEXT "Normal wall", -1, 332, 212, 41, 8, NOT WS_GROUP
+ CONTROL "Text", IDC_SD2_NORMAL_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 330, 223, 57, 14
+ LTEXT "Text", IDC_SD2_NORMAL, 333, 226, 50, 10, NOT WS_GROUP
+ LTEXT "Below wall", -1, 332, 241, 41, 8, NOT WS_GROUP
+ CONTROL "Text", IDC_SD2_BELOW_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 330, 253, 57, 14
+ LTEXT "Text", IDC_SD2_BELOW, 333, 256, 50, 10, NOT WS_GROUP
+ PUSHBUTTON "c", IDC_SD2_CLEAR_ABOVE, 390, 194, 16, 14, WS_TABSTOP
+ PUSHBUTTON "c", IDC_SD2_CLEAR_NORMAL, 390, 223, 16, 14, WS_TABSTOP
+ PUSHBUTTON "c", IDC_SD2_CLEAR_BELOW, 390, 253, 16, 14, WS_TABSTOP
+}
+IDD_CONFIRM_LINEDEF_BACK DIALOG 14, 30, 338, 295
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Confirm copy of LineDef attributes"
+FONT 7, "MS Serif"
+{
+ LTEXT "You confirmed the changes for the current highlighted LineDef in the editor, but you have more than one LineDef selected.", -1, 8, 6, 317, 19, NOT WS_GROUP
+ LTEXT "Select the attributes you want to copy from the current LineDef to ALL the OTHERS SELECTED LineDefs.", -1, 7, 26, 318, 19, NOT WS_GROUP
+ GROUPBOX "LineDef attributes", IDC_LINEDEF_GROUP, 10, 48, 316, 142, BS_GROUPBOX | WS_GROUP
+ CHECKBOX "Type", IDC_LD_TYPE, 21, 65, 63, 12, BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP
+ CHECKBOX "Starting vertex", IDC_LD_VERTEX1, 21, 85, 63, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Ending vertex", IDC_LD_VERTEX2, 21, 105, 63, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Sector tag", IDC_LD_SECTOR, 21, 125, 63, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "First SideDef number", IDC_LD_SIDEDEF1, 21, 145, 88, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Second SideDef number", IDC_LD_SIDEDEF2, 21, 165, 96, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ GROUPBOX "Flags", IDC_FLAGS_GROUP, 150, 56, 168, 126, BS_GROUPBOX | WS_GROUP
+ CHECKBOX "Impassable", IDC_IMPASSABLE, 161, 68, 123, 12, BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP
+ CHECKBOX "Monsters cannot cross", IDC_MONCROSS, 161, 80, 123, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Two-sided (transparent SideDefs)", IDC_TWOSIDED, 161, 92, 123, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Wall above is ""unpegged""", IDC_ABOVEUNP, 161, 104, 123, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Wall below is ""unpegged""", IDC_BELOWUNP, 161, 116, 123, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Secret (hides behind in Automap)", IDC_SECRET, 161, 128, 123, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Blocks sound", IDC_BLOCKSOUND, 161, 140, 123, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Not shown on Automap", IDC_NOTSHOWN, 161, 152, 123, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Shown on Automap at start", IDC_SHOWN, 161, 165, 123, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ GROUPBOX "First SideDef attributes", IDC_SD1_DATA_GROUP, 10, 197, 155, 57, BS_GROUPBOX | WS_GROUP
+ CHECKBOX "Upper texture", IDC_SD1_ABOVE_CHECK, 19, 210, 70, 12, BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP
+ CHECKBOX "Normal Texture", IDC_SD1_NORMAL_CHECK, 19, 223, 70, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Lower texture", IDC_SD1_BELOW_CHECK, 19, 236, 70, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Texture X Offset", IDC_SD1_XOFS_CHECK, 91, 210, 70, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Texture Y Offset", IDC_SD1_YOFS_CHECK, 91, 223, 70, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Sector", IDC_SD1_SECTOR_CHECK, 91, 236, 70, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ GROUPBOX "Second SideDef attributes", -1, 172, 197, 154, 57, BS_GROUPBOX | WS_GROUP
+ CHECKBOX "Upper texture", IDC_SD2_ABOVE_CHECK, 179, 210, 70, 12, BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP
+ CHECKBOX "Normal Texture", IDC_SD2_NORMAL_CHECK, 179, 223, 70, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Lower texture", IDC_SD2_BELOW_CHECK, 179, 236, 70, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Texture X Offset", IDC_SD2_XOFS_CHECK, 250, 210, 70, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Texture Y Offset", IDC_SD2_YOFS_CHECK, 250, 223, 70, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Sector", IDC_SD2_SECTOR_CHECK, 250, 236, 70, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ DEFPUSHBUTTON "&OK", IDOK, 102, 266, 50, 21, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ PUSHBUTTON "&Copy nothing", IDCANCEL, 185, 266, 50, 21, WS_TABSTOP
+}
+IDD_SECTOR_EDIT DIALOG 16, 26, 347, 238
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Sector edit"
+FONT 7, "MS Serif"
+{
+ DEFPUSHBUTTON "&OK", IDOK, 19, 179, 50, 21, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ PUSHBUTTON "&Cancel", IDCANCEL, 19, 209, 50, 21
+ LTEXT "Sector special:", -1, 11, 4, 60, 8
+ LISTBOX IDC_SECTOR_LIST, 10, 18, 216, 92, LBS_NOTIFY | WS_BORDER | LBS_USETABSTOPS | WS_BORDER | WS_VSCROLL | WS_GROUP
+ LTEXT "Light level:", -1, 7, 124, 48, 8, NOT WS_GROUP
+ EDITTEXT IDC_LIGHT_EDIT, 55, 122, 23, 12, WS_BORDER | WS_GROUP | WS_TABSTOP
+ LTEXT "LineDef tag:", -1, 7, 144, 49, 8, NOT WS_GROUP
+ EDITTEXT IDC_TAG_EDIT, 55, 142, 23, 12
+ PUSHBUTTON "New", IDC_NEW_TAG, 84, 141, 19, 14
+ GROUPBOX "Floor/Ceiling", IDC_FLOORCEIL_GROUP, 108, 112, 106, 116, BS_GROUPBOX | WS_GROUP
+ LTEXT "Floor texture:", -1, 113, 124, 60, 8, NOT WS_GROUP
+ CONTROL "Text", IDC_FLOOR_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 113, 134, 67, 14
+ LTEXT "Text", IDC_FLOOR_TEXT, 116, 137, 59, 10
+ PUSHBUTTON "c", IDC_FLOOR_CLEAR, 190, 134, 14, 14, WS_GROUP | WS_TABSTOP
+ PUSHBUTTON "<<", IDC_TO_FLOOR, 219, 134, 18, 14
+ LTEXT "Floor height:", -1, 113, 156, 48, 8, NOT WS_GROUP
+ EDITTEXT IDC_FLOOR_HEIGHT, 167, 154, 27, 12
+ LTEXT "Ceiling texture:", -1, 113, 176, 55, 8, NOT WS_GROUP
+ CONTROL "Text", IDC_CEILING_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 113, 186, 67, 14
+ LTEXT "Text", IDC_CEILING_TEXT, 116, 189, 59, 10
+ PUSHBUTTON "c", IDC_CEILING_CLEAR, 190, 186, 14, 14
+ PUSHBUTTON "<<", IDC_TO_CEILING, 219, 186, 18, 14
+ LTEXT "Ceiling height:", -1, 113, 208, 48, 8, NOT WS_GROUP
+ EDITTEXT IDC_CEILING_HEIGHT, 167, 206, 27, 12
+ LTEXT "Floor/Ceiling textures:", -1, 246, 8, 83, 8
+ LISTBOX IDC_FTEXTURE_LIST, 246, 19, 82, 208, LBS_STANDARD
+}
+
+IDD_CONFIRM_SECTOR DIALOG 6, 15, 256, 166
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Confirm copy of Sector attributes"
+FONT 8, "MS Sans Serif"
+{
+ DEFPUSHBUTTON "&OK", IDOK, 66, 142, 50, 16, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ LTEXT "You confirmed the changes for the current highlighted Sector in the editor, but you have more than one Sector selected.", -1, 12, 7, 231, 18, NOT WS_GROUP
+ LTEXT "Select the attributes you want to copy from the current Sector to ALL the OTHERS SELECTED Sectors.", -1, 12, 27, 231, 18, NOT WS_GROUP
+ GROUPBOX "Attributes selection", IDC_SATTR_GROUP, 43, 56, 169, 75, BS_GROUPBOX | WS_GROUP
+ CHECKBOX "&Special type", IDC_SPECIAL_CHECK, 49, 69, 75, 12, BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP
+ CHECKBOX "LineDef &tag", IDC_TAG_CHECK, 49, 83, 85, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "&Light level", IDC_LIGHT_CHECK, 49, 97, 85, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "&Floor texture", IDC_FLOOR_TEXTURE_CHECK, 144, 69, 62, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Floor &height", IDC_FLOOR_HEIGHT_CHECK, 144, 83, 62, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "C&eiling texture", IDC_CEILING_TEXTURE_CHECK, 144, 97, 62, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Ce&iling height", IDC_CEILING_HEIGHT_CHECK, 144, 111, 62, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ PUSHBUTTON "&Copy nothing", IDCANCEL, 139, 142, 50, 16, WS_GROUP | WS_TABSTOP
+}
+
+
+IDD_PREFERENCES DIALOG 11, 26, 339, 207
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Preferences"
+FONT 8, "MS Sans Serif"
+{
+ GROUPBOX "Default Wall textures", -1, 6, 5, 158, 115, BS_GROUPBOX | WS_GROUP
+ LTEXT "Upper:", -1, 12, 18, 29, 8, NOT WS_GROUP
+ CONTROL "", IDC_ABOVE_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 11, 29, 61, 11
+ LTEXT "Text", IDC_ABOVE_TEXT, 14, 30, 51, 8, NOT WS_GROUP
+ PUSHBUTTON "c", IDC_ABOVE_CLEAR, 58, 15, 15, 12, WS_GROUP | WS_TABSTOP
+ PUSHBUTTON "<<", IDC_TO_ABOVE, 77, 28, 14, 12, WS_GROUP | WS_TABSTOP
+ LTEXT "Normal:", -1, 12, 55, 29, 8, NOT WS_GROUP
+ CONTROL "", IDC_NORMAL_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 10, 66, 61, 11
+ LTEXT "Text", IDC_NORMAL_TEXT, 13, 67, 51, 8, NOT WS_GROUP
+ PUSHBUTTON "c", IDC_NORMAL_CLEAR, 59, 52, 15, 12
+ PUSHBUTTON "<<", IDC_TO_NORMAL, 77, 65, 14, 12
+ LTEXT "Lower:", -1, 12, 92, 29, 8, NOT WS_GROUP
+ CONTROL "", IDC_BELOW_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 11, 103, 61, 11
+ LTEXT "Text", IDC_BELOW_TEXT, 14, 104, 51, 8, NOT WS_GROUP
+ PUSHBUTTON "c", IDC_BELOW_CLEAR, 59, 89, 15, 12
+ PUSHBUTTON "<<", IDC_TO_BELOW, 77, 103, 14, 12
+ LISTBOX IDC_WTEXTURE_LIST, 97, 16, 60, 100, LBS_STANDARD
+ GROUPBOX "Default Floor/Ceiling", -1, 174, 5, 159, 115, BS_GROUPBOX | WS_GROUP
+ LTEXT "Floor texture:", -1, 180, 23, 44, 8, NOT WS_GROUP
+ CONTROL "", IDC_FLOOR_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 180, 34, 61, 11
+ LTEXT "Text", IDC_FLOOR_TEXT, 182, 35, 53, 9, NOT WS_GROUP
+ PUSHBUTTON "c", IDC_FLOOR_CLEAR, 229, 20, 15, 12, WS_GROUP | WS_TABSTOP
+ PUSHBUTTON "<<", IDC_TO_FLOOR, 247, 33, 14, 12, WS_GROUP | WS_TABSTOP
+ LTEXT "Floor height:", -1, 181, 53, 44, 8, NOT WS_GROUP
+ EDITTEXT IDC_FLOOR_HEIGHT, 232, 52, 26, 11, WS_BORDER | WS_GROUP | WS_TABSTOP
+ LTEXT "Ceiling texture:", -1, 179, 73, 49, 8, NOT WS_GROUP
+ CONTROL "", IDC_CEILING_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 180, 85, 61, 11
+ LTEXT "Text", IDC_CEILING_TEXT, 184, 86, 53, 9, NOT WS_GROUP
+ PUSHBUTTON "c", IDC_CEILING_CLEAR, 230, 71, 15, 12
+ PUSHBUTTON "<<", IDC_TO_CEILING, 246, 84, 14, 12
+ LTEXT "Ceiling height:", -1, 182, 104, 53, 8, NOT WS_GROUP
+ EDITTEXT IDC_CEILING_HEIGHT, 235, 103, 24, 11
+ LISTBOX IDC_FTEXTURE_LIST, 267, 16, 60, 100, LBS_STANDARD
+ GROUPBOX "Level builder", IDC_GROUPBOX1, 8, 126, 74, 54, BS_GROUPBOX
+ LTEXT "Priority:", -1, 13, 141, 40, 8
+ EDITTEXT IDC_PREF_BUILDER_PRIORITY, 55, 139, 22, 12
+ LTEXT "Split Factor:", -1, 13, 161, 41, 8, WS_GROUP
+ EDITTEXT IDC_PREF_SPLIFACTOR, 55, 159, 22, 12
+ GROUPBOX "Misc options", IDC_GROUPBOX2, 88, 126, 227, 54, BS_GROUPBOX
+ CHECKBOX "Debug", IDC_PREF_DEBUG, 95, 135, 39, 12, BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_PREF_QUIET, 95, 150, 39, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiter", IDC_PREF_QUIETER, 95, 165, 39, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Expert mode", IDC_PREF_EXPERT, 135, 135, 52, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Info Bar", IDC_PREF_INFOBAR, 135, 150, 55, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Additive box", IDC_PREF_ADDSELBOX, 135, 165, 55, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Select 0", IDC_PREF_SELECT0, 191, 135, 55, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "3D controls", IDC_PREF_3DCONTROLS, 191, 150, 60, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "LineDef length", IDC_PREF_DRAWLENGTH, 191, 165, 62, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ DEFPUSHBUTTON "&OK", IDOK, 105, 187, 50, 16, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ PUSHBUTTON "&Cancel", IDCANCEL, 184, 187, 50, 16
+ LTEXT "Max undo:", -1, 252, 137, 37, 8
+ EDITTEXT IDC_PREF_MAXUNDO, 292, 135, 18, 12
+}
+
+
+STRINGTABLE
+{
+ CM_MISCT_FINDFREETAG, "Look for the first free tag number"
+ CM_MISCT_ROTATESCALE, "Rotate and scale selected things"
+}
+
+
+STRINGTABLE 
+{
+ CM_MISCL_FINDFREETAG, "Look for the first free tag number"
+ CM_MISCL_ROTATESCALE, "Rotate and scale the selected LineDef(s)"
+ CM_MISCL_FLIP, "Flip the selected LineDef(s)"
+ CM_MISCL_SWAP, "Swap the two SideDefs of the selected LineDef(s)"
+ CM_MISCL_DELETE, "Delete the selected LineDef(s) and join the separated sectors"
+ CM_MISCL_SPLITADD, "Split a LineDef by adding a new Vertex in the middle"
+ CM_MISCL_SPLITSECT, "Split the selected LineDef(s) and add Sectors"
+ CM_MISCL_ALIGNY, "Align the Y offset of the selected LineDef(s) textures"
+ CM_MISCL_AX_SD1_CHECK, "X Align first SideDefs with same texture name (initial offset = 0)"
+ CM_MISCL_AX_SD1_CHECK_OFFSET, "X Align first SideDefs with same texture name and ask initial offset"
+ CM_MISCL_AX_SD1_NOCHECK, "X Align first SideDefs (initial offset = 0)"
+ CM_MISCL_AX_SD1_NOCHECK_OFFSET, "X Align first SideDefs and ask initial offset"
+ CM_MISCL_AX_SD2_CHECK, "X Align second SideDefs with same texture name (initial offset = 0)"
+ CM_MISCL_AX_SD2_CHECK_OFFSET, "X Align second SideDefs with same texture name and ask initial offset"
+ CM_MISCL_AX_SD2_NOCHECK, "X Align second SideDefs (initial offset = 0)"
+ CM_MISCL_AX_SD2_NOCHECK_OFFSET, "X Align second SideDefs and ask initial offset"
+}
+
+
+STRINGTABLE
+{
+ CM_MISCV_FINDFREETAG, "Look for the first free tag number"
+ CM_MISCV_ROTATESCALE, "Rotate and scale the selected vertices"
+ CM_MISCV_DELETE, "Delete a vertex and join the two LineDefs"
+ CM_MISCV_MERGE, "Merge the selected Vertices into one"
+ CM_MISCV_ADD, "Add a LineDef between the two selected Vertices and split the Sector"
+}
+
+
+STRINGTABLE
+{
+ CM_MISCS_FINDFREETAG, "Look for the first free tag number"
+ CM_MISCS_ROTATESCALE, "Rotate and scale the selected Sector(s)"
+ CM_MISCS_MAKEDOOR, "Set the 'door' attributes for the selected Sector(s)"
+ CM_MISCS_MAKELIFT, "Set the 'lift' attributes for the selected Sector(s)"
+ CM_MISCS_DISTRIBFLOOR, "Distributes the selected Sector(s) floor heights (stairs)"
+ CM_MISCS_DISTRIBCEILING, "Distributes the selected Sector(s) ceiling heights (stairs)"
+}
+
+
+IDD_DISPLAY_BITMAP DIALOG 79, 36, 262, 208
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Viewing bitmaps"
+FONT 8, "MS Sans Serif"
+{
+ CONTROL "", IDC_BITMAP_SIZE, "STATIC", SS_BLACKFRAME | NOT WS_VISIBLE, 12, 8, 205, 171
+ CTEXT "Zoom factor", -1, 227, 4, 26, 17, SS_CENTER | NOT WS_GROUP
+ CTEXT "-", IDC_ZOOM_FACTOR, 226, 23, 27, 8, SS_CENTER | NOT WS_GROUP
+ CONTROL "", IDC_ZOOM_FRAME, "STATIC", SS_BLACKFRAME | NOT WS_VISIBLE, 228, 36, 24, 34
+ CTEXT "Gamma Correction", -1, 223, 77, 34, 17, SS_CENTER | NOT WS_GROUP
+ CTEXT "-", IDC_GAMMA_LEVEL, 226, 96, 27, 8, SS_CENTER | NOT WS_GROUP
+ CONTROL "", IDC_GAMMA_FRAME, "STATIC", SS_BLACKFRAME | NOT WS_VISIBLE, 228, 110, 24, 69
+ DEFPUSHBUTTON "&Close", IDOK, 106, 187, 50, 16, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+}
+
+
+IDD_MASTER_DIR DIALOG 25, 43, 295, 174
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Master directory"
+FONT 8, "MS Sans Serif"
+{
+ DEFPUSHBUTTON "&Close", IDOK, 122, 153, 50, 16, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ LISTBOX IDC_MASTER_LIST, 7, 6, 281, 141, LBS_NOTIFY | WS_BORDER | LBS_OWNERDRAWFIXED | LBS_HASSTRINGS | WS_BORDER | WS_VSCROLL
+}
+
+
+IDD_VIEW_ENTRY DIALOG 10, 23, 314, 196
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Dump entry"
+FONT 8, "MS Sans Serif"
+{
+ DEFPUSHBUTTON "&Close", IDOK, 132, 175, 50, 16
+ LISTBOX IDC_VE_DUMP_LIST, 8, 38, 297, 132, LBS_NOTIFY | WS_BORDER | LBS_OWNERDRAWFIXED | LBS_HASSTRINGS | WS_BORDER | WS_VSCROLL
+ LTEXT "Entries:", -1, 8, 8, 31, 8
+ LTEXT "Hexadecimal dump:", -1, 8, 26, 71, 8
+ COMBOBOX IDC_VE_ENTRY_LIST, 43, 5, 72, 135, CBS_DROPDOWNLIST | WS_VSCROLL | WS_GROUP | WS_TABSTOP
+}
+
+
+IDC_HELPCURSOR CURSOR
+{
+ '00 00 02 00 01 00 20 20 00 00 00 00 00 00 30 01'
+ '00 00 16 00 00 00 28 00 00 00 20 00 00 00 40 00'
+ '00 00 01 00 01 00 00 00 00 00 00 01 00 00 00 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 FF FF FF 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 00 00 00 00 00 07 C0 00 00 08 20 00 00 08'
+ '20 00 00 08 20 00 00 08 20 00 00 07 C0 00 00 00'
+ '00 00 00 E7 C0 00 00 C8 20 00 01 C8 20 00 01 88'
+ '20 00 03 88 20 00 03 08 20 00 47 04 10 00 66 02'
+ '08 00 7E 01 04 00 7F F0 82 00 7F 04 41 00 7F 04'
+ '41 00 7F 04 41 00 7F 04 41 00 7E 04 41 00 7C 83'
+ '81 00 78 40 02 00 70 20 04 00 60 10 08 00 40 08'
+ '10 00 00 07 E0 00 FF FF FF FF FF FF FF FF FF FF'
+ 'FF FF FF FF FF FF FF F8 3F FF FF F0 1F FF FF F0'
+ '1F FF FF F0 1F FF FF F0 1F FF FF F8 3F FF FE 0F'
+ 'FF FF FE 08 3F FF FE 00 1F FF FC 10 1F FF FC 10'
+ '1F FF 38 30 1F FF 10 30 1F FF 00 78 0F FF 00 7C'
+ '07 FF 00 06 03 FF 00 07 01 FF 00 03 80 FF 00 03'
+ '80 FF 00 03 80 FF 00 03 80 FF 00 03 80 FF 00 00'
+ '00 FF 01 80 01 FF 03 C0 03 FF 07 E0 07 FF 0F F0'
+ '0F FF 1F F8 1F FF'
+}
+
+
+IDD_VERTEX DIALOG 26, 26, 190, 81
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Vertex edit"
+FONT 8, "MS Sans Serif"
+{
+ LTEXT "&X position:", -1, 13, 21, 35, 8, NOT WS_GROUP
+ EDITTEXT IDC_VERTEX_XPOS, 51, 19, 36, 12
+ LTEXT "&Y position:", -1, 101, 21, 35, 8, NOT WS_GROUP
+ EDITTEXT IDC_VERTEX_YPOS, 140, 19, 36, 12
+ DEFPUSHBUTTON "&OK", IDOK, 33, 57, 50, 16
+ PUSHBUTTON "&Cancel", IDCANCEL, 106, 57, 50, 16
+}
+
+
+IDD_CONFIRM_VERTEX DIALOG 28, 29, 241, 131
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Confirm copy of Vertex attributes"
+FONT 8, "MS Sans Serif"
+{
+ DEFPUSHBUTTON "&OK", IDOK, 59, 108, 50, 16
+ PUSHBUTTON "&Copy nothing", IDCANCEL, 132, 108, 50, 16
+ CHECKBOX "&X position", IDC_CONFVE_XPOS, 80, 60, 48, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "&Y position", IDC_CONFVE_YPOS, 80, 76, 54, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ LTEXT "You confirmed the changes for the current highlighted Vertex in the editor, but you have more than one Vertex selected.", -1, 5, 4, 231, 18, NOT WS_GROUP
+ LTEXT "Select the attributes you want to copy from the current Vertex to ALL the OTHERS SELECTED Vertices.", -1, 5, 24, 231, 18, NOT WS_GROUP
+ GROUPBOX "Vertex attributes", -1, 73, 50, 95, 43, BS_GROUPBOX
+}
+
+
+
+
+CM_FILE_READPATCH BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 80'
+ '00 00 00 80 80 00 80 00 00 00 80 00 80 00 80 80'
+ '00 00 80 80 80 00 C0 C0 C0 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 88 88 88 88 88 88 88 88 88 88'
+ 'BB 09 80 00 00 00 00 00 88 88 88 88 73 61 80 87'
+ '77 77 77 70 88 88 88 88 6F 4A 80 F8 88 88 88 70'
+ '88 88 88 88 DD B4 80 F9 98 88 88 70 88 88 88 88'
+ 'BB 2D 80 FF FF FF FF 80 88 88 88 88 04 FC 80 00'
+ '00 00 00 00 88 88 88 88 64 40 88 88 88 88 88 88'
+ '88 88 88 88 84 55 88 80 08 88 88 88 88 88 88 88'
+ '6F 3E 88 80 08 88 88 88 88 88 88 88 45 95 88 80'
+ '08 88 88 80 00 00 00 08 2A E0 88 80 08 80 88 80'
+ 'EF EF EF 08 9C D5 88 80 07 80 08 80 F4 44 4E 08'
+ '4C 0C 88 87 00 00 00 80 EF EF EF 08 98 D5 88 88'
+ '70 00 00 80 F4 44 4E 08 00 00 88 88 88 80 08 80'
+ 'EF EF EF 08 00 00 88 88 88 80 88 80 F4 4E 00 08'
+ '00 00 88 88 88 88 88 80 EF EF 00 88 00 00 88 88'
+ '88 88 88 80 00 00 08 88 00 00 88 88 88 88 88 88'
+ '88 88 88 88 01 12'
+}
+
+
+CM_FILE_SAVEOBJECT BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 80'
+ '00 00 00 80 80 00 80 00 00 00 80 00 80 00 80 80'
+ '00 00 80 80 80 00 C0 C0 C0 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 88 88 88 88 88 88 88 88 88 88'
+ 'B7 00 88 88 88 88 00 00 00 00 00 08 62 F9 88 88'
+ '88 88 08 77 77 77 77 08 36 85 88 88 88 88 0F 88'
+ '88 88 87 08 CC 75 88 88 88 88 0F 99 88 88 87 08'
+ '00 00 88 88 88 88 0F FF FF FF F8 08 00 C4 88 88'
+ '88 88 00 00 00 00 00 08 11 12 88 88 88 88 88 88'
+ '88 88 88 88 02 A8 88 88 88 88 88 88 88 00 88 88'
+ '10 01 88 88 88 88 88 88 80 00 08 88 10 00 80 00'
+ '00 00 08 88 00 00 00 88 00 00 80 EF EF EF 08 88'
+ '88 00 88 88 00 00 80 F4 44 4E 08 88 88 00 88 88'
+ '00 00 80 EF EF EF 08 88 87 00 88 88 00 00 80 F4'
+ '44 4E 08 00 00 07 88 88 00 00 80 EF EF EF 08 00'
+ '00 78 88 88 01 12 80 F4 4E 00 08 88 88 88 88 88'
+ '42 64 80 EF EF 00 88 88 88 88 88 88 1D 49 80 00'
+ '00 08 88 88 88 88 88 88 0B B2 88 88 88 88 88 88'
+ '88 88 88 88 46 64'
+}
+
+
+CM_FILE_INSERTRAW BITMAP
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 77 77 77 77 77 77 77 77 77 77'
+ '00 00 7C 77 C7 C7 7C 77 C7 C7 77 77 00 00 7C 77'
+ 'C7 C7 7C 7C 7C 7C 77 77 00 00 7C CC 77 CC CC 7C'
+ '7C 7C 77 77 00 00 7C 77 C7 C7 7C 7C 77 7C 77 77'
+ '00 00 7C 77 C7 C7 7C 7C 77 7C 77 77 00 00 7C CC'
+ '77 7C C7 7C 77 7C 77 77 00 00 77 77 77 77 77 77'
+ '77 77 77 77 00 00 77 70 07 77 77 77 77 77 77 77'
+ '00 00 77 70 07 77 77 77 77 77 77 77 00 00 77 70'
+ '07 77 77 70 00 00 00 07 00 00 77 70 07 70 77 70'
+ 'EF EF EF 07 00 00 77 70 08 70 07 70 F4 44 4E 07'
+ '00 00 77 78 00 00 00 70 EF EF EF 07 00 00 77 77'
+ '80 00 00 70 F4 44 4E 07 00 00 77 77 77 70 07 70'
+ 'EF EF EF 07 00 00 77 77 77 70 77 70 F4 4E 00 07'
+ '00 00 77 77 77 77 77 70 EF EF 00 77 00 00 77 77'
+ '77 77 77 70 00 00 07 77 00 00 77 77 77 77 77 77'
+ '77 77 77 77 00 00'
+}
+
+
+CM_FILE_EXTRACTOBJ BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 77 77 77 77 77 77 77 77 77 77'
+ '00 00 77 77 C7 7C 7C 77 C7 7C 7C 77 00 00 77 77'
+ 'C7 7C 7C 77 C7 C7 C7 C7 00 00 77 77 CC C7 7C CC'
+ 'C7 C7 C7 C7 00 00 77 77 C7 7C 7C 77 C7 C7 77 C7'
+ '00 00 77 77 C7 7C 7C 77 C7 C7 77 C7 00 00 77 77'
+ 'CC C7 77 CC 77 C7 77 C7 00 00 77 77 77 77 77 77'
+ '77 77 77 77 00 00 77 77 77 77 77 77 77 00 77 77'
+ '00 00 77 77 77 77 77 77 70 00 07 77 00 00 70 00'
+ '00 00 07 77 00 00 00 77 00 00 70 EF EF EF 07 77'
+ '77 00 77 77 00 00 70 F4 44 4E 07 77 77 00 77 77'
+ '00 00 70 EF EF EF 07 77 78 00 77 77 00 00 70 F4'
+ '44 4E 07 00 00 08 77 77 00 00 70 EF EF EF 07 00'
+ '00 87 77 77 00 00 70 F4 4E 00 07 77 77 77 77 77'
+ '00 00 70 EF EF 00 77 77 77 77 77 77 00 00 70 00'
+ '00 07 77 77 77 77 77 77 00 00 77 77 77 77 77 77'
+ '77 77 77 77 00 00'
+}
+
+
+CM_FILE_GROUPPATCH BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 70 00 00 00 00 00 70 07 77 77'
+ '00 00 70 78 88 88 88 80 70 07 77 77 00 00 70 F7'
+ '77 77 77 80 70 00 00 77 00 00 70 F9 97 77 77 80'
+ '70 07 70 07 00 00 70 FF FF FF FF 70 70 07 70 07'
+ '00 00 70 00 00 00 00 00 70 00 00 77 00 00 77 44'
+ '77 77 74 47 77 77 44 77 00 00 74 44 47 77 44 44'
+ '77 74 44 47 00 00 44 44 44 74 44 44 47 44 44 44'
+ '00 00 77 44 77 77 74 47 77 77 44 77 00 00 78 44'
+ '77 77 74 47 77 77 44 87 00 00 44 48 77 77 74 47'
+ '77 77 84 44 00 00 44 87 77 77 74 47 77 77 78 44'
+ '00 00 70 00 00 00 07 70 00 00 00 07 00 00 70 EF'
+ 'EF EF 07 70 EF EF EF 07 00 00 70 F4 44 4E 07 70'
+ 'F4 44 4E 07 00 00 70 EF EF EF 07 70 EF EF EF 07'
+ '00 00 70 F4 4E 00 07 70 F4 4E 00 07 00 00 70 EF'
+ 'EF 00 77 70 EF EF 00 77 00 00 70 00 00 07 77 70'
+ '00 00 07 77 00 00'
+}
+
+
+CM_FILE_BUILDMAIN BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 70 00 00 00 00 00 70 77 77 07'
+ '00 00 70 78 88 88 88 80 70 77 77 07 00 00 70 F7'
+ '77 77 77 80 70 70 07 07 00 00 70 F9 97 77 77 80'
+ '70 00 00 07 00 00 70 FF FF FF FF 70 70 07 70 07'
+ '00 00 70 00 00 00 00 00 70 77 77 07 00 00 77 44'
+ '77 77 74 47 77 77 44 77 00 00 74 44 47 77 44 44'
+ '77 74 44 47 00 00 44 44 44 74 44 44 47 44 44 44'
+ '00 00 77 44 77 77 74 47 77 77 44 77 00 00 78 44'
+ '77 77 74 47 77 77 44 87 00 00 44 48 77 77 74 47'
+ '77 77 84 44 00 00 44 87 77 77 74 47 77 77 78 44'
+ '00 00 70 00 00 00 07 70 00 00 00 07 00 00 70 EF'
+ 'EF EF 07 70 EF EF EF 07 00 00 70 F4 44 4E 07 70'
+ 'F4 44 4E 07 00 00 70 EF EF EF 07 70 EF EF EF 07'
+ '00 00 70 F4 4E 00 07 70 F4 4E 00 07 00 00 70 EF'
+ 'EF 00 77 70 EF EF 00 77 00 00 70 00 00 07 77 70'
+ '00 00 07 77 00 00'
+}
+
+
+CM_MODE_THINGS BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 00 00 0F 00 00 00 00 00 00 00'
+ '00 00 00 00 00 FF 00 00 00 00 00 00 00 00 00 00'
+ '00 00 FF 00 00 00 00 00 00 00 00 00 00 00 00 F0'
+ '00 00 00 00 00 00 00 00 00 00 00 0F F0 00 00 00'
+ '00 00 00 00 00 00 99 90 0F 00 00 00 00 00 00 00'
+ '00 09 09 09 00 FF 00 00 00 00 00 00 00 90 09 00'
+ '90 00 FF 00 00 00 00 00 00 99 99 99 90 00 00 F0'
+ '00 00 00 00 00 90 09 00 90 00 00 0F 00 00 00 00'
+ '00 09 09 09 00 00 00 F0 00 00 00 33 33 30 99 90'
+ '00 00 0F 00 00 00 00 00 33 30 00 00 00 00 F0 00'
+ '00 00 00 03 33 30 00 00 00 0F 00 00 00 00 00 33'
+ '30 30 00 00 00 F0 00 00 00 00 03 33 00 30 00 00'
+ '0F 00 00 00 00 00 33 30 00 00 00 00 F0 00 00 00'
+ '00 00 33 00 00 00 00 0F 00 00 00 00 00 00 00 00'
+ '00 00 00 F0 00 00 00 00 00 00 00 00 00 00 0F 00'
+ '00 00 00 00 00 00'
+}
+
+CM_MODE_LINEDEFS BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 00 0F F0 00 00 00 00 00 00 00'
+ '00 00 00 FF 00 00 00 00 00 00 00 00 00 00 0F F0'
+ '00 00 00 00 00 00 00 00 00 00 77 00 00 00 00 00'
+ '00 00 00 00 00 00 77 00 00 00 00 00 00 00 00 00'
+ '00 00 0F F0 00 00 00 0F 00 00 00 00 00 00 00 FF'
+ '00 00 00 FF 00 00 00 00 00 00 00 0F F0 00 0F F0'
+ '00 00 00 00 00 00 00 00 FF 00 FF 00 00 00 00 00'
+ '00 00 00 00 0F FF F0 00 00 00 00 00 00 00 00 00'
+ '00 FF 00 00 00 00 00 00 00 00 00 33 33 3F F0 00'
+ '00 00 00 00 00 00 00 00 33 30 FF 00 F0 00 00 00'
+ '00 00 00 03 33 30 0F F0 F8 00 00 00 00 00 00 33'
+ '30 30 00 FF 8F 00 00 00 00 00 03 33 00 30 0F F8'
+ 'FF 00 00 00 00 00 33 30 00 00 00 8F F7 70 00 00'
+ '00 00 33 00 00 00 00 00 07 70 00 00 00 00 00 00'
+ '00 00 00 00 0F F0 00 00 00 00 00 00 00 00 00 00'
+ '0F F0 00 00 00 00'
+}
+
+CM_MODE_VERTEXES BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 00 00 07 70 00 00 00 00 00 00'
+ '00 00 00 00 07 70 00 00 00 00 00 00 00 00 00 00'
+ '07 70 00 00 00 00 00 00 00 00 00 00 00 77 00 00'
+ '00 00 00 00 00 00 00 00 00 77 00 00 00 00 00 00'
+ '00 00 00 00 00 07 70 00 00 00 00 00 00 00 00 00'
+ '00 07 70 00 00 00 00 00 00 00 00 00 00 00 77 00'
+ '00 00 00 00 00 00 00 00 00 02 27 02 20 00 00 00'
+ '00 00 00 00 00 00 22 22 00 00 00 00 00 00 00 00'
+ '00 00 02 20 00 00 00 00 00 00 00 33 33 30 22 22'
+ '70 00 00 00 00 00 00 00 33 32 20 02 27 70 00 00'
+ '00 00 00 03 33 30 00 00 07 77 70 00 00 00 00 33'
+ '30 30 00 00 00 07 77 70 00 00 03 33 00 30 00 00'
+ '00 00 07 77 00 00 33 30 00 00 00 00 00 00 00 07'
+ '00 00 33 00 00 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 00 00 00 00'
+}
+
+
+CM_FILE_SAVE BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 80'
+ '00 00 00 80 80 00 80 00 00 00 80 00 80 00 80 80'
+ '00 00 80 80 80 00 C0 C0 C0 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 88 88 88 88 88 88 88 88 88 88'
+ 'B7 00 88 88 88 88 00 00 00 00 00 08 62 F9 88 88'
+ '88 88 08 77 77 77 77 08 36 85 88 88 88 88 0F 88'
+ '88 88 87 08 CC 75 88 88 88 88 0F 99 88 88 87 08'
+ '00 00 88 88 88 88 0F FF FF FF F8 08 00 C4 88 88'
+ '88 88 00 00 00 00 00 08 11 12 88 88 88 88 88 88'
+ '88 88 88 88 02 A8 88 88 88 88 88 88 88 00 88 88'
+ '10 01 88 88 88 88 88 88 80 00 08 88 10 00 80 00'
+ '00 00 08 88 00 00 00 88 00 00 80 EF EF EF 08 88'
+ '88 00 88 88 00 00 80 F4 44 4E 08 88 88 00 88 88'
+ '00 00 80 EF EF EF 08 88 87 00 88 88 00 00 80 F4'
+ '44 4E 08 00 00 07 88 88 00 00 80 EF EF EF 08 00'
+ '00 78 88 88 01 12 80 F4 4E 00 08 88 88 88 88 88'
+ '42 64 80 EF EF 00 88 88 88 88 88 88 1D 49 80 00'
+ '00 08 88 88 88 88 88 88 0B B2 88 88 88 88 88 88'
+ '88 88 88 88 46 64'
+}
+
+
+CM_MODE_SECTORS BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 00 00 00 07 7F FF FF FF F7 70'
+ '00 00 00 00 00 07 7F FF FF FF F7 70 00 00 00 00'
+ '00 0F F0 00 00 00 0F F0 00 00 00 00 00 0F F0 00'
+ '00 00 0F F0 00 00 00 00 00 0F F0 00 00 00 0F F0'
+ '00 00 00 00 00 0F F0 00 00 00 0F F0 00 00 00 00'
+ '00 0F F0 00 00 00 0F F0 00 00 00 00 00 0F F0 00'
+ '00 00 0F F0 00 00 00 00 00 0F F0 00 00 00 0F F0'
+ '00 00 00 00 00 07 70 00 00 00 0F F0 00 00 00 00'
+ '00 07 70 00 00 00 0F F0 00 00 00 33 33 3F F0 00'
+ '00 00 0F F0 00 00 00 00 33 30 FF 00 00 00 0F F0'
+ '00 00 00 03 33 30 FF 00 00 00 0F F0 00 00 00 33'
+ '30 30 0F F0 00 00 0F F0 00 00 03 33 00 30 0F F0'
+ '00 00 0F F0 00 00 33 30 00 00 00 FF 00 00 0F F0'
+ '00 00 33 00 00 00 00 77 FF FF F7 70 00 00 00 00'
+ '00 00 00 77 FF FF F7 70 00 00 00 00 00 00 00 00'
+ '00 00 00 00 00 00'
+}
+
+
+CM_HELP_CONTENTS BITMAP LOADONCALL MOVEABLE DISCARDABLE 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 77 77 77 77 77 77 77 77 77 77'
+ '00 00 77 77 77 77 77 77 77 77 77 77 00 00 77 77'
+ '77 77 77 77 77 77 77 77 00 00 77 77 77 77 70 00'
+ '77 77 77 77 00 00 77 77 77 77 0B B0 07 77 77 77'
+ '00 00 77 77 77 77 0B B0 07 77 77 77 00 00 77 77'
+ '77 77 70 07 77 77 77 77 00 00 77 77 77 77 0B 00'
+ '77 77 77 77 00 00 77 77 77 77 0B 00 77 77 77 77'
+ '00 00 77 77 77 77 0B 00 77 77 77 77 00 00 77 77'
+ '77 77 0B B0 07 77 77 77 00 00 77 77 77 00 70 BB'
+ '00 77 77 77 00 00 77 77 70 B0 07 0B B0 07 77 77'
+ '00 00 77 77 70 B0 07 70 B0 07 77 77 00 00 77 77'
+ '70 BB 00 0B B0 07 77 77 00 00 77 77 77 0B BB BB'
+ '00 77 77 77 00 00 77 77 77 70 00 00 07 77 77 77'
+ '00 00 77 77 77 77 77 77 77 77 77 77 00 00 77 77'
+ '77 77 77 77 77 77 77 77 00 00 77 77 77 77 77 77'
+ '77 77 77 77 00 00'
+}
+
+
+CM_HELP_TUTORIAL BITMAP LOADONCALL MOVEABLE DISCARDABLE 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 80 87 77 77 77 77 77 77 77 77'
+ '00 00 08 07 77 17 77 77 77 77 77 77 00 00 80 87'
+ '11 11 17 77 77 77 77 77 00 00 00 01 11 01 11 77'
+ '77 77 77 77 00 00 00 01 00 00 01 17 77 77 77 77'
+ '00 00 70 00 00 00 00 07 70 00 77 77 00 00 70 00'
+ '00 00 00 00 0B B0 07 77 00 00 00 00 00 00 00 00'
+ '0B B0 07 77 00 00 70 00 00 00 00 07 70 07 77 77'
+ '00 00 77 70 00 00 00 77 0B 00 77 77 00 00 77 77'
+ '00 00 77 77 0B 00 77 77 00 00 77 77 77 07 77 77'
+ '0B 00 77 77 00 00 77 77 77 77 77 77 0B B0 07 77'
+ '00 00 77 77 77 77 77 00 70 BB 00 77 00 00 77 77'
+ '77 77 70 B0 07 0B B0 07 00 00 77 77 77 77 70 B0'
+ '07 70 B0 07 00 00 77 77 77 77 70 BB 00 0B B0 07'
+ '00 00 77 77 77 77 77 0B BB BB 00 77 00 00 77 77'
+ '77 77 77 70 00 00 07 77 00 00 77 77 77 77 77 77'
+ '77 77 77 77 00 00'
+}
+
+
+CM_WINDOW_SHOWGRID BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 00 CC 00 00 0C C0 00 00 CC 00'
+ '00 00 00 CC 00 00 0C C0 00 00 CC 00 00 00 CC CC'
+ 'CC CC CC CC CC CC CC CC 00 00 CC CC CC CC CC CC'
+ 'CC CC CC CC 00 00 00 CC 00 00 0C C0 00 00 CC 00'
+ '00 00 00 CC 00 00 0C C0 00 00 CC 00 00 00 00 CC'
+ '00 00 0C C0 00 00 CC 00 00 00 00 CC 00 00 0C C0'
+ '00 00 CC 00 00 00 00 CC 00 00 0C C0 00 00 CC 00'
+ '00 00 CC CC CC CC CC CC CC CC CC CC 00 00 CC CC'
+ 'CC CC CC CC CC CC CC CC 00 00 00 CC 00 00 0C C0'
+ '00 00 CC 00 00 00 00 CC 00 00 0C C0 00 00 CC 00'
+ '00 00 00 CC 00 00 0C C0 00 00 CC 00 00 00 00 CC'
+ '00 00 0C C0 00 00 CC 00 00 00 00 CC 00 00 0C C0'
+ '00 00 CC 00 00 00 CC CC CC CC CC CC CC CC CC CC'
+ '00 00 CC CC CC CC CC CC CC CC CC CC 00 00 00 CC'
+ '00 00 0C C0 00 00 CC 00 00 00 00 CC 00 00 0C C0'
+ '00 00 CC 00 00 00'
+}
+
+
+CM_WINDOW_SNAPTOGRID BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 00 CC 00 00 0C C0 00 00 CC 00'
+ '00 00 00 CC 00 00 0C C0 00 00 CC 00 00 00 CC BB'
+ 'CC CC CB BC CC CC BB CC 00 00 CC BB CC CC CB BC'
+ 'CC CC BB CC 00 00 00 CC 00 00 0C C0 00 00 CC 00'
+ '00 00 00 CC 00 00 0C C0 00 00 CC 00 00 00 00 CC'
+ '00 00 0C C0 00 00 CC 00 00 00 00 CC 00 00 0C C0'
+ '00 00 CC 00 00 00 00 CC 00 00 0C C0 00 00 CC 00'
+ '00 00 CC BB CC CC CB BC CC CC BB CC 00 00 CC BB'
+ 'CC CC CB BC CC CC BB CC 00 00 00 CC 00 00 0C C0'
+ '00 00 CC 00 00 00 00 CC 00 00 0C C0 00 00 CC 00'
+ '00 00 00 CC 00 00 0C C0 00 00 CC 00 00 00 00 CC'
+ '00 00 0C C0 00 00 CC 00 00 00 00 CC 00 00 0C C0'
+ '00 00 CC 00 00 00 CC BB CC CC CB BC CC CC BB CC'
+ '00 00 CC BB CC CC CB BC CC CC BB CC 00 00 00 CC'
+ '00 00 0C C0 00 00 CC 00 00 00 00 CC 00 00 0C C0'
+ '00 00 CC 00 00 00'
+}
+
+
+CM_OBJECTS_RECTANGLE BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 77 77 70 77 77 77 77 77 77 77'
+ '00 00 77 70 07 77 77 77 77 77 77 77 00 00 77 00'
+ '00 00 00 00 00 00 00 77 00 00 77 00 07 77 70 77'
+ '77 77 00 07 00 00 77 07 70 77 70 77 77 77 00 07'
+ '00 00 77 07 77 77 70 77 77 70 70 70 00 00 77 07'
+ '77 77 70 77 77 77 70 77 00 00 77 07 77 77 77 77'
+ '77 77 70 77 00 00 77 07 77 77 77 77 77 77 70 77'
+ '00 00 77 07 77 77 77 77 00 00 00 77 00 00 77 00'
+ '00 00 77 77 77 77 70 77 00 00 77 07 77 77 77 77'
+ '77 77 70 77 00 00 77 07 77 77 77 77 77 77 70 77'
+ '00 00 77 07 77 77 77 07 77 77 70 77 00 00 07 07'
+ '07 77 77 07 77 77 70 77 00 00 70 00 77 77 77 07'
+ '77 07 70 77 00 00 70 00 77 77 77 07 77 70 00 77'
+ '00 00 77 00 00 00 00 00 00 00 00 77 00 00 77 77'
+ '77 77 77 77 77 70 07 77 00 00 77 77 77 77 77 77'
+ '77 07 77 77 00 00'
+}
+
+
+CM_OBJECTS_POLYGON BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 77 77 77 77 77 77 77 77 77 77'
+ '00 00 77 77 77 77 70 00 07 77 77 77 00 00 77 77'
+ '77 70 07 00 07 77 77 77 00 00 77 70 70 07 77 07'
+ '70 07 77 77 00 00 77 70 07 70 77 77 07 70 07 77'
+ '00 00 77 00 00 70 77 77 07 77 70 77 00 00 77 07'
+ '77 77 07 70 77 77 00 07 00 00 77 07 77 77 77 77'
+ '77 77 00 07 00 00 77 07 77 77 77 77 77 70 70 70'
+ '00 00 77 00 00 07 77 77 70 00 00 77 00 00 07 07'
+ '07 77 77 77 77 77 70 77 00 00 70 00 77 77 77 77'
+ '77 77 70 77 00 00 70 00 77 77 07 70 77 77 70 77'
+ '00 00 77 07 77 70 77 77 07 00 00 77 00 00 77 70'
+ '07 70 77 77 07 70 07 77 00 00 77 77 70 07 70 77'
+ '70 07 07 77 00 00 77 77 77 70 00 70 07 77 77 77'
+ '00 00 77 77 77 70 00 07 77 77 77 77 00 00 77 77'
+ '77 77 77 77 77 77 77 77 00 00 77 77 77 77 77 77'
+ '77 77 77 77 00 00'
+}
+
+
+CM_WINDOW_ZOOMOUT BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 00 00 00 07 77 77 70 00 00 00'
+ '00 00 0B BB BB 07 77 77 70 BB BB B0 00 00 0B BB'
+ '00 07 77 77 70 00 BB B0 00 00 0B BB B0 77 77 77'
+ '77 0B BB B0 00 00 0B 0B BB 07 77 77 70 BB B0 B0'
+ '00 00 0B 00 BB B0 77 77 0B BB 00 B0 00 00 00 07'
+ '0B BB 07 70 BB B0 70 00 00 00 77 77 70 BB B0 0B'
+ 'BB 07 77 77 00 00 77 77 77 0B B0 0B B0 77 77 77'
+ '00 00 77 77 77 70 07 70 07 77 77 77 00 00 77 77'
+ '77 70 07 70 07 77 77 77 00 00 77 77 77 0B B0 0B'
+ 'B0 77 77 77 00 00 77 77 70 BB B0 0B BB 07 77 77'
+ '00 00 00 07 0B BB 07 70 BB B0 70 00 00 00 0B 00'
+ 'BB B0 77 77 0B BB 00 B0 00 00 0B 0B BB 07 77 77'
+ '70 BB B0 B0 00 00 0B BB B0 77 77 77 77 0B BB B0'
+ '00 00 0B BB 00 07 77 77 70 00 BB B0 00 00 0B BB'
+ 'BB 07 77 77 70 BB BB B0 00 00 00 00 00 07 77 77'
+ '70 00 00 00 00 00'
+}
+
+
+CM_WINDOW_ZOOMIN BITMAP 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 70 07 77 77 77 77 77 77 70 07'
+ '00 00 0B B0 77 77 77 77 77 77 0B B0 00 00 0B BB'
+ '07 77 77 77 77 70 BB B0 00 00 70 BB B0 70 00 00'
+ '07 0B BB 07 00 00 77 0B BB 00 B8 8B 00 BB B0 77'
+ '00 00 77 70 BB B0 B0 0B 0B BB 07 77 00 00 77 77'
+ '0B BB B8 8B BB B0 77 77 00 00 77 70 00 BB B0 0B'
+ 'BB 00 07 77 00 00 77 70 BB BB B8 8B BB BB 07 77'
+ '00 00 77 70 80 80 80 08 08 08 07 77 00 00 77 70'
+ '80 80 80 08 08 08 07 77 00 00 77 70 BB BB B8 8B'
+ 'BB BB 07 77 00 00 77 70 00 BB B0 0B BB 00 07 77'
+ '00 00 77 77 0B BB B8 8B BB B0 77 77 00 00 77 70'
+ 'BB B0 B0 0B 0B BB 07 77 00 00 77 0B BB 00 B8 8B'
+ '00 BB B0 77 00 00 70 BB B0 70 00 00 07 0B BB 07'
+ '00 00 0B BB 07 77 77 77 77 70 BB B0 00 00 0B B0'
+ '77 77 77 77 77 77 0B B0 00 00 70 07 77 77 77 77'
+ '77 77 70 07 00 00'
+}
+
+
+CM_WINDOW_GRIDNEXT BITMAP
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 00 CC 00 00 0C C0 00 00 CC 00'
+ '00 00 00 CC 00 00 0C C0 00 00 CC 00 00 00 CC CC'
+ 'CC CC CC CC CC CC CC CC 00 00 CC CB BB BB CC CC'
+ 'BB BB BC CC 00 00 00 CB B3 30 0C C0 03 3B BC 00'
+ '00 00 00 CB 3B 00 0C C0 00 B3 BC 00 00 00 00 CB'
+ '30 B0 0C C0 0B 03 BC 00 00 00 00 CB 00 0B 0C C0'
+ 'B0 00 BC 00 00 00 00 CC 00 00 BC CB 00 00 CC 00'
+ '00 00 CC CC CC CC CC CC CC CC CC CC 00 00 CC CC'
+ 'CC CC CC CC CC CC CC CC 00 00 00 CC 00 00 BC CB'
+ '00 00 CC 00 00 00 00 CB 00 0B 0C C0 B0 00 BC 00'
+ '00 00 00 CB 30 B0 0C C0 0B 03 BC 00 00 00 00 CB'
+ '3B 00 0C C0 00 B3 BC 00 00 00 00 CB B3 30 0C C0'
+ '03 3B BC 00 00 00 CC CB BB BB CC CC BB BB BC CC'
+ '00 00 CC CC CC CC CC CC CC CC CC CC 00 00 00 CC'
+ '00 00 0C C0 00 00 CC 00 00 00 00 CC 00 00 0C C0'
+ '00 00 CC 00 00 00'
+}
+
+
+CM_WINDOW_GRIDPREV BITMAP
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 B0 CC 00 00 0C C0 00 00 CC 0B'
+ '00 00 0B CC 00 00 0C C0 00 00 CC B0 00 00 CC BC'
+ 'CC BC CC CC CB CC CB CC 00 00 CC CB C3 BC CC CC'
+ 'CB 3C BC CC 00 00 00 CC B3 B0 0C C0 0B 3B CC 00'
+ '00 00 00 C3 3B B0 0C C0 0B B3 3C 00 00 00 00 BB'
+ 'BB B0 0C C0 0B BB BB 00 00 00 00 CC 00 00 0C C0'
+ '00 00 CC 00 00 00 00 CC 00 00 0C C0 00 00 CC 00'
+ '00 00 CC CC CC CC CC CC CC CC CC CC 00 00 CC CC'
+ 'CC CC CC CC CC CC CC CC 00 00 00 CC 00 00 0C C0'
+ '00 00 CC 00 00 00 00 CC 00 00 0C C0 00 00 CC 00'
+ '00 00 00 BB BB B0 0C C0 0B BB BB 00 00 00 00 C3'
+ '3B B0 0C C0 0B B3 3C 00 00 00 00 CC B3 B0 0C C0'
+ '0B 3B CC 00 00 00 CC CB C3 BC CC CC CB 3C BC CC'
+ '00 00 CC BC CC BC CC CC CB CC CB CC 00 00 0B CC'
+ '00 00 0C C0 00 00 CC B0 00 00 B0 CC 00 00 0C C0'
+ '00 00 CC 0B 00 00'
+}
+
+
+CM_EDIT_UNDO BITMAP LOADONCALL MOVEABLE DISCARDABLE 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 77 77 77 77 77 77 77 77 77 77'
+ '00 00 77 77 77 77 77 77 77 77 77 77 00 00 77 77'
+ '77 77 77 77 77 77 77 77 00 00 77 77 77 77 00 00'
+ '07 77 77 77 00 00 77 77 77 77 0A AA A0 07 77 77'
+ '00 00 77 77 77 77 0A AA AA 20 77 77 00 00 77 77'
+ '77 77 0A AA A2 A2 87 77 00 00 77 77 77 77 00 00'
+ '0A 22 07 77 00 00 77 77 77 77 77 77 80 02 07 77'
+ '00 00 77 77 77 07 77 77 77 80 07 77 00 00 77 77'
+ '70 07 77 77 80 02 07 77 00 00 77 77 0A 00 00 00'
+ '0A 22 07 77 00 00 77 70 AA AA AA AA A2 A2 87 77'
+ '00 00 77 0A AA AA AA AA AA 20 77 77 00 00 77 70'
+ 'AA AA AA AA A0 07 77 77 00 00 77 77 0A 00 00 00'
+ '07 77 77 77 00 00 77 77 70 07 77 77 77 77 77 77'
+ '00 00 77 77 77 07 77 77 77 77 77 77 00 00 77 77'
+ '77 77 77 77 77 77 77 77 00 00 77 77 77 77 77 77'
+ '77 77 77 77 00 00'
+}
+
+
+CM_EDIT_REDO BITMAP LOADONCALL MOVEABLE DISCARDABLE 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 C0 00 00 C0'
+ '00 00 00 C0 C0 00 C0 00 00 00 C0 00 C0 00 C0 C0'
+ '00 00 C0 C0 C0 00 80 80 80 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 77 77 77 77 77 77 77 77 77 77'
+ '00 00 77 77 77 77 77 77 77 77 77 77 00 00 77 77'
+ '77 77 77 77 77 77 77 77 00 00 77 77 77 70 00 00'
+ '77 77 77 77 00 00 77 77 70 0A AA A0 77 77 77 77'
+ '00 00 77 77 02 AA AA A0 77 77 77 77 00 00 77 78'
+ '2A 2A AA A0 77 77 77 77 00 00 77 70 22 A0 00 00'
+ '77 77 77 77 00 00 77 70 20 08 77 77 77 77 77 77'
+ '00 00 77 70 08 77 77 77 70 77 77 77 00 00 77 70'
+ '20 08 77 77 70 07 77 77 00 00 77 70 22 A0 00 00'
+ '00 A0 77 77 00 00 77 78 2A 2A AA AA AA AA 07 77'
+ '00 00 77 77 02 AA AA AA AA AA A0 77 00 00 77 77'
+ '70 0A AA AA AA AA 07 77 00 00 77 77 77 70 00 00'
+ '00 A0 77 77 00 00 77 77 77 77 77 77 70 07 77 77'
+ '00 00 77 77 77 77 77 77 70 77 77 77 00 00 77 77'
+ '77 77 77 77 77 77 77 77 00 00 77 77 77 77 77 77'
+ '77 77 77 77 00 00'
+}
+
+
+IDC_PASTE CURSOR LOADONCALL MOVEABLE DISCARDABLE 
+{
+ '00 00 02 00 01 00 20 20 00 00 03 00 04 00 30 01'
+ '00 00 16 00 00 00 28 00 00 00 20 00 00 00 40 00'
+ '00 00 01 00 01 00 00 00 00 00 80 00 00 00 00 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 FF FF FF 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 00 00 00 00 00 00 00 00 00 07 FF C0 00 3F'
+ 'FF F8 00 FF FF FE 00 FF FF FE 00 DE 27 66 00 DD'
+ 'BA DE 00 DE 36 C2 00 DF AE DA 00 C6 72 66 00 DB'
+ 'FE FE 00 DB FE FE 00 C7 FF FE 00 FF FF FE 00 FF'
+ 'FF FE 00 FF FF FE 00 FF FF FE 00 F8 00 3E 00 80'
+ '07 02 00 00 03 80 00 00 03 80 10 00 01 C0 10 00'
+ '01 C0 10 00 00 E0 EE 00 00 E0 10 00 00 70 10 00'
+ '00 70 10 00 00 00 FF FF FF FF FF FF FF FF FF FF'
+ 'FF FF FF FF FF FF FF F0 00 1F FF 80 00 03 FF 00'
+ '00 01 FE 00 00 00 FE 00 00 00 FE 00 00 00 FE 00'
+ '00 00 FE 00 00 00 FE 00 00 00 FE 00 00 00 FE 00'
+ '00 00 FE 00 00 00 FE 00 00 00 FE 00 00 00 FE 00'
+ '00 00 FE 00 00 00 FE 00 00 00 FE 00 00 00 FE 00'
+ '00 00 FF 00 00 01 FF 80 00 03 FF F8 00 1F FF FF'
+ 'FC 1F FF FF FE 0F FF FF FE 0F FF FF FF 07 FF FF'
+ 'FF 07 FF FF FF 8F'
+}
+
+
+IDC_INSERT CURSOR 
+{
+ '00 00 02 00 01 00 20 20 00 00 03 00 04 00 30 01'
+ '00 00 16 00 00 00 28 00 00 00 20 00 00 00 40 00'
+ '00 00 01 00 01 00 00 00 00 00 00 02 00 00 00 00'
+ '00 00 00 00 00 00 02 00 00 00 00 00 00 00 00 00'
+ '00 00 FF FF FF 00 00 00 00 00 00 00 00 00 00 00'
+ '00 00 00 00 00 00 00 00 00 00 00 07 FF C0 00 3F'
+ 'FF F8 00 FF FF FE 00 FF FF FE 00 AD 1C DC 00 AD'
+ 'EB DA 00 AD 98 5A 00 AD 7B 5A 00 A3 8C C8 00 BF'
+ 'FF FA 00 BF FF FE 00 FF FF FE 00 FF FF FE 00 FF'
+ 'FF FE 00 FF FF FE 00 FF FF FE 00 F8 00 3E 00 80'
+ '07 02 00 80 03 82 00 78 03 9C 10 07 FD C0 10 00'
+ '01 C0 10 00 00 E0 EE 00 00 E0 10 00 00 70 10 00'
+ '00 70 10 00 00 00 FF FF FF FF FF FF FF FF FF FF'
+ 'FF FF FF FF FF FF FF F0 00 1F FF 80 00 03 FF 00'
+ '00 01 FE 00 00 00 FE 00 00 00 FE 00 00 00 FE 00'
+ '00 00 FE 00 00 00 FE 00 00 00 FE 00 00 00 FE 00'
+ '00 00 FE 00 00 00 FE 00 00 00 FE 00 00 00 FE 00'
+ '00 00 FE 00 00 00 FE 00 00 00 FE 00 00 00 FE 00'
+ '00 00 FE 00 00 00 FF 00 00 01 FF 80 00 03 FF F8'
+ '00 1F FF FF FE 0F FF FF FE 0F FF FF FF 07 FF FF'
+ 'FF 07 FF FF FF 8F'
+}
+
+
+#ifdef __WIN32__
+IDB_LOGO BITMAP "logo32.bmp"
+#else
+IDB_LOGO BITMAP "logo16.bmp"
+#endif
+
+
+IDD_ABOUT_BACKUP DIALOG 19, 28, 272, 151
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "About WinDEU"
+FONT 8, "MS Sans Serif"
+{
+ ICON IDI_SDIAPPLICATION, -1, 5, 2, 18, 20
+ CTEXT "16-32", IDC_WINDEU_VERSION, 3, 24, 23, 8
+ CTEXT "WinDEU: DEU for Windows", -1, 35, 5, 216, 8, SS_CENTER | SS_NOPREFIX | WS_GROUP
+ CTEXT "Version", IDC_VERSION, 35, 14, 216, 8, SS_NOPREFIX
+ CTEXT "", IDC_COPYRIGHT, 35, 27, 216, 17, SS_NOPREFIX
+ RTEXT "", IDC_DEBUG, 196, 46, 66, 8, SS_NOPREFIX
+ CONTROL "", -1, "static", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE, 12, 60, 248, 57
+ LTEXT "WinDEU is a program by the ""DEU team"" (see LICENSE file):", -1, 15, 64, 242, 11
+ LTEXT "Renaud Paquay (rpa@info.fundp.ac.be) (Windows version),", -1, 15, 77, 242, 11
+ LTEXT "Raphael Quinet (Raphael.Quinet@eed.ericsson.se) (DOS version),", -1, 15, 90, 242, 11
+ LTEXT "Brendon J Wyber (b.wyber@csc.canterbury.ac.nz), and others...", -1, 15, 103, 242, 11
+ DEFPUSHBUTTON "&OK", IDOK, 115, 128, 41, 16
+}
+
+
+IDD_VERSION_INFO DIALOG 6, 15, 179, 107
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "WinDEU version information"
+FONT 8, "MS Sans Serif"
+{
+ CTEXT "", IDC_BUILD_TIME, 35, 46, 119, 8, SS_CENTER | SS_NOPREFIX | WS_GROUP
+ ICON IDI_SDIAPPLICATION, -1, 5, 2, 18, 20
+ CTEXT "16-32", IDC_WINDEU_VERSION, 3, 24, 23, 8
+ CTEXT "WinDEU: DEU for Windows", -1, 35, 5, 119, 8, SS_CENTER | SS_NOPREFIX | WS_GROUP
+ CTEXT "Version", IDC_VERSION, 35, 16, 119, 8, SS_NOPREFIX
+ CONTROL "Jul-Dec 1994, Jan-Apr 1995", IDC_COPYRIGHT, "STATIC", SS_CENTER | SS_NOPREFIX | WS_GROUP, 35, 30, 119, 8
+ RTEXT "", IDC_DEBUG, 98, 62, 66, 8, SS_NOPREFIX
+ DEFPUSHBUTTON "&Close", IDOK, 69, 84, 41, 16
+}
+
+
+IDD_WORK DIALOG 36, 33, 194, 93
+STYLE 0x04 | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Working..."
+FONT 8, "MS Sans Serif"
+{
+ CONTROL "", IDC_GAUGE_STATIC, "STATIC", SS_WHITERECT | WS_CHILD | WS_VISIBLE | WS_GROUP, 8, 9, 175, 14
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 8, 35, 175, 31
+ LTEXT "", IDC_WORK_TEXT, 11, 38, 169, 25
+ DEFPUSHBUTTON "Cancel", IDCANCEL, 72, 73, 50, 14
+}
+
+IDD_SIDEDEF_EDIT DIALOG 18, 27, 392, 306
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "SideDef edit"
+FONT 7, "MS Serif"
+{
+ DEFPUSHBUTTON "&OK", IDOK, 37, 278, 50, 19, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ PUSHBUTTON "&Cancel", IDCANCEL, 118, 278, 50, 19
+ LTEXT "X Offset:", -1, 9, 8, 33, 8, NOT WS_GROUP
+ LTEXT "Y Offset:", -1, 90, 11, 34, 8, NOT WS_GROUP
+ LTEXT "Sector number:", -1, 12, 29, 59, 8, NOT WS_GROUP
+ EDITTEXT IDC_SD1_XPOS, 45, 7, 28, 11, WS_BORDER | WS_TABSTOP
+ EDITTEXT IDC_SD1_YPOS, 126, 9, 31, 11, WS_BORDER | WS_TABSTOP
+ EDITTEXT IDC_SD1_SECTOR, 70, 29, 27, 11, WS_BORDER | WS_TABSTOP
+ LTEXT "Upper texture", -1, 124, 68, 51, 8, NOT WS_GROUP
+ CONTROL "Text", IDC_SD1_ABOVE_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 122, 79, 57, 14
+ LTEXT "Text", IDC_SD1_ABOVE, 125, 82, 50, 10, NOT WS_GROUP
+ LTEXT "Normal texture", -1, 124, 139, 51, 8, NOT WS_GROUP
+ CONTROL "Text", IDC_SD1_NORMAL_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 122, 150, 57, 14
+ LTEXT "Text", IDC_SD1_NORMAL, 125, 153, 50, 10, NOT WS_GROUP
+ LTEXT "Lower texture", -1, 124, 209, 49, 8, NOT WS_GROUP
+ CONTROL "Text", IDC_SD1_BELOW_FRAME, "STATIC", SS_WHITEFRAME | WS_CHILD | WS_VISIBLE, 122, 221, 57, 14
+ LTEXT "Text", IDC_SD1_BELOW, 125, 224, 50, 10, NOT WS_GROUP
+ PUSHBUTTON "c", IDC_SD1_CLEAR_ABOVE, 101, 68, 14, 14, WS_TABSTOP
+ PUSHBUTTON "c", IDC_SD1_CLEAR_NORMAL, 101, 132, 14, 14, WS_TABSTOP
+ PUSHBUTTON "c", IDC_SD1_CLEAR_BELOW, 102, 206, 14, 14, WS_TABSTOP
+ PUSHBUTTON ">>", IDC_SD1_TO_ABOVE, 102, 85, 14, 14
+ PUSHBUTTON ">>", IDC_SD1_TO_NORMAL, 102, 150, 14, 14
+ PUSHBUTTON ">>", IDC_SD1_TO_BELOW, 102, 221, 14, 14
+ LTEXT "Texture - Width - Height", -1, 10, 56, 81, 8, NOT WS_GROUP
+ LISTBOX IDC_TEXTURE_LIST, 5, 68, 90, 175, LBS_STANDARD | LBS_USETABSTOPS
+ CONTROL "Text", -1, "STATIC", SS_BLACKRECT | WS_CHILD | WS_VISIBLE | WS_GROUP, 184, 4, 172, 96
+ CONTROL "Text", -1, "STATIC", SS_BLACKRECT | WS_CHILD | WS_VISIBLE | WS_GROUP, 184, 104, 172, 96
+ CONTROL "Text", -1, "STATIC", SS_BLACKRECT | WS_CHILD | WS_VISIBLE | WS_GROUP, 184, 204, 172, 96
+ CTEXT "Zoom factor", -1, 362, 8, 27, 18
+ CONTROL "Text", -1, "STATIC", SS_BLACKRECT | WS_GROUP, 363, 29, 22, 80
+ CTEXT "Gamma correction", -1, 360, 122, 29, 19
+ CONTROL "Text", -1, "STATIC", SS_BLACKRECT | WS_GROUP, 363, 146, 22, 137
+}
+IDD_CONFIRM_LINEDEF DIALOG 20, 32, 263, 265
+STYLE 0x04 | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Confirm copy of LineDef attributes"
+FONT 7, "MS Serif"
+{
+ DEFPUSHBUTTON "&OK", IDOK, 72, 239, 50, 21, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ LTEXT "You confirmed the changes for the current highlighted LineDef in the editor, but you have more than one LineDef selected.", -1, 8, 6, 241, 19, WS_GROUP
+ LTEXT "Select the attributes you want to copy from the current LineDef to ALL the OTHERS SELECTED LineDefs.", -1, 7, 26, 241, 19, WS_GROUP
+ GROUPBOX "LineDef attributes", IDC_LINEDEF_GROUP, 10, 49, 154, 61, BS_GROUPBOX | WS_GROUP
+ CHECKBOX "Type", IDC_LD_TYPE, 16, 58, 63, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP | WS_GROUP
+ CHECKBOX "Flags", IDC_LD_FLAGS, 16, 71, 63, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Starting vertex", IDC_LD_VERTEX1, 16, 84, 63, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Ending vertex", IDC_LD_VERTEX2, 16, 97, 63, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Sector tag", IDC_LD_SECTOR, 93, 58, 63, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "First SideDef", IDC_LD_SIDEDEF1, 93, 71, 63, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ CHECKBOX "Second SideDef", IDC_LD_SIDEDEF2, 93, 84, 67, 12, BS_AUTOCHECKBOX | NOT WS_TABSTOP
+ GROUPBOX "First SideDef data", IDC_SD1_DATA_GROUP, 170, 48, 82, 91, BS_GROUPBOX | WS_GROUP
+ CHECKBOX "Above texture", IDC_SD1_ABOVE_CHECK, 177, 59, 70, 12, BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP
+ CHECKBOX "Normal Texture", IDC_SD1_NORMAL_CHECK, 177, 72, 70, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Below texture", IDC_SD1_BELOW_CHECK, 177, 85, 70, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Texture X Offset", IDC_SD1_XOFS_CHECK, 177, 98, 70, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Texture Y Offset", IDC_SD1_YOFS_CHECK, 177, 111, 70, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Sector", IDC_SD1_SECTOR_CHECK, 177, 124, 70, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ GROUPBOX "Second SideDef data", -1, 170, 142, 82, 91, BS_GROUPBOX | WS_GROUP
+ CHECKBOX "Above texture", IDC_SD2_ABOVE_CHECK, 177, 153, 70, 12, BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP
+ CHECKBOX "Normal Texture", IDC_SD2_NORMAL_CHECK, 177, 166, 70, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Below texture", IDC_SD2_BELOW_CHECK, 177, 179, 70, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Texture X Offset", IDC_SD2_XOFS_CHECK, 177, 192, 70, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Texture Y Offset", IDC_SD2_YOFS_CHECK, 177, 205, 70, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Sector", IDC_SD2_SECTOR_CHECK, 177, 218, 70, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ GROUPBOX "Flags", IDC_FLAGS_GROUP, 10, 113, 154, 120, BS_GROUPBOX | WS_GROUP
+ CHECKBOX "Impassable", IDC_IMPASSABLE, 21, 122, 123, 12, BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP
+ CHECKBOX "Monsters cannot cross", IDC_MONCROSS, 21, 134, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Two-sided (transparent SideDefs)", IDC_TWOSIDED, 21, 146, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Wall above is ""unpegged""", IDC_ABOVEUNP, 21, 158, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Wall below is ""unpegged""", IDC_BELOWUNP, 21, 170, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Secret (hides behind in Automap)", IDC_SECRET, 21, 182, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Blocks sound", IDC_BLOCKSOUND, 21, 194, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Not shown on Automap", IDC_NOTSHOWN, 21, 206, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Shown on Automap at start", IDC_SHOWN, 21, 218, 123, 12, BS_AUTOCHECKBOX | WS_TABSTOP
+ PUSHBUTTON "&Copy nothing", IDCANCEL, 141, 239, 50, 21, WS_GROUP | WS_TABSTOP
+}
+
+CM_WINDOW_INFOWIN BITMAP LOADONCALL MOVEABLE DISCARDABLE 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 80'
+ '00 00 00 80 80 00 80 00 00 00 80 00 80 00 80 80'
+ '00 00 80 80 80 00 C0 C0 C0 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 88 88 88 88 88 88 88 88 88 88'
+ '00 00 87 77 77 77 77 77 77 77 77 78 00 00 87 00'
+ '00 00 00 00 00 00 00 78 00 00 87 0F EF E0 EF EF'
+ '0F EF E0 78 00 00 87 0E FE F0 FE FE 0E FE F0 78'
+ '00 00 87 0F EF E0 EF EF 0F EF E0 78 00 00 87 00'
+ '00 00 0B 00 00 00 00 78 00 00 87 00 00 00 BB B0'
+ '00 00 00 78 00 00 87 00 00 0B BB BB 00 00 00 78'
+ '00 00 87 00 00 00 0B 00 00 00 00 78 00 00 87 00'
+ '00 00 0B 00 00 00 00 78 00 00 87 00 00 0B 00 0B'
+ '00 00 00 78 00 00 87 00 00 00 B0 B0 00 00 00 78'
+ '00 00 87 00 00 00 0B 00 00 00 00 78 00 00 87 00'
+ '00 00 B0 B0 00 00 00 78 00 00 87 00 00 0B 00 0B'
+ '00 00 00 78 00 00 87 77 77 77 77 77 77 77 77 78'
+ '00 00 87 F7 CC CC CC CC CC 7F 7F 78 00 00 87 77'
+ '77 77 77 77 77 77 77 78 00 00 88 88 88 88 88 88'
+ '88 88 88 88 00 00'
+}
+
+CM_EDITOR_EDITLEVEL BITMAP LOADONCALL MOVEABLE DISCARDABLE 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 80'
+ '00 00 00 80 80 00 80 00 00 00 80 00 80 00 80 80'
+ '00 00 80 80 80 00 C0 C0 C0 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 88 88 88 88 88 88 88 88 88 88'
+ '00 00 88 88 88 88 88 88 88 88 88 88 00 00 88 00'
+ '00 00 00 00 00 00 08 88 00 00 88 0F EF EF EF EF'
+ 'EF EF 08 88 00 00 88 0E FE FE FE FE FE FE 08 88'
+ '00 00 88 0F 44 44 44 44 44 4F 08 88 00 00 88 0E'
+ 'FE FE FE FE FE FE 08 88 00 00 88 0F 44 44 44 44'
+ '44 4F 08 88 00 00 88 0E FE FE FE FE FE FE 08 88'
+ '00 00 88 0F 44 44 44 44 44 4F 08 88 00 00 88 0E'
+ 'FE FE FE FE FE FE 08 88 00 00 88 0F 44 44 44 44'
+ '44 4F 08 88 00 00 88 0E FE FE FE FE FE FE 08 88'
+ '00 00 88 0F 44 44 44 44 00 00 08 88 00 00 88 0E'
+ 'FE FE FE FE 0E F0 78 88 00 00 88 0F 44 44 44 44'
+ '0F 07 88 88 00 00 88 0E FE FE FE FE 00 78 88 88'
+ '00 00 88 00 00 00 00 00 07 88 88 88 00 00 88 88'
+ '88 88 88 88 88 88 88 88 00 00 88 88 88 88 88 88'
+ '88 88 88 88 00 00'
+}
+CM_EDITOR_CREATELEVEL BITMAP LOADONCALL MOVEABLE DISCARDABLE 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 80'
+ '00 00 00 80 80 00 80 00 00 00 80 00 80 00 80 80'
+ '00 00 80 80 80 00 C0 C0 C0 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 88 88 88 88 88 88 88 88 88 88'
+ '00 00 88 88 88 88 88 88 88 88 88 88 00 00 88 00'
+ '00 00 00 00 00 00 08 88 00 00 88 0F EF EF EF EF'
+ 'EF EF 08 88 00 00 88 0E FE FE FE FE FE FE 08 88'
+ '00 00 88 0F EF EF EF EF EF EF 08 88 00 00 88 0E'
+ 'FE FE FE FE FE FE 08 88 00 00 88 0F EF EF EF EF'
+ 'EF EF 08 88 00 00 88 0E FE FE FE FE FE FE 08 88'
+ '00 00 88 0F EF EF EF EF EF EF 08 88 00 00 88 0E'
+ 'FE FE FE FE FE FE 08 88 00 00 88 0F EF EF EF EF'
+ 'EF EF 08 88 00 00 88 0E FE FE FE FE FE FE 08 88'
+ '00 00 88 0F EF EF EF EF 00 00 08 88 00 00 88 0E'
+ 'FE FE FE FE 0E F0 78 88 00 00 88 0F EF EF EF EF'
+ '0F 07 88 88 00 00 88 0E FE FE FE FE 00 78 88 88'
+ '00 00 88 00 00 00 00 00 07 88 88 88 00 00 88 88'
+ '88 88 88 88 88 88 88 88 00 00 88 88 88 88 88 88'
+ '88 88 88 88 00 00'
+}
+
+IDD_STATISTICS DIALOG 70, 59, 215, 133
+STYLE DS_MODALFRAME | 0x4L | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Statistics"
+FONT 8, "MS Sans Serif"
+{
+ LTEXT "Things:", -1, 5, 22, 40, 8
+ LTEXT "Vertices:", -1, 5, 38, 40, 8
+ LTEXT "LineDefs:", -1, 5, 54, 40, 8
+ LTEXT "SideDefs:", -1, 5, 70, 40, 8
+ LTEXT "Sectors:", -1, 5, 86, 40, 8
+ LTEXT "Number:", -1, 48, 9, 41, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 46, 20, 44, 12
+ RTEXT "", IDC_TH_NUM, 48, 22, 40, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 46, 36, 44, 12
+ RTEXT "", IDC_VE_NUM, 48, 38, 40, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 46, 52, 44, 12
+ RTEXT "", IDC_LD_NUM, 48, 54, 40, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 46, 68, 44, 12
+ RTEXT "", IDC_SD_NUM, 48, 70, 40, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 46, 84, 44, 12
+ RTEXT "", IDC_SE_NUM, 48, 86, 40, 8
+ LTEXT "Size (Kb):", -1, 103, 9, 44, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 101, 20, 44, 12
+ RTEXT "", IDC_TH_SIZE, 103, 22, 40, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_GROUP, 101, 36, 44, 12
+ RTEXT "", IDC_VE_SIZE, 103, 38, 40, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 101, 52, 44, 12
+ RTEXT "", IDC_LD_SIZE, 103, 54, 40, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_GROUP, 101, 68, 44, 12
+ RTEXT "", IDC_SD_SIZE, 103, 70, 40, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 101, 84, 44, 12
+ RTEXT "", IDC_SE_SIZE, 103, 86, 40, 8
+ LTEXT "Size (Bytes):", -1, 158, 9, 44, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 156, 20, 44, 12
+ RTEXT "", IDC_TH_BYTES, 158, 22, 40, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 156, 36, 44, 12
+ RTEXT "", IDC_VE_BYTES, 158, 38, 40, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 156, 52, 44, 12
+ RTEXT "", IDC_LD_BYTES, 158, 54, 40, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 156, 68, 44, 12
+ RTEXT "", IDC_SD_BYTES, 158, 70, 40, 8
+ CONTROL "", -1, "STATIC", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE | WS_GROUP, 156, 84, 44, 12
+ RTEXT "", IDC_SE_BYTES, 158, 86, 40, 8
+ DEFPUSHBUTTON "&OK", IDOK, 82, 111, 50, 15
+}
+
+
+CM_EDIT_DELETEOBJ BITMAP LOADONCALL MOVEABLE DISCARDABLE
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 80'
+ '00 00 00 80 80 00 80 00 00 00 80 00 80 00 80 80'
+ '00 00 80 80 80 00 C0 C0 C0 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 88 88 88 88 88 88 88 88 88 88'
+ '00 00 88 84 44 48 88 88 84 44 48 88 00 00 88 74'
+ 'FF 44 88 88 44 FF 47 88 00 00 88 74 88 F4 88 88'
+ '4F 88 47 88 00 00 88 74 88 84 88 88 48 88 47 88'
+ '00 00 88 87 48 84 48 87 48 84 78 88 00 00 88 88'
+ '74 44 47 74 44 47 88 88 00 00 88 88 88 44 44 44'
+ '44 88 88 88 00 00 88 88 88 84 4F F4 48 88 88 88'
+ '00 00 88 88 88 87 04 44 78 88 88 88 00 00 88 88'
+ '88 70 FF 0F 07 88 88 88 00 00 88 88 87 0F F0 4F'
+ 'F0 78 88 88 00 00 88 88 70 FF 08 80 FF 07 88 88'
+ '00 00 88 87 0F F0 88 88 0F F0 78 88 00 00 88 70'
+ 'FF 08 88 88 80 FF 07 88 00 00 87 0F F0 88 88 88'
+ '88 0F F0 78 00 00 80 FF 08 88 88 88 88 80 FF 08'
+ '00 00 80 F0 88 88 88 88 88 88 0F 08 00 00 80 08'
+ '88 88 88 88 88 88 80 08 00 00 88 88 88 88 88 88'
+ '88 88 88 88 00 00'
+}
+
+
+CM_EDIT_ADDOBJ BITMAP LOADONCALL MOVEABLE DISCARDABLE 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 80'
+ '00 00 00 80 80 00 80 00 00 00 80 00 80 00 80 80'
+ '00 00 80 80 80 00 C0 C0 C0 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 88 88 88 88 88 88 88 88 88 88'
+ '00 00 88 88 88 88 88 80 00 00 00 08 00 00 88 87'
+ '77 77 77 70 EF EF EF 08 00 00 88 00 00 00 00 00'
+ 'F4 44 4E 08 00 00 80 F8 88 88 88 80 EF EF EF 08'
+ '00 00 80 F8 88 88 88 80 F4 44 4E 08 00 00 80 F8'
+ '88 88 88 80 EF EF EF 08 00 00 80 F8 88 00 00 80'
+ 'F4 4E 00 08 00 00 80 F8 88 80 00 80 EF EF 00 88'
+ '00 00 80 F8 88 00 00 80 00 00 08 88 00 00 80 F8'
+ '80 00 80 88 07 88 88 88 00 00 80 F8 00 08 88 88'
+ '07 88 88 88 00 00 80 F8 80 88 88 88 07 88 88 88'
+ '00 00 80 F8 88 88 88 88 07 88 88 88 00 00 80 F8'
+ '88 88 88 88 07 88 88 88 00 00 80 FF 00 00 00 FF'
+ '08 88 88 88 00 00 88 00 4C 4C 40 00 88 88 88 88'
+ '00 00 88 88 C4 C4 C0 88 88 88 88 88 00 00 88 88'
+ '8C 4C 08 88 88 88 88 88 00 00 88 88 88 88 88 88'
+ '88 88 88 88 00 00'
+}
+
+
+CM_EDIT_COPYOBJ BITMAP LOADONCALL MOVEABLE DISCARDABLE 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 80'
+ '00 00 00 80 80 00 80 00 00 00 80 00 80 00 80 80'
+ '00 00 80 80 80 00 C0 C0 C0 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 88 88 88 88 88 88 88 88 88 88'
+ '00 00 88 88 77 88 88 88 88 88 87 78 00 00 88 87'
+ '00 88 88 88 88 88 70 08 00 00 88 70 F0 88 88 88'
+ '88 87 0F 08 00 00 87 0F F0 88 88 88 88 70 FB 08'
+ '00 00 80 FF F0 88 88 88 88 0F BF 08 00 00 80 F0'
+ 'F0 88 88 88 88 0B 0B 08 00 00 80 0F F0 88 88 08'
+ '88 00 BF 08 00 00 80 FF F0 88 88 00 88 0B FB 08'
+ '00 00 80 00 F0 80 00 00 08 00 0F 08 00 00 80 FF'
+ 'F0 80 00 00 08 0B FB 08 00 00 80 00 F0 88 88 00'
+ '88 00 0F 08 00 00 80 FF F0 88 88 08 88 0B FB 08'
+ '00 00 80 0F F0 88 88 88 88 00 BF 08 00 00 80 F0'
+ 'F0 88 88 88 88 0F 0B 08 00 00 88 0F F0 88 88 88'
+ '88 80 BF 08 00 00 88 80 F0 88 88 88 88 88 0B 08'
+ '00 00 88 88 00 88 88 88 88 88 80 08 00 00 88 88'
+ '87 88 88 88 88 88 88 78 00 00 88 88 88 88 88 88'
+ '88 88 88 88 00 00'
+}
+
+
+CM_WINDOW_TOOLBAR BITMAP LOADONCALL MOVEABLE DISCARDABLE 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 80'
+ '00 00 00 80 80 00 80 00 00 00 80 00 80 00 80 80'
+ '00 00 80 80 80 00 C0 C0 C0 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 88 88 88 88 88 88 88 88 88 88'
+ '00 00 87 77 77 77 77 77 77 77 77 78 00 00 87 00'
+ '00 0B 00 0B 00 00 00 78 00 00 87 00 00 00 B0 B0'
+ '00 00 00 78 00 00 87 00 00 00 0B 00 00 00 00 78'
+ '00 00 87 00 00 00 B0 B0 00 00 00 78 00 00 87 00'
+ '00 0B 00 0B 00 00 00 78 00 00 87 00 00 00 0B 00'
+ '00 00 00 78 00 00 87 00 00 00 0B 00 00 00 00 78'
+ '00 00 87 00 00 0B BB BB 00 00 00 78 00 00 87 00'
+ '00 00 BB B0 00 00 00 78 00 00 87 00 00 00 0B 00'
+ '00 00 00 78 00 00 87 FF FF FF FF FF FF FF FF 78'
+ '00 00 87 DC FA 4F BC FA 9F 4B FF 78 00 00 87 CD'
+ 'F4 AF CB F9 AF B4 FF 78 00 00 87 FF FF FF FF FF'
+ 'FF FF FF 78 00 00 87 77 77 77 77 77 77 77 77 78'
+ '00 00 87 F7 CC CC CC CC CC 7F 7F 78 00 00 87 77'
+ '77 77 77 77 77 77 77 78 00 00 88 88 88 88 88 88'
+ '88 88 88 88 00 00'
+}
+
+
+CM_WINDOW_INFOBAR BITMAP LOADONCALL MOVEABLE DISCARDABLE 
+{
+ '42 4D 66 01 00 00 00 00 00 00 76 00 00 00 28 00'
+ '00 00 14 00 00 00 14 00 00 00 01 00 04 00 00 00'
+ '00 00 F0 00 00 00 00 00 00 00 00 00 00 00 10 00'
+ '00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 80'
+ '00 00 00 80 80 00 80 00 00 00 80 00 80 00 80 80'
+ '00 00 80 80 80 00 C0 C0 C0 00 00 00 FF 00 00 FF'
+ '00 00 00 FF FF 00 FF 00 00 00 FF 00 FF 00 FF FF'
+ '00 00 FF FF FF 00 88 88 88 88 88 88 88 88 88 88'
+ '00 00 87 77 77 77 77 77 77 77 77 78 00 00 87 88'
+ '88 88 88 88 88 88 88 78 00 00 87 88 88 88 88 88'
+ '88 88 88 78 00 00 87 00 00 00 0B 00 00 00 00 78'
+ '00 00 87 00 00 00 BB B0 00 00 00 78 00 00 87 00'
+ '00 0B BB BB 00 00 00 78 00 00 87 00 00 00 0B 00'
+ '00 00 00 78 00 00 87 00 00 00 0B 00 00 00 00 78'
+ '00 00 87 00 00 00 0B 00 00 00 00 78 00 00 87 00'
+ '00 0B 00 0B 00 00 00 78 00 00 87 00 00 00 B0 B0'
+ '00 00 00 78 00 00 87 00 00 00 0B 00 00 00 00 78'
+ '00 00 87 00 00 00 B0 B0 00 00 00 78 00 00 87 00'
+ '00 0B 00 0B 00 00 00 78 00 00 87 00 00 00 00 00'
+ '00 00 00 78 00 00 87 77 77 77 77 77 77 77 77 78'
+ '00 00 87 F7 CC CC CC CC CC 7F 7F 78 00 00 87 77'
+ '77 77 77 77 77 77 77 78 00 00 88 88 88 88 88 88'
+ '88 88 88 88 00 00'
+}
+

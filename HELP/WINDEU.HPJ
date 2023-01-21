@@ -1,0 +1,14 @@
+[OPTIONS]
+TITLE=WinDEU Help
+CONTENTS=CONTENTS
+BMROOT=.\bmp
+;COMPRESS=MEDIUM
+
+[FILES]
+windeu.rtf
+
+[CONFIG]
+BrowseButtons()
+
+[MAP]
+#include <windeu.h>

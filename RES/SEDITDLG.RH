@@ -1,0 +1,68 @@
+/*----------------------------------------------------------------------------*
+ | This file is part of WinDEU, the port of DEU to Windows.                   |
+ | WinDEU was created by the DEU team:                                        |
+ |  Renaud Paquay, Raphael Quinet, Brendon Wyber and others...                |
+ |                                                                            |
+ | DEU is an open project: if you think that you can contribute, please join  |
+ | the DEU team.  You will be credited for any code (or ideas) included in    |
+ | the next version of the program.                                           |
+ |                                                                            |
+ | If you want to make any modifications and re-distribute them on your own,  |
+ | you must follow the conditions of the WinDEU license. Read the file        |
+ | LICENSE or README.TXT in the top directory.  If do not  have a copy of     |
+ | these files, you can request them from any member of the DEU team, or by   |
+ | mail: Raphael Quinet, Rue des Martyrs 9, B-4550 Nandrin (Belgium).         |
+ |                                                                            |
+ | This program comes with absolutely no warranty.  Use it at your own risks! |
+ *----------------------------------------------------------------------------*
+
+	Project WinDEU
+	DEU team
+	Jul-Dec 1994, Jan-Mar 1995
+
+	FILE:         seditdlg.rh
+*/
+#ifndef __seditdlg_rh
+#define __seditdlg_rh
+
+#define IDD_SECTOR_EDIT	32
+
+#define IDC_SECTOR_LIST	100
+
+#define IDC_LIGHT_EDIT	101
+
+#define IDC_TAG_EDIT	102
+#define IDC_NEW_TAG		103
+
+#define IDC_FLOORCEIL_GROUP	104
+
+/* These def. are common to "seditdlg.rh" and "prefdlg.rh" */
+#define IDC_FTEXTURE_LIST	200
+#define IDC_PREF_BUILDER_PRIORITY	106
+#define IDC_PREF_DEBUG	107
+#define IDC_PREF_QUIET	108
+#define IDC_PREF_QUIETER	109
+#define IDC_PREF_EXPERT	110
+#define IDC_PREF_INFOBAR	111
+#define IDC_PREF_ADDSELBOX	115
+#define IDC_PREF_SELECT0	116
+#define IDC_PREF_SPLIFACTOR	121
+#define IDC_PREF_3DCONTROLS	122
+#define IDC_PREF_DRAWLENGTH	123
+#define IDC_PREF_MAXUNDO	126
+#define IDC_GROUPBOX1	124
+#define IDC_GROUPBOX2	125
+
+#define IDC_FLOOR_TEXT		201
+#define IDC_FLOOR_FRAME		202
+#define IDC_FLOOR_CLEAR		203
+#define IDC_FLOOR_HEIGHT	204
+#define IDC_TO_FLOOR		205
+
+#define IDC_CEILING_TEXT  	206
+#define IDC_CEILING_FRAME	207
+#define IDC_CEILING_HEIGHT	208
+#define IDC_CEILING_CLEAR	209
+#define IDC_TO_CEILING		210
+
+#endif

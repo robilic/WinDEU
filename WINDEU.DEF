@@ -1,0 +1,20 @@
+;------------------------------------------------
+;   Main WinDEU
+;   FUNDP
+;   Jul-Dec 1994, Jan-Feb 1995
+;
+;   SUBSYSTEM:    windeu.exe Module Defintion File
+;   FILE:         windeu.def
+;   AUTHOR:       Renaud Paquay
+;
+;------------------------------------------------
+
+NAME WinDEU
+
+DESCRIPTION 'WinDEU: Deu for Windows, by Renaud Paquay Jul-Dec 1994, Jan-Feb 1995'
+EXETYPE     WINDOWS
+CODE        PRELOAD MOVEABLE DISCARDABLE
+DATA        PRELOAD MOVEABLE MULTIPLE
+HEAPSIZE    8192
+STACKSIZE   8192
+EXPORTS     KEYBOARDPROC

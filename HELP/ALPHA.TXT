@@ -1,0 +1,70 @@
+Path: news.fundp.ac.be!idefix.CS.kuleuven.ac.be!Belgium.EU.net!EU.net!howland.reston.ans.net!swrinde!cs.utexas.edu!asuvax!news.asu.edu!eschafer
+From: eschafer@imap1.asu.edu
+Newsgroups: comp.os.ms-windows.programmer.graphics
+Subject: Re: merging DIBs
+Date: 2 Apr 1995 21:55:15 GMT
+Organization: Arizona State University
+Lines: 58
+Message-ID: <3ln6g3$r4j@news.asu.edu>
+References: <3libeh$3qe@darkstar.UCSC.EDU> <3licfo$45o@darkstar.UCSC.EDU>
+NNTP-Posting-Host: general1.asu.edu
+X-Newsreader: TIN [version 1.2 PL2]
+
+Kyle Anthony York (noesis@ucscb.UCSC.EDU) wrote:
+: help please. i've been avoiding the nasty graphics & such of windwos
+: for as long as possible, now it seems i've not choice :(
+
+:   i need to merge multiple DIBs onto a screen. seems simple enough, but
+: i can't seem to do it. they are all odd shapes, with white being used
+: as the ``transparent'' colour. what is the quick/efficient way to do this?
+: i didn't see it addressed in the FAQ
+: thanks
+: --kyle
+
+This is basically a compositing problem.  Typically when compositing, you
+need to have an "alpha channel" for the image that will be pasted on top.
+The alpha channel is an extra "color" which says where and how strongly the
+image on top is opaque.
+  Sounds like you don't have an alpha channel, but having white as your
+"key" color helps.  Here's what I would do (warning: this may sting a bit).
+
+  Put the first (bottom-most) DIB onto the window usig SetDIBitsToDevice().
+
+  For each remaining "Image" DIB:
+    Create a new "Alpha" DIB header with 1 bpp and the same dimensions.
+    There should be two colors: black and white.
+
+    Allocate an array for all Alpha 1-bpp pixels (BYTE AlphaBits[w*h/8]).
+
+    Create an Image DDB from your Image DIB with CreateDIBitmap().
+    CreateCompatibleDC() and select the Image DDB into it.
+    Normally alpha channels use white as opaque but it's more convenient to
+    compute with white being transparent.
+
+    Convert your Image DDB to 1-bpp Alpha DIB:
+      GetDIBits(hdcImage, hbmImage, 0, Height, AlphaBits,
+                pbmiAlphaHeader, DIB_RGB_COLORS);
+    OK, now we have a sort of boolean inverted alpha channel.
+
+    Keep the underlying bitmap's pixels where the Alpha DIB is white.
+      StretchDIBits(hdcWindow, 0, 0, Width, Height, 0, 0, Width, Height,
+                    AlphaBits, pbmiAlphaHeader, DIB_RGB_COLORS, SRCAND);
+
+    We need to invert the Alpha Image and then AND the result with the
+    overlayed pixels.  Might as well use that Image DDB we made:
+      StretchDIBits(hdcImage, 0, 0, Width, Height, 0, 0, Width, Height,
+                    AlphaBits, pbmiAlphaHeader, DIB_RGB_COLORS, SRCCOPY);
+      StretchDIBits(hdcImage, 0, 0, Width, Height, 0, 0, Width, Height,
+                    ImageBits, pbmiImageHeader, DIB_RGB_COLORS, SRCERASE);
+    (SRCERASE inverts the destination and ANDs the result with the source.)
+
+    OK, at this point there should be an image with a hole in it in the
+    window.  Fill in the hole with the opaque part of the overlayed image:
+      BitBlt(hdcWindow, 0, 0, Width, Height, hdcImage, 0, 0, SRCPAINT);
+
+    Merry Christmas, a boolean alpha channel.  If you are doing this for
+    some serious compositing, you really should use 8-bit alpha
+    channels and integer math on the actual image bytes.  Follow up if
+    you want more hints (if you're still awake at this point :).)
+
+      Eric Schafer

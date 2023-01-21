@@ -1,0 +1,94 @@
+Newsgroups: comp.os.ms-windows.programmer.controls
+Path: news.fundp.ac.be!idefix.CS.kuleuven.ac.be!Belgium.EU.net!EU.net!howland.reston.ans.net!vixen.cso.uiuc.edu!sdd.hp.com!hplabs!hplextra!hplb!slo
+From: slo@hplb.hpl.hp.com (Steve Loughran)
+Subject: Re: Owl, Ctl3D and Win95 (Background color?)
+Sender: news@hplb.hpl.hp.com (Usenet News Administrator)
+Message-ID: <D6K2At.B31@hplb.hpl.hp.com>
+Date: Wed, 5 Apr 1995 09:28:04 GMT
+References: <3lafqp$688@mark.ucdavis.edu>
+Nntp-Posting-Host: muttley.hpl.hp.com
+Organization: Hewlett-Packard Laboratories, Bristol, England
+X-Newsreader: TIN [version 1.2 PL0.7]
+Lines: 81
+
+George Mealy (gamealy@wheel.ucdavis.edu) wrote:
+> Our application is OWL250, Win31, Ctl3d and not Borland Style controls. 
+
+> When run under Win31 the dialogs have a grey background as do our 
+> Common Dialogs and other normal apps. When run under Win95, our 
+> Common Dialogs still have the same appearance, but the other dialogs 
+> in our app have a white background.
+
+> Ctl3d is part of Win95 so obviously something is not being set up 
+> right either by our app or Owl, or both.
+
+> EnableCtl3D simply checks for version of Windows and in Win95.
+
+Just don't bother with the OWL wrapper around ctl3d enabling.
+While it means a single bit of source can move from 16 to 32 bits
+without having to have the library in the project changed from
+ctl3dv2.dll to ctl3d32.dll, it's a lot of trouble to go to.
+
+I just use calls to the -wait for it- raw API! And it works great. 
+The sample code to do this is appended at the end of the article.
+
+Note that BCC4.5 ships with an out of date version of ctl3d32.dll. Use
+the latest ones off the MSDN CD/ ftp.microsoft.com. Also: Win95 uses
+the win32s version of the DLL, not the NT version.
+
+
+-Steve
+
+//uncomment this line to turn 3d bits off
+//#define NOCTL3D
+
+#ifndef NOCTL3D
+#       include <ctl3d.h>
+#endif
+
+
+//=======================================================================
+// Per instance initialisation
+//=======================================================================
+void App::InitInstance()
+{
+
+        //Control 3d
+#ifndef NOCTL3D
+        Ctl3dRegister(*this);
+        Ctl3dAutoSubclass(*this);
+#endif
+        //and we dont want BWCC
+        //this defaults to on in BC4.5
+        EnableBWCC(FALSE);
+
+
+        //...
+
+                //and call parent constructor...which creates the windows &c
+        TApplication::InitInstance();
+}
+
+
+//=======================================================================
+// Instance shutdown handler
+//=======================================================================
+int App::TermInstance(int status)
+{
+        //tidy up
+
+        // ...
+
+#ifndef NOCTL3D
+        Ctl3dUnregister(*this);
+#endif
+        return TApplication::TermInstance(status);
+}
+
+
+--
+Steve Loughran 
+Hewlett-Packard Laboratories, Bristol
+mailto:slo@hplb.hpl.hp.com
+tel:+44 (117) 9228717
+

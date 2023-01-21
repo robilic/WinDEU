@@ -1,0 +1,511 @@
+                           ======================
+                           What's new in WinDEU ?
+                           ======================
+
+History of changes and bug fixes in WinDEU since first public version
+(5.23beta, Dec 24 1994).
+
+Written by:
+	Renaud Paquay (rpa@info.fundp.ac.be)
+	Last modified: Apr 11 1995
+	Member of the DEU team and main WinDEU programmer
+
+
+Future
+======
+- WinDEU 5.3: DEU 5.3 port to Windows.
+
+Apr 11 1995
+-----------
+- Bug fixed in level selection dialog box.
+- The scroll lock key now affects only the mouse movements inside the
+  editor window (when dragging objects or selecting with box), but the
+  map scrolling is always possible with cursor keys and scroll bars.
+
+Apr 10 1995
+-----------
+- Added enablers for Delete and Copy functions, to disable them
+  when no object is selected.
+- Added icons in editor toolbar for Delete objets, Copy objects, Add object, 
+  Show ToolBar, Show Status Bar, Show Info windows.
+- Information windows can be layout horizontaly or verticaly, upper or
+  lower, left or right of editor window. See the "Window|Position" menu
+  item.
+- New dialog box to get level number.
+- New dialog box to display level statistics.
+- WinDEU is now smarter when editing multiple objects. It remembers what
+  the user changed in the dialog box and automaticaly selects the
+  corresponding check boxes for the "Copy Confirmation" dialog box.
+
+Apr 09 1995
+-----------
+- Added icons by CalvHobs1 (DOOM icons) in resource
+- Added icons by Noel ??? (Original icons) in resource
+
+Apr 04 1995
+-----------
+- Fixed weird bug in WinDEU 16-bit version. When loading a level with
+  more than 64Kb of SideDefs, SideDef 0 was partialy overwritten by
+  SideDef 2184. This bug was due to Windows memory management in 16-bit
+  protected mode, this is why WinDEU32 was not affected.
+
+Apr 03 1995
+-----------
+- Added a progress dialog with cancel button for some operations:
+  . checking level
+  . building main wad or grouping patch wads.
+
+Apr 02 1995
+-----------
+- X offset limit set to -32767 to +32767. Thanks to Drake O'brian for telling
+  me the bug.
+- Logo added in the dialog box. Thanks to CalvnHobs1@aol.com for the 2 
+  WinDEU logos.
+- Inserting a rectangle/polygon is now a two-phase action:
+  . first enter the rect/poly informations
+  . then move the mouse and LMB click to "drop" the rect/poly.
+
+Apr 01 1995
+-----------
+- Hint text is now displayed in the title bar (easier to read)
+- Move movements are now ignored when WinDEU window is not active
+- Free memory display is updated every 2 seconds in status bar
+
+Mar 31 1995
+-----------
+- Window size was not restored correctly after rebuilding nodes.
+  Bug fixed.
+- Size of WAD created calculated correctly when building main wad or
+  grouping wads.
+
+Mar 30 1995
+-----------
+- When zooming with menu items or toolbar button, the zoom is not
+  centered on the pointer, but on the screen. When zooming with "+" and
+  "-" keys, the zoom is centered on the mouse pointer.
+- Fixed bug which made impossible to GROUP WADS or BUILD MAIN WAD when
+  using a DOOM2 main wad.
+
+Mar 28 1995
+-----------
+- WinDEU 5.24 beta 1 release.
+
+Mar 27 1995
+-----------
+- Objects are now unselected when changing mode with T, V, L and S
+  keys, but remains are when using Tab and Shift-Tab (same as DEU 5.21)
+- Menu item "Swap LineDefs" changed to "Swap SideDefs"
+- GridScale, ShowGrid and SnapToGrid are now in the configuration file
+- Help file updated 
+
+Mar 26 1995
+-----------
+- *NEW FEATURE*
+  Added Toolbar in main and editor windows
+
+- *NEW FEATURE*
+  Added Undo/Redo functions in editor
+
+- *NEW FEATURE*
+  MaxUndo config option, which determines the maximum number of Undo/Redo 
+  levels
+
+Mar 13 1995
+-----------
+- Fixed minor bug when zooming pictures.
+
+Mar 12 1995
+-----------
+- DOOM2 thing not selected in "edit thing" list box when using WinDEU32.
+  Bug fixed.
+
+Mar 10 1995
+-----------
+- Minor changes in the help file
+- Garbage displayed when entering initial offset of X texture alignment.
+  Bug Fixed.
+
+Mar 9 1995
+----------
+- Fixed bug with very small PWAD (only 1 sector): couldn't build nodes.
+- Fixed bug in 'Jump to object' dialog box (GPF when closing).
+- Fixed bug of finding help file when changing current directory (under NT).
+
+Mar 5 1995
+----------
+- WinDEU 5.23 PUBLIC FINAL RELEASE
+- Copyrights comment modified in each source file
+- LICENSE file modified
+- Full heretic support (LineDefs)
+- Small fixes
+
+Mar 3 1995
+----------
+- Oups! forgot to include the ctl3dv2 and ctl3d32.dll int zip files.
+- WinDEU32 sometimes used to enter infinite loop when editing a Thing.
+  I don't really know the reason, but it seems to be fixed with the new 
+  full compilation (maybe a bug in BC++ ?).
+
+Mar 2 1995
+----------
+- WinDEU 5.23 *Final* release
+
+Mar 1 1995
+----------
+- Help file (at least) finished (pffouuhh;-) (*lot* of work: 580Kb!!!)
+- When no picture for a thing or texture, WinDEU display two crossing lines 
+  (like DEU) and the entry name.
+- In edit Thing dialog box, Player pictures now displayed with DOOM colors
+  (GREEN, GRAY, BROWN and RED).
+
+Feb 28 1995
+-----------
+- Added X and Y position in edit thing dialog box.
+- Map wasn't marked as changed when editing sectors, linedefs and things,
+  under particular cicumstences.
+- Added a dialog box for editing vertices (x and y position).
+- When editing a group of LineDefs, WinDEU used to display a warning
+  message when trying to copy SideDef data from a LineDef with no
+  such SideDef. This was a result of WinDEU policy to copy SideDef
+  attributes instead of SideDef number. WinDEU still uses the same
+  policy, but with an exception: if the source SideDef number is "-1",
+  WinDEU will display a message asking to copy the SideDef number
+  instead of the SideDef data.
+  This is useful if you want, for example, suppress the second SideDef
+  of a group of LineDef. You select the LineDefs, then you set the
+  second SideDef number to "-1" in the edit LineDef dialog box,
+  then you check the "Second SideDef" check box in the "Confirm copy
+  of LineDef attributes" dialog box. WinDEU will put "-1" in each second
+  SideDef number of the selected LineDefs.
+
+Feb 27 1995
+-----------
+- *NEW FEATURE*
+  Added the tuturial (TUTOR.DOC) in the help file (section 9).
+  Added "Tuturial" menu item in "Help" popup menu (both main and editor
+  menus).
+
+- Included the tutorial WAD files in W??DEU52.ZIP
+  NOTE: From now on, you *should* unzip W??DEU52.ZIP with -d option.
+
+Feb 26 1995
+-----------
+- Added minimize button to Level rebuilding progress dialog box.
+  Use this button to minimize the WinDEU window when rebuilding a level.
+  The icon displays the 3 builders completetion pourcentage, exactly like
+  the dialog box.
+- Suppressed flickering when viewing picture (Zoom and Gamma correction)
+- Added HERETIC things pictures (thanks to DEU 5.3 beta3)
+- In the Thing dialog box, changed "Dead bodies" check box with "Sounds"
+  when using HERETIC.
+
+  NOTE about DOOM2/HERETIC support:
+  - In the Edit Thing dialog box, only the Things from the doom version
+	of the wad file are available, i.e. WinDEU won't display DOOM2 or
+	HERETIC new enemies when using a DOOM1 main wad file.
+  - Idem in the Edit Sector dialog box.
+
+
+Feb 23 1995
+-----------
+- Added original deu key commands as accelerators in main menu.
+- The WinDEU editor window is now disabled when building the nodes.
+- Complete support of DOOM2 Things, Sectors, and LineDefs.
+- Partial support of HERETIC Things(no pictures yet) and Sectors.
+
+Feb 19 1995
+-----------
+- Context sensitive help for everything (using F1 key anytime)
+- Help menu completed (search help on, using help, ...)
+- Fast/slow scroll speed using SPACE key (and new menu item 
+  Window|Slow Scroll)
+- Map Scrolling using cursor keys
+
+Feb 16 1995
+-----------
+- ScrollLock key is now working.
+- Status bar is updated after saving a level
+- Usage message box updated with new options
+- Gamma correction and zoom level are kept in memory between dialog boxes
+
+Feb 12-15 1995
+--------------
+- Changed the zip files name:
+  W16DEU52.ZIP contains WinDEU 5.23, Windows (Win16) version
+  W32DEU52.ZIP contains WinDEU 5.23, Windows NT (or Win32s) version
+  WSCDEU52.ZIP contains the WinDEU 5.23 sources (unzip with -d).
+
+- I updated the help file to explain all the WinDEU features.
+  I included dialog boxes images with 'hotspots' explaining each
+  part of the dialog boxes. (lot of work!)
+  The next step is to implement contextual help.
+
+Feb 9 1995
+----------
+- Broke the 64Kb barrier for the 'Dump Entry' and 'Master Directory' list
+  boxes. There's still a limitations in the 'Dump Entry' list box: On my
+  Windows version (WFG 3.11), only about 5000 strings are accepted in the
+  list box, which corresponds to an entry of about 87.000 (0x0153E0) bytes.
+  Hopefuly, such entries are not common (SideDefs of big levels).
+  THERE'S NO WAY I CAN FIX THIS (except by changing the Windows Kernel ;)
+
+Feb 6 1995
+----------
+- Better support of DOOM2 and HERETIC files. You can load a DOOM 1 (or
+  HERETIC) patch wad when the main wad is the DOOM2 wad. If you load a E1M1
+  patch wad, the level is added in the master directory and you can edit it
+  using the new 'level number' dialog box.
+  The things and LineDefs are now displayed with their real name (thanks to
+  DEU 5.3 new W_THINGS.C and W_LINEDEFS.C files).
+
+Feb 5 1995
+----------
+- **NEW FEATURE**
+  The 'Edit|Dump Entry' menu item is now (at least) implemented. It doesn't
+  work with big entries because of Windows limitations. It's not possible to
+  output to a file.
+
+- **NEW FEATURE**
+  Changed the multi-tasking option. BuildPriority now defines the minimum
+  number of milliseconds WinDEU will compute before giving control back to
+  Windows. This setting has the advantage of being INDEPENDANT from the CPU
+  speed. Legal settings are 0 to 1000. Good settings are 20 to 50.
+  NOTE: - The overhead is still negligible.
+	- A BuildPriority of 0 means no multi-tasking (like previous WinDEU
+	  version)
+
+- **NEW FEATURE**
+  The preferences dialog allows to change almost every configuration options
+  (not only default textures like before). You can even change to builder
+  priority while your level is being rebuilt!
+
+- The '64Kb' DEU bug fixed (read error when viewing pictures at the end of
+  external PWADS).
+
+Feb 4 1995
+----------
+- In 'Vertices' editing mode, the level redrawing is faster when the scale is
+  small (currently smaller than 1/5). This speedup is obtained by reducing the
+  details drawn (a point instead of a cross for a vertex, a line instead of a
+  vector for a LineDef).
+
+Feb 3 1995
+----------
+- **NEW FEATURE**
+  WinDEU is now 'cooperative' when building the nodes of a level.
+  There's a new configuration option ('BuildPriority' or 'bp') which lets you
+  specify the priority of WinDEU (this priority determines approximately the
+  frenquency at which WinDEU 'asks' Windows to give control back to other
+  applications).
+  WARNING: This is still a 'beta' features. The mouse is not desactivated in
+	   the editor Window, so you can continue to edit your level while
+	   it's being built!
+	   If you move LineDefs and/or change the level, the Builder may
+	   product unpredictable result. This feature was implemented for
+	   people with slow processors who want to use other applications
+	   when WinDEU is building the level.
+  NOTE: - If you want WinDEU to work like before or if you use WinDEU32 under
+	  Windows NT, set the 'BuildPriority' option to 0.
+	- Don't be afraid to set a priority > 0. To test the overhead of
+	  the cooperative 'multi-tasking', try to build a level with a
+	  priority of 0, then with a priority of 100, without moving your
+	  mouse or using other applications. You'll see the overhead is quite
+	  negligible.
+	  Currently, to rebuild the E2M7 level on my 486 DX50, it takes
+	  84sec with priotity = 0 and 86sec with priority = 100 (with the
+	  Win16 version of WinDEU!).
+
+Feb 2 1995
+----------
+- GPF when trying to add a LineDef in a new level without vertexes.
+  Bug fixed.
+
+- Vertexes numbers were not taken in account when inserting a LineDef.
+  The new LineDef simply had the same vertexes than current selected LineDef.
+  Bug fixed.
+
+- Bug when "Automerging Vertexes":
+	Tim Morley sent me a mail to describe this bug (thanks to him!):
+
+	"(...)In vertex mode if you try to insert a new vertex in the middle
+	of an existing linedef, it asks you if you wish to split the
+	line def, if you answer yes, it appears to do the job, however
+	it doesn't quite do it right. You end up with a new vertex with
+	s linedef to one of the end of the original line, and the
+	original line in place.
+
+	Let me draw a few pictures....
+
+	start with
+
+		X--------------------------X
+
+	Place a new vertex in the middle of it, and it looks like this on
+	screen
+
+		X------------X-------------X
+
+	Now if you move the new point round a bit you can see where
+	things have gone wrong..
+
+			X
+		   /
+		  /
+		X--------------------------X
+	(...)"
+   Bug Fixed.
+
+Jan 27 1995
+-----------
+-  I think this will be one of the last 5.23 version of WinDEU. WinDEU seems
+   to be stable now. I'll soon begin to port DEU 5.3...
+
+-  GPF when trying to start WinDEU without a valid DOOM.WAD file.
+   Thanks to my brother for signaling the bug. Bug fixed.
+
+Jan 20 1995
+-----------
+- New config option 'DrawLength' to enable the drawing of the length the
+  moving LineDefs
+
+Jan ?? 1995
+-----------
+- I've made an icon for WinDEU. Since I got no artist talent, if anyone
+  has a better one to propose....
+
+Jan 16 1995
+-----------
+- The CTL3DV2.DLL file is now included in the WINDEU.ZIP
+  The CTL3D32.DLL file is now included in the WINDEU32.ZIP
+  ** YOU MUST COPY THESE FILES IN YOUR WINDOWS' "SYSTEM" DIRECTORY
+  ** AND REMOVE THEM FROM THE WINDEU DIRECTORY, OR IT WON'T WORK.
+  ** For NT Users:
+  **  The CTL3D32.DLL must be copied to the %SystemRoot%\system32 directory
+  **  The CTL3DV2.DLL must be copied to the %SystemRoot%\system directory
+
+- When editing SideDefs, it was impossible to set negative offsets, but
+  the legal values are -255 to +255.
+  Bug fixed.
+
+Jan 12 1995
+-----------
+- Optimization of texture displaying. MUCH faster than before. The
+  display is the fastest for 256 colors Windows Drivers, but is
+  faster too for 32K, 64K and 16M colors Windows Drivers.
+
+Jan 10 1995
+-----------
+- Each time you used the Right Mouse Buttons menus (in any editing mode),
+  the Windows USER resources were eaten up by WinDEU. Bug fixed.
+  Thanks to Drake O'Brien for signaling the bug.
+
+- The mouse coord. are displayed with the 'grid' scale format: When
+  use set the 'Snap to grid' option, the mouse coord. aren't continuous
+  anymore, they are rounded to the nearest coord. which is on
+  the grid.
+
+Jan 7 1995
+----------
+- Level drawing is now -MUCH- faster when scale is 1/2, 1/1 or >1/1.
+  Why? I use programmed scaling and clipping, instead of the windows
+  ones. The drawing is NOT faster when WinDEU has to redraw the entire
+  level (level totaly visible).
+
+- Because of this faster drawing, the scroll bars are now
+  'thumbtracked'. It means the map scrolls *real time* when you move
+  the rect. button of the scroll bars.
+
+- When the scale of the level editor is > 1, some circles appear
+  randomly in the window (only under Windows, not NT). I think this
+  is a bug in Windows (or in my video driver), because when run under
+  NT, it's OK (both Win16 and Win32 versions). This bug is now fixed
+  because WinDEU uses now program clipping, instead a Windows clipping.
+
+- Minor fixes in the WinDEU help file.
+
+Jan 6 1995
+----------
+- GPF when using command parameters. Bug in original DEU 5.21 code.
+  Bug fixed.
+
+- New option : '3DControls (3d)'. For those who don't like 3D controls, or
+  don't have the CTL3Dxx.DLL, boolean to enable or disable the use
+  of 3D controls.
+  NOTE: For NT users, for WinDEU32 to work with 3D controls, the
+	CTL3D32.DLL -MUST- be copied to the %SystemRoot%\system32
+	directory (NOT to the %SystemRoot%\system directory).
+
+- WinDEU didn't start if CTL3DV2.DLL not present.
+  WinDEU32 didn't start if CTL3D32.DLL not present.
+  (These DLLs are used for 3D Controls).
+  Bug fixed.
+
+- An invalid option (in command line or in the WINDEU.INI file) caused
+  WinDEU to STOP on an error message. Now, the error message is
+  still displayed, but WinDEU doesn't stop anymore.
+
+- WinDEU stops if a sprite picture can't be found in the main wad
+  file. Now WinDEU display an error message, but doesn't stop.
+
+- WinDEU stops if an invalid patch wad file is opened. Now, WinDEU
+  display an error message, but doesn't stop.
+
+Jan 5 1995
+----------
+- GPF when trying to save a new created level (with Edit.Create Level
+  menu item). Bug fixed. Thanks to Mark Bartusis for signaling the bug.
+
+- Nodes creating (raphael's old code) caused GPFs for an empty level.
+  GPFs occured when trying to build the nodes for a trivial level
+  (I tried a level with only 1 Thing and 2 Vertices (no LineDef)).
+  Bug fixed? (I tried).
+
+
+======================================
+Revision history before public release
+======================================
+
+Sep 09 94
+---------
+
+This version of WinDEU isn't still completly finished, but it's already
+possible to create and/or edit any DOOM level (and the external WAD files).
+Just like DEU, WinDEU has 4 edition modes:
+	Things:   Decorations, weapons, ennemies, ...
+	LineDefs: Lines and textures
+	Vertexes: Points
+	Sectors:  Sectors
+
+The WinDEU editor works just like DEU's. Read the HELP file to find
+the few differences in the user interface.
+
+
+Oct 05 94
+---------
+
+. The 'level editor' part of WinDEU is now finished at 99%. Some bugs are
+  still there (I think), but all menus and dialog boxes are working.
+
+. The WAD file management part (main menu) is not finished. Some functions
+  remains not implemented:
+	List master
+	Insert RAW object
+	Extract object
+	Save object
+	Dump Entry
+
+
+Dec 22 94
+---------
+
+. WinDEU is finished at 99%. The only missing function is 'Dump entry'.
+  (I think this one is not very important).
+
+. I have been in the DEU team for 3 weeks now, and the WinDEU version
+  is 5.23beta, this will be the first public release.
+
+
+
+Renaud Paquay
+(WinDEU programmer and member of the DEU team)
+rpa@info.fundp.ac.be

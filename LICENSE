@@ -1,0 +1,78 @@
+-------------------------------------------------------------------------------
+[0] COPYRIGHT NOTICE
+--------------------
+WinDEU 5.24 was created by the "DEU team":
+Renaud Paquay, Raphael Quinet, Brendon Wyber, Ted Vessenes and others.
+
+[0.1] USAGE
+This program is free software.  The latest version can be obtained free of
+charge on most Doom-related FTP servers (try ftp.cdrom.com, ftp.idsoftware.com
+or ftp2.montefiore.ulg.ac.be) and on the alt.binaries.doom newsgroup (on
+Internet/USENET).
+
+[0.2] DISTRIBUTION
+You are granted the rights to copy and distribute verbatim copies of this
+software package (including the three unmodified zip files w16deu524.zip,
+w32deu524.zip and wscdeu524.zip), under the following conditions
+* You may distribute it free of charge.  If you distribute WinDEU bundled in a
+  collection of other programs or files, or with a magazine, book or another
+  material, the whole package must be free.
+* If you are charging any distribution fee for WinDEU or for the media on 
+  which it is distributed, you must meet one of the following two conditions:
+  - Your package includes the following notice on the cover or any place
+    where the people can look before having to open or buy the package:
+    "includes the Doom editor WinDEU 5.24 (free software)".  If your package 
+    can be ordered by mail or phone, this notice should also appear in any
+    advertisement.
+  - You send a free copy of the package in which WinDEU is included or with
+    which it is distributed (disk, CD-ROM, magazine, book,...) to at least
+    five (5) members of the DEU team.  You are free to choose which members
+    of the DEU team will receive a free copy, but please include a list
+    of the persons you choose, so that we can check it.
+
+[0.3] MODIFICATIONS
+You are allowed to modify and distribute modified versions of this program
+(free of charge or not) under the following conditions:
+* If at least ten percent (10%) of the code is new, your program must
+  display the following notice when executed, or in an "about" window:
+  "This is a modified version of the free software package WinDEU 5.24.
+   WinDEU was created and is maintained by the DEU team: Renaud Paquay,
+   Raphael Quinet, Brendon Wyber, Ted Vessenes and others."
+  This notice should also be included as is in the documentation of your
+  program, if any.
+* If at least fifty percent (50%) of the code is new, you can choose to
+  use this shorter notice instead: "This program contains some source code
+  from WinDEU 5.24, written by the DEU team."
+* If you are using less than ten percent (10%) of the WinDEU source code in
+  your program or if you just used the algorithms but not the code directly,
+  you are not required to display any credit notice.  But it would be nice and
+  courteous to do so.
+* If your program contains some code from another version of WinDEU (and/or DEU)
+  and you add some code from this version to it, the total counts as "WinDEU source 
+  code".
+* If requested by a member of the DEU team, you agree to submit your source
+  code to a neutral third party who will estimate how much of the code is new.
+  Changes in the comments and credit notice will not be counted.
+You are not allowed to distribute modifed copies if you do not fulfill these
+conditions, although you are allowed to make modifications for your personal
+use.  Please consider joining the DEU team: this is the best way to contribute
+to the DEU project, and you will be credited for any code (or ideas) included
+in the next version.
+
+[0.4] OTHER RIGHTS
+The authors reserve the rights to change this license agreement in future
+versions of the program without any prior notice.
+
+Other rights for distribution of WinDEU or modified versions can be obtained
+from Renaud Paquay, 62 rue de Bruxelles, B-5000 Namur, Belgium.
+Other rights for distribution of DEU or modified versions can be obtained
+from Raphael Quinet, 9 rue des Martyrs, B-4550 Nandrin, Belgium.
+-------------------------------------------------------------------------------
+[X] DISCLAIMER:
+This program is provided "as-is", with NO WARRANTY, expressed or implied, as
+to its usefullness, stability, or suitability to task.  Niether Renaud Paquay,
+Raphael Quinet, nor any other member of the DEU team, is responsible for any
+damages, direct, indirect, or incedental, resulting from the use, misuse, or
+failure to use this product or any of its derivatives.  You use this program
+at your own risk.
+-------------------------------------------------------------------------------
